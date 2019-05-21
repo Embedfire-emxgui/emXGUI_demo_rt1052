@@ -138,6 +138,6 @@ status_t FlexSPI_NorFlash_Buffer_Read(FLEXSPI_Type *base,
                                       uint8_t *dst,
                                       uint16_t dataSize);
                                      
-
+status_t FlexSPI_NorFlash_EraseChip(FLEXSPI_Type *base);
                                       
 #endif /* __BSP_NORFLASH_H */

@@ -651,6 +651,44 @@ status_t FlexSPI_NorFlash_Enable_Quad_Mode(FLEXSPI_Type *base)
 
 
 /**
+* @brief  擦除整片FLASH
+* @param  base:使用的FlexSPI端口
+* @retval FlexSPI传输返回的状态值，正常为0
+*/
+status_t FlexSPI_NorFlash_EraseChip(FLEXSPI_Type *base)
+{
+    status_t status;
+    flexspi_transfer_t flashXfer;
+
+    /* 写使能 */
+    status = FlexSPI_NorFlash_Write_Enable(base);
+
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    flashXfer.deviceAddress = 0;
+    flashXfer.port = kFLEXSPI_PortA1;
+    flashXfer.cmdType = kFLEXSPI_Command;
+    flashXfer.SeqNumber = 1;
+    flashXfer.seqIndex = NOR_CMD_LUT_SEQ_IDX_ERASECHIP;
+    
+    status = FLEXSPI_TransferBlocking(base, &flashXfer);
+
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+    
+    /* 等待FLASH至空闲状态 */
+    status = FlexSPI_NorFlash_Wait_Bus_Busy(base);
+    
+    return status;
+}
+
+
+/**
 * @brief  擦除扇区
 * @param  base:使用的FlexSPI端口
 * @param  dstAddr:要擦除扇区的起始地址

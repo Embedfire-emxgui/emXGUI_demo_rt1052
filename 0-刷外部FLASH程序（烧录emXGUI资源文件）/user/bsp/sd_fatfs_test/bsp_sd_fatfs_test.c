@@ -90,25 +90,25 @@ FRESULT f_mount_test(FATFS* fileSystem)
     }
     else//其他错误，暂时不处理，直接退出函数
     {
-      PRINTF("挂载文件系统失败\r\n");
+      PRINTF("\r\n 挂载文件系统失败\r\n");
       while(1);
     }
   }
   else 
   {
-    PRINTF("挂载文件系统成功\r\n");
+    PRINTF("\r\n 挂载文件系统成功\r\n");
   }
   /*判断是否允许使用相对路径*/
 #if (FF_FS_RPATH >= 2U)
   error = f_chdrive((char const *)&driverNumberBuffer[0U]);
   if (error)
   {
-    PRINTF("Change drive failed.\r\n");
+    PRINTF("\r\n Change drive failed.\r\n");
     while(1);
   }
   else
   {
-    PRINTF("Change drive success.\r\n");
+    PRINTF("\r\n Change drive success.\r\n");
   }
 #endif
   return error;

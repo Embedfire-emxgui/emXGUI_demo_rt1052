@@ -21,6 +21,7 @@
 #include "./delay/core_delay.h"
 #include "./led/bsp_led.h"  
 
+#include "././res_mgr/res_mgr.h"
 
 #define EXAMPLE_SECTOR      4096      /* 要进行读写测试的扇区号 */
 #define EXAMPLE_SIZE        (4*1024)  /* 读写测试的数据量，单位为字节*/
@@ -305,4 +306,99 @@ int NorFlash_AHBCommand_Test(void)
     return 0;  
 }
 
+
+
+int t = 0;
+int SPI_FLASH_BulkErase(void)
+{
+  status_t status;
+  for(int i = 0; i < 2560; i++)
+  {
+    t++;
+    /* 擦除指定扇区 */
+    status = FlexSPI_NorFlash_Erase_Sector(FLEXSPI, RESOURCE_BASE_ADDR + i * SECTOR_SIZE);
+    if (status != kStatus_Success)
+    {
+      RGB_RED_LED_ON;
+      PRINTF("擦除flash扇区失败 !\r\n");
+      return -1;
+    }
+//    else
+//    {
+//      PRINTF("擦除flash扇区成功 !\r\n");
+//    }
+  }
+
+#if 0
+  for(int i = 0; i < 2560; i++){
+    //清除数组内容
+    memset(s_nor_read_buffer, 0, EXAMPLE_SIZE);
+    /* 读取内容 */
+    status = FlexSPI_NorFlash_Buffer_Read(FLEXSPI, 
+                                         RESOURCE_BASE_ADDR + i * SECTOR_SIZE, 
+                                         s_nor_read_buffer,
+                                         EXAMPLE_SIZE);
+    
+    if (status != kStatus_Success)
+    {
+        RGB_RED_LED_ON;
+        PRINTF("读取数据失败 !\r\n");
+        return -1;
+    }    
+
+    /* 擦除后FLASH中的内容应为0xFF，
+       设置比较用的s_nor_program_buffer值全为0xFF */    
+    memset(s_nor_program_buffer, 0xFF, EXAMPLE_SIZE);
+    /* 把读出的数据与0xFF比较 */
+    if (memcmp(s_nor_program_buffer, s_nor_read_buffer, EXAMPLE_SIZE))
+    {
+        RGB_RED_LED_ON;
+        PRINTF("擦除数据，读出数据不正确 !\r\n ");
+        return -1;
+    }
+    else
+    {
+        PRINTF("擦除数据成功. \r\n");
+    }
+  }
+#endif  
+  
+  if(status == kStatus_Success)
+    return 1;
+  return 0;
+}
+
+uint8_t SPI_FLASH_BufferWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint16_t NumByteToWrite)
+{
+  status_t status;
+  /* 写入数据 */
+  status = FlexSPI_NorFlash_Buffer_Program(FLEXSPI,
+                                           WriteAddr,
+                                           pBuffer,
+                                           NumByteToWrite);
+  if (status != kStatus_Success)
+  {
+      RGB_RED_LED_ON;
+      PRINTF("写入失败 !\r\n");    
+      return 0;
+  }  
+  return 1;
+}
+
+uint8_t SPI_FLASH_BufferRead(uint8_t* pBuffer, uint32_t ReadAddr, uint16_t NumByteToRead)
+{
+  status_t status;
+  /* 写入数据 */
+  status = FlexSPI_NorFlash_Buffer_Read(FLEXSPI,
+                                           ReadAddr,
+                                           pBuffer,
+                                           NumByteToRead);
+  if (status != kStatus_Success)
+  {
+      RGB_RED_LED_ON;
+      PRINTF("写入失败 !\r\n");    
+      return 0;
+  }  
+  return 1;
+}
 /****************************END OF FILE**********************/
