@@ -39,7 +39,7 @@ FRESULT f_mount_test(FATFS* fileSystem)
   const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
   FATFS* g_fileSystem = fileSystem;
   
-  error = f_mount(g_fileSystem, driverNumberBuffer, 0U);
+  error = f_mount(g_fileSystem, driverNumberBuffer, 1U);
   if (error)
   {
     /*¥ÌŒÛ¿‡–Õ≈–∂œ*/
