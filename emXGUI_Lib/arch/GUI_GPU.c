@@ -1,18 +1,15 @@
 
-#include "gui_drv.h"
-/*===================================================================================*/
-/* DMA2D 加速示例使用的动态开关 */
-/* 宏DMA2D_EN 和 g_dma2d_en均为真时才会使用dma2d*/
-BOOL g_dma2d_en = TRUE;
+#include "GUI_Drv.h"
+#include "pxp_drv.h"
 
+/*===================================================================================*/
 /*
  *GPU绘图加速驱动函数,如果不支持操作可以直接返回FALSE.
  */
 
-#if(DMA2D_EN)
-BOOL DMA2D_FillRect(const SURFACE *pSurf,int x,int y,U16 w,U16 h,U32 color);
-BOOL DMA2D_DrawBitmap_RGB565(const SURFACE *pSurf,int x,int y,U16 w,U16 h,int width_bytes,const U8 *bits);
-BOOL DMA2D_DrawBitmap_ARGB(const SURFACE *pSurf,int x,int y,U16 w,U16 h,int width_bytes,const U8 *bits,U32 color_format);
+#if(G2D_EN)
+
+#define	GPU_EN	1
 
 #endif
 
@@ -41,17 +38,14 @@ BOOL 	GPU_CopyBits(const SURFACE *pSurf,int x,int y,int w,int h,void *out,int wi
  */
 BOOL	GPU_FillRect(const SURFACE *pSurf,int x,int y,int w,int h,COLORREF c)
 {
-#if(DMA2D_EN)
-  if(g_dma2d_en)
+#if(GPU_EN)
 	{
-		if(DMA2D_FillRect(pSurf,x,y,w,h,c))
+		if(PXP_fill_rect(pSurf,x,y,w,h,c))
 		{
 			return TRUE;
 		}
 		return FALSE;
 	}
-  else
-    return FALSE;
 #else
 	return FALSE;
 #endif
@@ -72,25 +66,34 @@ BOOL	GPU_FillRectARGB(const SURFACE *pSurf,int x,int y,int w,int h,U8 a,U8 r,U8 
  */
 BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,int width_bytes,int format)
 {
-#if(DMA2D_EN)
-  if(g_dma2d_en)	
+#if(GPU_EN)
 	{
 		switch(format)
 		{
 
 		case BM_RGB565:
-			return	DMA2D_DrawBitmap_RGB565(pSurf,x,y,w,h,width_bytes,bits);
+			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB565);
+
+		case BM_XRGB1555:
+			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB555);
+
+		case BM_ARGB4444:
+			return	PXP_draw_bitmap_ARGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_AsPixelFormatARGB4444);
+
+		case BM_RGB888:
+			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB888);
+
+		case BM_XRGB8888:
+			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB888);
 
 		case BM_ARGB8888:
-			return	DMA2D_DrawBitmap_ARGB(pSurf,x,y,w,h,width_bytes,bits,CM_ARGB8888);
+			return	PXP_draw_bitmap_ARGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_AsPixelFormatARGB8888);
 
 		default:
 			return FALSE;
 
 		}
 	}
-  else
-    return FALSE;
 #else
 	return FALSE;
 #endif
@@ -103,9 +106,9 @@ BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,
  */
 BOOL 	GPU_ScaleBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const BITMAP *bm)
 {
-#if(DMA2D_EN)
+#if(GPU_EN)
 	{
-	return FALSE;
+		return	PXP_ScaleBitmap(pSurf,x,y,w,h,bm);
 	}
 #else
 	return FALSE;

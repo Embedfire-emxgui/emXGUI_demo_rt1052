@@ -35,7 +35,7 @@ extern "C"
 	void	GUI_MEM_Free(void *p);
 
 }
-}
+
 void* operator new(size_t size)
 {
 	return (void*)GUI_MEM_Alloc(size);
