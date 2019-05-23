@@ -44,7 +44,7 @@
 #define	DMA2D_EN                   0
 
 /* 是否使用缓冲型控件，使用的话会增加一层液晶像素数据的消耗，显示效果减少闪烁*/
-#define  FRAME_BUFFER_EN            0
+#define  FRAME_BUFFER_EN            1
 
 /*==========输入设备配置===gui_input_port.c==================================================*/
 /* 是否使用输入设备 */
@@ -68,7 +68,7 @@
 //#define	GUI_CORE_MEM_BASE	  0xD0100000  //本例子使用RTT管理，使用内部sram，不指定地址
 
 /* GUI内核使用的存储区大小，推荐最小值为8KB */
-#define  GUI_CORE_MEM_SIZE  (32*1024) //本例子使用系统管理，在rtt系统在board.c实现，freertos在heap_4.c实现
+#define  GUI_CORE_MEM_SIZE  (200*1024) //本例子使用系统管理，在rtt系统在board.c实现，freertos在heap_4.c实现
 /* 最小分配粒度，单位为字节*/  
 #define	GUI_CORE_MEM_ALLOC_UNIT   (64)         
 
@@ -97,7 +97,7 @@
 /* 内存堆的总大小，单位为字节 */ 
 #define	VMEM_SIZE	        (0x01700000)     
 /* 最小分配粒度，单位为字节*/  
-#define	VMEM_ALLOC_UNIT   (64)         //64字节   
+#define	VMEM_ALLOC_UNIT   (64)         //64字节    
 
 /*===========字体配置===gui_font_port.c===============================================*/
 /* 默认字体使用XFT，保留，这个宏不起作用 */
@@ -119,7 +119,7 @@
 *  流设备和整体加载方式都要把这个宏设置为1
 *  使用本功能时需要把GUI_RES_DEV_EN设置为1
 */
-#define GUI_EXTERN_FONT_EN       0
+#define GUI_EXTERN_FONT_EN       1
 
 /*
 * 是否把整个外部字体数据加载至VMEM区域，初始化加载时需要较长时间，
@@ -130,7 +130,15 @@
 
 /* 要使用的外部默认字体文件，USE_EXTERN_FONT为1时生效 */
 #define GUI_DEFAULT_EXTERN_FONT   gui_font_param[cur_lcd].default_extern_cn
+#define GUI_LOGO_FONT_50          gui_font_param[cur_lcd].default_extern_logo50
+#define GUI_LOGO_FONT_100         gui_font_param[cur_lcd].default_extern_logo100
+#define GUI_LOGO_FONT_252         gui_font_param[cur_lcd].default_extern_logo252
 
+#define GUI_CTRL_FONT_32          gui_font_param[cur_lcd].default_extern_ctrl32
+#define GUI_CTRL_FONT_48          gui_font_param[cur_lcd].default_extern_ctrl48
+#define GUI_CTRL_FONT_64          gui_font_param[cur_lcd].default_extern_ctrl64
+#define GUI_CTRL_FONT_72          gui_font_param[cur_lcd].default_extern_ctrl72
+#define GUI_CTRL_FONT_100         gui_font_param[cur_lcd].default_extern_ctrl100
 
 /*===========日志输出设备配置===gui_log_port.c===============================================*/
 
@@ -149,14 +157,14 @@
 #define GUI_FS_EN         1
 
 /* 资源所在的基地址 */
-#define GUI_RES_BASE             4096
+#define GUI_RES_BASE             16*1024*1024
 
 /* 存储在FLASH中的资源目录大小 */
 #define GUI_CATALOG_SIZE         (8*1024)
 
 /*===========图片接口配置===gui_picture_port.c===============================================*/
 /* 是否支持文件系统图片接口,需要移植fatfs文件系统 */
-#define GUI_PIC_FS_EN         0
+#define GUI_PIC_FS_EN         1
 
 /* 是否支持显示JPEG图片,需要添加jpeg解码库 */
 #define GUI_PIC_JPEG_EN       0
@@ -170,7 +178,7 @@
 /*===========是否启用各种APP===============================================*/
 
 /* 启动界面 */
-#define GUI_APP_BOOT_INTERFACE_EN     0
+#define GUI_APP_BOOT_INTERFACE_EN     1
 
 /* 资源烧录器，使能后缺少资源会自动进入资源烧录界面 */
 /* 需要sd文件系统/flash资源设备支持 */
