@@ -1006,6 +1006,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2017,6 +2037,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -3024,6 +3064,26 @@
               <FileName>GUI_DEMO_ShowWave.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4040,6 +4100,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -4384,7 +4464,7 @@
 </MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1,CPU_MIMXRT1052DVL6B,XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE =1,XIP_BOOT_HEADER_DCD_ENABLE =1,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1,X_GUI_USE_FREERTOS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\sd_fatfs_test;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\user\bsp\PXP</IncludePath>
+              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\sd_fatfs_test;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\user\bsp\PXP;..\..\..\emXGUI_Lib\app\tutorial\rgb_led</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5098,6 +5178,26 @@
               <FileName>GUI_DEMO_ShowWave.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6114,6 +6214,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -7122,6 +7242,26 @@
               <FileName>GUI_DEMO_ShowWave.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/rgb_led</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_STYLE.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_STYLE.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -19,7 +19,8 @@ void	GUI_MEM_Free(void *p);
 void*	GUI_GRAM_Alloc(U32 size);
 void	GUI_GRAM_Free(void *p);
  
-
+UINT Get_VMEM_CurSize(void);
+  
 #ifdef __cplusplus
 }
 #endif

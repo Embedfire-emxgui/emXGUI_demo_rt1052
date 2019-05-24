@@ -197,5 +197,9 @@ void vfree(void *p)
 	GUI_VMEM_Free(p);
 }
 
+UINT Get_VMEM_CurSize(void)
+{
+  return heap_vmem.used_cur;
+}
 /********************************END OF FILE****************************/
 
