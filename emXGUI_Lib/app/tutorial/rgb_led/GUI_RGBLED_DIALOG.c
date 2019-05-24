@@ -523,7 +523,6 @@ void	GUI_LED_DIALOG(void)
                         WS_VISIBLE,
                         0, 0, GUI_XSIZE, GUI_YSIZE,
                         NULL, NULL, NULL, NULL);
-  GUI_DEBUG("%x", RGBLED_Dialog.hwnd);
    //显示主窗口
 	ShowWindow(RGBLED_Dialog.hwnd, SW_SHOW);
 	//开始窗口消息循环(窗口关闭并销毁时,GetMessage将返回FALSE,退出本消息循环)。
@@ -536,8 +535,8 @@ void	GUI_LED_DIALOG(void)
 
 void GUI_LED_DIALOG_Create(void)
 {
-  RGBLED_Dialog_Init();
-  GUI_LED_DIALOG();
+  RGBLED_Dialog_Init();//硬件初始化
+  GUI_LED_DIALOG();//GUI窗口初始化
   
 }
 
@@ -552,7 +551,7 @@ void GUI_RGBLED_DIALOGTest(void *param)
   
   if(thread == 0)
   {
-#if 1      
+#if MEM_DETECT      
       RGBLED_Dialog.cur_size = Get_VMEM_CurSize();
 #endif
     
@@ -567,7 +566,7 @@ void GUI_RGBLED_DIALOGTest(void *param)
 			app=1;
      
 			GUI_LED_DIALOG_Create();
-#if 1      
+#if MEM_DETECT      
       if(Get_VMEM_CurSize() != RGBLED_Dialog.cur_size)
       {
         GUI_DEBUG("内存未释放");

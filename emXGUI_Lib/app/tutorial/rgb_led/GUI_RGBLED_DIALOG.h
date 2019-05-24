@@ -1,7 +1,9 @@
 #ifndef _GUI_RGBLED_DIALOG_H_
 #define _GUI_RGBLED_DIALOG_H_
 
-#include "RGBLED_DIALOG_BACKEND.h"
+#define MEM_DETECT       (1)
+
+
 
 enum GUI_RGBLEDID
 {
@@ -37,13 +39,19 @@ enum RGBLED_Message
   LEDOn_Mess,
 };
 
+typedef struct
+{
+  uint8_t R_col;
+  uint8_t G_col;
+  uint8_t B_col;
+}RGB_Component_Typedef;
 
 typedef struct
 {
   HWND hwnd;
   HDC hdc_back;//±³¾°²ã
   
-#if 1 
+#if MEM_DETECT 
   UINT cur_size;
 #endif  
   
