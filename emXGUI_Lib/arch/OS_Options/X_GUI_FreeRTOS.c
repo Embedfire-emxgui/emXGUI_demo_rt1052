@@ -104,7 +104,7 @@ BOOL	GUI_SemWait(GUI_SEM *hsem,U32 time)
 
 /*===================================================================================*/
 /*
-函数功能: 信号量发送
+函数功能: 信号量发送(线程)
 参数: hsem(由GUI_SemCreate返回的句柄);  
 返回: 无
 说明: .
@@ -113,6 +113,12 @@ void	GUI_SemPost(GUI_SEM *hsem)
 {
 	xSemaphoreGive((SemaphoreHandle_t)hsem);
 }
+/*
+函数功能: 信号量发送(受freertos管理的中断)
+参数: hsem(由GUI_SemCreate返回的句柄);  
+返回: 无
+说明: 若在受freertos管理的中断中调用GUI_SemPost,会导致port.c：425
+*/
 void GUI_SemPostISR(GUI_SEM *hsem)
 {
    
