@@ -490,7 +490,7 @@ void GUI_App_Desktop(void *param)
 	//创建主窗口
 	hwnd = CreateWindowEx(NULL,
 		&wcex,
-		_T("IconViewer"),
+		L"IconViewer",
 		//								/*WS_MEMSURFACE|*/WS_CAPTION|WS_DLGFRAME|WS_BORDER|WS_CLIPCHILDREN,
 		/*WS_MEMSURFACE|*/WS_CLIPCHILDREN,
 

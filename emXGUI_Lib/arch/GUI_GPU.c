@@ -1,7 +1,7 @@
 
 #include "GUI_Drv.h"
 #include "pxp_drv.h"
-
+BOOL g_dma2d_en = TRUE;
 /*===================================================================================*/
 /*
  *GPU绘图加速驱动函数,如果不支持操作可以直接返回FALSE.
@@ -39,6 +39,7 @@ BOOL 	GPU_CopyBits(const SURFACE *pSurf,int x,int y,int w,int h,void *out,int wi
 BOOL	GPU_FillRect(const SURFACE *pSurf,int x,int y,int w,int h,COLORREF c)
 {
 #if(GPU_EN)
+  if(g_dma2d_en)
 	{
 		if(PXP_fill_rect(pSurf,x,y,w,h,c))
 		{
@@ -46,6 +47,8 @@ BOOL	GPU_FillRect(const SURFACE *pSurf,int x,int y,int w,int h,COLORREF c)
 		}
 		return FALSE;
 	}
+  else
+    return FALSE;
 #else
 	return FALSE;
 #endif
@@ -67,6 +70,7 @@ BOOL	GPU_FillRectARGB(const SURFACE *pSurf,int x,int y,int w,int h,U8 a,U8 r,U8 
 BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,int width_bytes,int format)
 {
 #if(GPU_EN)
+  if(g_dma2d_en)
 	{
 		switch(format)
 		{
@@ -94,6 +98,8 @@ BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,
 
 		}
 	}
+  else
+    return FALSE;
 #else
 	return FALSE;
 #endif

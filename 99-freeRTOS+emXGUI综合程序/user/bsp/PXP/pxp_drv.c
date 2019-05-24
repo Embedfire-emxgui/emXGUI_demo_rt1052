@@ -32,7 +32,7 @@ void PXP_IRQHandler(void)
 	//SCB_InvalidateDCache_by_Addr(PXP->OUT_BUF,size);
 
 	PXP_Rdy=TRUE;
-	GUI_SemPost(sem_pxp);
+	GUI_SemPostISR(sem_pxp);
 
 	taskEXIT_CRITICAL_FROM_ISR( ulReturn ); 
 }
@@ -82,11 +82,11 @@ void PXP_DrvInit(void)
 		PXP_EnableAlphaSurfaceOverlayColorKey(PXP,FALSE);
 		PXP_EnableLcdHandShake(PXP,false);
 		PXP_EnableContinousRun(PXP,false);
-
+     
 		PXP_EnableInterrupts(PXP,kPXP_CompleteInterruptEnable);
 		NVIC_EnableIRQ(PXP_IRQn);
 		NVIC_ClearPendingIRQ(PXP_IRQn);
-
+    NVIC_SetPriority(PXP_IRQn, 6U);
 		/* Disable AS. */
 		PXP_SetAlphaSurfacePosition(PXP, 0, 0, 0, 0);
 		PXP_SetOverwrittenAlphaValue(PXP,255);

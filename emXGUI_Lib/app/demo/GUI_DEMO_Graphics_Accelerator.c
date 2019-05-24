@@ -10,7 +10,7 @@
 #include "x_libc.h"
 #include "GUI_AppDef.h"
 #include  "gui_picture_port.h"
-#include "cpuusage.h"
+
 
 /*============================================================================*/
 //extern const unsigned char gImage_0[];
@@ -269,7 +269,7 @@ static void DrawHandler(HDC hdc,int Width,int Height)
         	  x =ObjRect[i].x;
         	  y =ObjRect[i].y;
 
-		       switch (ObjType[i])
+		       switch (3)
 	  	       {
 
               case 0:
@@ -502,7 +502,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       wnd=CreateWindow(BUTTON,L"Chrom-ART 激活",TBS_FLAT|WS_OWNERDRAW|WS_TRANSPARENT|WS_VISIBLE,400,0,200,35,hwnd,ID_ART_ACTIVE,NULL,NULL); //创建一个文字框.
       SetWindowFont(wnd,defaultFont); //设置控件窗口字体.
       g_dma2d_en = TRUE;
-//      SetTimer(hwnd,1,30,TMR_START,NULL);
+      //SetTimer(hwnd,1,20,TMR_START,NULL);
       hdc_bk = CreateMemoryDC(SURF_SCREEN, 800, 480);      
       break;
     }
@@ -546,7 +546,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 //          x_wsprintf(wbuf,L"%d %%",cpu_load_major);
 //        else
 //         char *buff = "50";
-        cpu_usage = cpu_usage_get("GUI_APP");
+//        cpu_usage = cpu_usage_get("GUI_APP");
         x_wsprintf(wbuf,L"%d %", cpu_usage);
 
 				SetWindowText(wnd,wbuf);

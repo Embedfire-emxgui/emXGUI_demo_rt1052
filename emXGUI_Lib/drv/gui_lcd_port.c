@@ -15,6 +15,7 @@
 #include "gui_drv.h"
 #include "gui_drv_cfg.h"
 #include "gui_lcd_port.h"
+#include "pxp_drv.h"
 /*============================================================================*/
 
 
@@ -117,8 +118,8 @@ SURFACE* GUI_DisplayInit(void)
   //LCDÓ²¼þ³õÊ¼»¯
  	LCD_HardInit((u32)pSurf->Bits); 
   
-#if  DMA2D_EN 
-  DMA2D_DrvInit();
+#if  G2D_EN 
+  PXP_DrvInit();
 #endif
   
 #if FRAME_BUFFER_EN

@@ -46,7 +46,7 @@ static void dummy(void *param)
 
 }
 //extern void	GUI_DEMO_Graphics_Accelerator(void*);
-//extern void GUI_App_Desktop(void *param);
+extern void GUI_App_Desktop(void *param);
 //extern void GUI_PicViewer_DIALOGTest(void *param);
 //extern void GUI_RGBLED_DIALOGTest(void *);
 //extern void GUI_MUSIC_DIALOGTest(void *param);
@@ -75,7 +75,7 @@ static const struct __obj_list menu_list_1[] = {
     //L"Radiobox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
     //L"Textbox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
 
-      L"GUI应用",		NULL, 	L"J", 	RGB_WHITE,			dummy,
+      L"GUI应用",		NULL, 	L"J", 	RGB_WHITE,			GUI_App_Desktop,
       L"MP3播放器",		NULL,	  L"I", RGB_WHITE,				dummy,
       L"视频播放器",		NULL,	  L"D", RGB_WHITE,				dummy,
 
