@@ -39,7 +39,7 @@ void PWM_config(void)
   pwm_config_t pwmConfig;
   
   /*…Ë÷√ ±÷”*/
-  CLOCK_SetDiv(kCLOCK_AhbDiv, 0x2); /* Set AHB PODF to 2, divide by 3 */
+//  CLOCK_SetDiv(kCLOCK_AhbDiv, 0x2); /* Set AHB PODF to 2, divide by 3 */
   CLOCK_SetDiv(kCLOCK_IpgDiv, 0x3); /* Set IPG PODF to 3, divede by 4 */
   
   

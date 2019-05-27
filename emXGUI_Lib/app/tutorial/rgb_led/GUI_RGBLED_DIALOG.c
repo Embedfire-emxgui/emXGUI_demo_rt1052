@@ -50,7 +50,7 @@ static void RGBLED_Dialog_Init(void)
   RGBLED_Dialog.m_hardware_init = FlexPWM_Init;
   RGBLED_Dialog.m_hardware_deinit = FlexPWM_DeInit;
   
-  RGBLED_Dialog.m_hardware_init();
+  FlexPWM_Init();
   
   RGBLED_Dialog.m_SetColorValue(RGBLED_Dialog.RGB_Component.R_col,
                                 RGBLED_Dialog.RGB_Component.G_col,
@@ -534,7 +534,7 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
   return WM_NULL;
 }
 
-void	GUI_LED_DIALOG(void)
+void	GUI_LED_DIALOG(void *param)
 {
 	WNDCLASS	wcex;
 	MSG msg;
@@ -551,7 +551,7 @@ void	GUI_LED_DIALOG(void)
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
 
   
-   
+  RGBLED_Dialog_Init();
 	//创建主窗口
 	RGBLED_Dialog.hwnd = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
                         &wcex,
@@ -569,10 +569,10 @@ void	GUI_LED_DIALOG(void)
 	}  
 }
 
-void GUI_LED_DIALOG_Create(void)
+void GUI_LED_DIALOG_Create(void *param)
 {
-  RGBLED_Dialog_Init();//硬件初始化
-  GUI_LED_DIALOG();//GUI窗口初始化
+  ////硬件初始化
+  GUI_LED_DIALOG(NULL);//GUI窗口初始化
   
 }
 
@@ -583,6 +583,8 @@ void GUI_LED_DIALOG_Delete(void)
   memset(&RGBLED_Dialog, 0, sizeof(RGBLED_Dialog));
   
 }
+
+#if 1
 void GUI_RGBLED_DIALOGTest(void *param)
 {
   static int thread = 0;
@@ -604,7 +606,7 @@ void GUI_RGBLED_DIALOGTest(void *param)
 		{
 			app=1;
      
-			GUI_LED_DIALOG_Create();
+			GUI_LED_DIALOG_Create(NULL);
 #if MEM_DETECT      
       if(Get_VMEM_CurSize() != RGBLED_Dialog.cur_size)
       {
@@ -618,3 +620,6 @@ void GUI_RGBLED_DIALOGTest(void *param)
 		}    
   }
 }
+#endif
+
+
