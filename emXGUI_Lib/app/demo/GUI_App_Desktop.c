@@ -47,7 +47,7 @@ static void dummy(void *param)
 
 extern void	GUI_DEMO_Graphics_Accelerator(void*);
 extern void	GUI_DEMO_ShowWave(void*);
-
+extern void GUI_DEMO_ShowComponent(void *param);
 
 #if 0
 static void App_GUI_DEMO_Hello(HWND hwnd)
@@ -95,7 +95,7 @@ static struct __obj_list menu_list_1[] = {
 		L"波形显示",		NULL,	  L"B", RGB_WHITE,				GUI_DEMO_ShowWave,//(void(*)(HWND hwnd))GUI_DEMO_ShowWave,
 		//  	L"Hello",		NULL,	  L"B", RGB_WHITE,				dummy,
 		//		L"Button",		NULL,	  L"C", RGB_WHITE,				App_GUI_Climate_Cabinet,
-        L"控件演示",	NULL,   L"E", RGB_WHITE,				dummy,
+        L"控件演示",	NULL,   L"E", RGB_WHITE,				GUI_DEMO_ShowComponent,
 				L"仪表盘",		NULL,	  L"H",RGB_WHITE, 				dummy,
 
 				L"计算器",	NULL, 	L"Z", RGB_WHITE,				dummy,
