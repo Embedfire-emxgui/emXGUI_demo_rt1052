@@ -95,7 +95,6 @@ void PXP_DrvInit(void)
 		/* Disable CSC1, it is enabled by default. */
 		PXP_EnableCsc1(PXP, false);
 	}
-
 }
 
 /*=========================================================================================*/

@@ -95,11 +95,11 @@ static struct __obj_list menu_list_1[] = {
 		L"波形显示",		NULL,	  L"B", RGB_WHITE,				GUI_DEMO_ShowWave,//(void(*)(HWND hwnd))GUI_DEMO_ShowWave,
 		//  	L"Hello",		NULL,	  L"B", RGB_WHITE,				dummy,
 		//		L"Button",		NULL,	  L"C", RGB_WHITE,				App_GUI_Climate_Cabinet,
-
+        L"控件演示",	NULL,   L"E", RGB_WHITE,				dummy,
 				L"仪表盘",		NULL,	  L"H",RGB_WHITE, 				dummy,
 
 				L"计算器",	NULL, 	L"Z", RGB_WHITE,				dummy,
-				L"Radiobox",	NULL,   L"E", RGB_WHITE,				dummy,
+				
 				L"Textbox",	NULL,	  L"F", RGB_WHITE,				dummy,
 
 				//    L"Speed",		NULL,	  L"G",RGB_WHITE, 				dummy,

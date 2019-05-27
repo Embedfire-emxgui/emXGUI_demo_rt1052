@@ -1013,6 +1013,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
             </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2053,6 +2058,11 @@
               <FileName>GUI_DEMO_ShowWave.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3095,6 +3105,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
             </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4136,6 +4151,11 @@
               <FileName>GUI_DEMO_ShowWave.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5229,6 +5249,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
             </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6271,6 +6296,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
             </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7312,6 +7342,11 @@
               <FileName>GUI_DEMO_ShowWave.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_ShowComponent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
           </Files>
         </Group>
