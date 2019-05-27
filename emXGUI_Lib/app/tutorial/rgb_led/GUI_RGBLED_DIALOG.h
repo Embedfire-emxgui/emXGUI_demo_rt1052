@@ -68,6 +68,10 @@ typedef struct
   void(*m_checkbox_draw)(DRAWITEM_HDR *, BOOL);
   void(*m_textbox_draw)(DRAWITEM_HDR *);
   void(*m_scrollbar_draw)(DRAWITEM_HDR *, RGB_Component_Typedef);
+  void(*m_hardware_init)(void);
+  void(*m_hardware_deinit)(void);
+  void(*m_SetColorValue)(uint8_t,uint8_t,uint8_t);
+  
 }RGBLED_DIALOG_Typedef;
 
 void Set_BackGroudHDC(HDC hdc_background);

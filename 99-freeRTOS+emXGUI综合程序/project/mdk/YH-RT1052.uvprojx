@@ -463,6 +463,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1493,6 +1503,16 @@
               <FileName>fsl_pxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2525,6 +2545,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3556,6 +3586,16 @@
               <FileName>fsl_pxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4639,6 +4679,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5671,6 +5721,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6702,6 +6762,16 @@
               <FileName>fsl_pxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_xbara.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_xbara.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -78,7 +78,6 @@ static void progressbar_owner_draw(DRAWITEM_HDR *ds)
 	HDC hdc;
 	RECT rc,m_rc[2];
 //	int range,val;
-	WCHAR wbuf[128];
 	PROGRESSBAR_CFG cfg;
 	hwnd =ds->hwnd;
 	hdc =ds->hDC;

@@ -29,7 +29,9 @@ __align(4) RGBLED_DIALOG_Typedef RGBLED_Dialog =
   .m_checkbox_draw = GUI_RGBLED_CheckBoxOwnerDraw,
   .m_textbox_draw = GUI_RGBLED_TextBoxOwnerDraw,
   .m_scrollbar_draw = GUI_RGBLED_ScrollbarOwnerDraw_V,
-  
+  .m_SetColorValue = SetColorValue,
+  .m_hardware_init = FlexPWM_Init,
+  .m_hardware_deinit = FlexPWM_DeInit,
 };
 
 static void RGBLED_Dialog_Init(void)
@@ -42,15 +44,33 @@ static void RGBLED_Dialog_Init(void)
   RGBLED_Dialog.m_button_draw = GUI_RGBLED_ButtonOwnerDraw;
   RGBLED_Dialog.m_checkbox_draw = GUI_RGBLED_CheckBoxOwnerDraw;
   RGBLED_Dialog.m_textbox_draw = GUI_RGBLED_TextBoxOwnerDraw;
-  RGBLED_Dialog.m_scrollbar_draw = GUI_RGBLED_ScrollbarOwnerDraw_V;  
+  RGBLED_Dialog.m_scrollbar_draw = GUI_RGBLED_ScrollbarOwnerDraw_V; 
+  /***********************硬件相关部分***************************/
+  RGBLED_Dialog.m_SetColorValue = SetColorValue;
+  RGBLED_Dialog.m_hardware_init = FlexPWM_Init;
+  RGBLED_Dialog.m_hardware_deinit = FlexPWM_DeInit;
+  
+  RGBLED_Dialog.m_hardware_init();
+  
+  RGBLED_Dialog.m_SetColorValue(RGBLED_Dialog.RGB_Component.R_col,
+                                RGBLED_Dialog.RGB_Component.G_col,
+                                RGBLED_Dialog.RGB_Component.B_col);
 }
 
-
+/**
+  * @brief  设置背景HDC
+  * @param  hdc_background:背景层HDC
+  * @retval NULL
+  */
 void Set_BackGroudHDC(HDC hdc_background)
 {
   RGBLED_Dialog.hdc_back = hdc_background;
 }
-
+/**
+  * @brief  获取当前APP的背景层HDC
+  * @param  NULL
+  * @retval 当前背景层HDC
+  */
 HDC Get_BackGroudHDC(void)
 {
   return RGBLED_Dialog.hdc_back;
@@ -280,7 +300,7 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       {
         PostCloseMessage(hwnd);
       }
-      if (ctr_id == eID_SCROLLBAR_R)
+      if(ctr_id == eID_SCROLLBAR_R)
       {
         NM_SCROLLBAR *sb_nr;		
         sb_nr = (NM_SCROLLBAR*)nr; //Scrollbar的通知消息实际为 NM_SCROLLBAR扩展结构,里面附带了更多的信息.
@@ -294,13 +314,13 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       //                  SetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_R_NUM), wbuf);
       //                  RedrawWindow(GetDlgItem(hwnd, ID_TEXTBOX_R_LED), NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
            
-              SendMessage(hwnd, Upadate_Mess, ctr_id, NULL);
+              SendMessage(hwnd, Upadate_Mess, ctr_id, RGBLED_Dialog.state);
            }
            break;
         }
       }
 
-      if (ctr_id == eID_SCROLLBAR_G)
+      if(ctr_id == eID_SCROLLBAR_G)
       {
         NM_SCROLLBAR *sb_nr;
         sb_nr = (NM_SCROLLBAR*)nr; //Scrollbar的通知消息实际为 NM_SCROLLBAR扩展结构,里面附带了更多的信息.
@@ -313,7 +333,7 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       //                  x_wsprintf(wbuf, L"%d", leddlg_S.col_G);
       //                  SetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_G_NUM), wbuf);
       //                  RedrawWindow(GetDlgItem(hwnd, ID_TEXTBOX_G_LED), NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
-              SendMessage(hwnd, Upadate_Mess, ctr_id, NULL);
+              SendMessage(hwnd, Upadate_Mess, ctr_id, RGBLED_Dialog.state);
            }
            break;
         }
@@ -331,10 +351,11 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
               SendMessage(nr->hwndFrom, SBM_SETVALUE, TRUE, RGBLED_Dialog.RGB_Component.B_col); //设置B滑块的位置
 
               //更新内容
-              SendMessage(hwnd, Upadate_Mess, ctr_id, NULL);
+              SendMessage(hwnd, Upadate_Mess, ctr_id, RGBLED_Dialog.state);
            }
            break;
         }
+        
       }
       if(id == eID_CHECKBOX_SW)
       {
@@ -407,6 +428,7 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
       WCHAR wbuf[128];
       u16 ctr_id = LOWORD(wParam);
+      //BOOL cur_state = HIWORD(wParam);//当前状态
       switch(ctr_id)
       {
         case eID_SCROLLBAR_R:
@@ -433,7 +455,13 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }        
       }
       InvalidateRect(GetDlgItem(hwnd, eID_TEXTBOX_APP), NULL, TRUE);
-      
+
+      {
+        RGBLED_Dialog.m_SetColorValue(RGBLED_Dialog.RGB_Component.R_col,
+                                      RGBLED_Dialog.RGB_Component.G_col,
+                                      RGBLED_Dialog.RGB_Component.B_col);        
+      }
+        
       break;
     } 
     case LEDOff_Mess:
@@ -457,7 +485,11 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       ShowWindow(GetDlgItem(hwnd, eID_TEXTBOX_B), SW_HIDE);
       ShowWindow(GetDlgItem(hwnd, eID_TEXTBOX_G), SW_HIDE);
       ShowWindow(GetDlgItem(hwnd, eID_TEXTBOX_R), SW_HIDE); 
-      RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE|RDW_ERASE);      
+      RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE|RDW_ERASE); 
+      if(RGBLED_Dialog.state == FALSE)
+      {
+        RGBLED_Dialog.m_SetColorValue(0, 0, 0);
+      }    
       break;
     }
     case LEDOn_Mess:
@@ -481,13 +513,17 @@ static LRESULT GUI_LED_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       ShowWindow(GetDlgItem(hwnd, eID_TEXTBOX_B), SW_SHOW);
       ShowWindow(GetDlgItem(hwnd, eID_TEXTBOX_G), SW_SHOW);
       ShowWindow(GetDlgItem(hwnd, eID_TEXTBOX_R), SW_SHOW);   
-      RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE|RDW_ERASE);      
+      RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE|RDW_ERASE); 
+
+      RGBLED_Dialog.m_SetColorValue(RGBLED_Dialog.RGB_Component.R_col,
+                                    RGBLED_Dialog.RGB_Component.G_col,
+                                    RGBLED_Dialog.RGB_Component.B_col);
       break;
     }
     case WM_DESTROY:
     {    
       
-       //Delete_DlALOG();
+      RGBLED_Dialog.m_SetColorValue(0, 0, 0);
       DeleteDC(hdc_mem);
       return PostQuitMessage(hwnd);	
     }     
@@ -542,7 +578,10 @@ void GUI_LED_DIALOG_Create(void)
 
 void GUI_LED_DIALOG_Delete(void)
 {
+  
+  RGBLED_Dialog.m_hardware_deinit();
   memset(&RGBLED_Dialog, 0, sizeof(RGBLED_Dialog));
+  
 }
 void GUI_RGBLED_DIALOGTest(void *param)
 {

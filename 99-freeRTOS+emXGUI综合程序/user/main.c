@@ -180,8 +180,8 @@ static void BSP_Init(void)
 //    f_open_test("/dir_1/he.txt",&file_object);
     
      /*关闭文件*/
-    f_close_test(&file_object);    
-    RGB_LED_COLOR_BLUE;    
+//    f_close_test(&file_object);    
+//    RGB_LED_COLOR_BLUE;    
     CORE_BOARD_LED_ON;
     
     /*调用画板函数*/

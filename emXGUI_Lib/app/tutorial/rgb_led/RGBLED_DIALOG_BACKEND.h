@@ -1,6 +1,9 @@
 #ifndef _RGBLED_DIALOG_BACKEND_H_
 #define _RGBLED_DIALOG_BACKEND_H_
 
+#include "emXGUI.h"
+
+
 #define PWM_SRC_CLK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #define PWM4_PWMA00_GPIO      GPIO1
@@ -26,4 +29,7 @@
                                         HYS_0_HYSTERESIS_DISABLED) 
 
 static void PWM_DRV_Init3PhPwm(void);
+void SetColorValue(uint8_t r, uint8_t g, uint8_t b);
+void FlexPWM_Init(void);
+void FlexPWM_DeInit(void);
 #endif 

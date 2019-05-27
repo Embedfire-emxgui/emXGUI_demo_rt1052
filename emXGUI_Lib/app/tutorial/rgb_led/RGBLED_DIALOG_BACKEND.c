@@ -95,25 +95,50 @@ static void PWM_DRV_Init3PhPwm(void)
 {
     pwm_signal_param_t pwmSignal[1];
     uint32_t pwmSourceClockInHz;
-    uint32_t pwmFrequencyInHz = 20;
+    uint32_t pwmFrequencyInHz = 8000;
 
     pwmSourceClockInHz = PWM_SRC_CLK_FREQ;
 
     
     pwmSignal[0].pwmChannel = kPWM_PwmA;
-    pwmSignal[0].level = kPWM_HighTrue;
+    pwmSignal[0].level = kPWM_LowTrue;
     pwmSignal[0].dutyCyclePercent = 0; /* 1 percent dutycycle */    
     pwmSignal[0].deadtimeValue = 0;
 
 
-//    PWM_SetupPwm(PWM4, kPWM_Module_0, pwmSignal, 1, kPWM_SignedEdgeAligned, pwmFrequencyInHz,
-//                 pwmSourceClockInHz);
+    PWM_SetupPwm(PWM4, kPWM_Module_0, pwmSignal, 1, kPWM_SignedEdgeAligned, pwmFrequencyInHz,
+                 pwmSourceClockInHz);
 
-//    PWM_SetupPwm(PWM4, kPWM_Module_1, pwmSignal, 1, kPWM_SignedEdgeAligned, pwmFrequencyInHz,
-//                 pwmSourceClockInHz);
+    PWM_SetupPwm(PWM4, kPWM_Module_1, pwmSignal, 1, kPWM_SignedEdgeAligned, pwmFrequencyInHz,
+                 pwmSourceClockInHz);
 
     PWM_SetupPwm(PWM1, kPWM_Module_3, pwmSignal, 1, kPWM_SignedEdgeAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 }
 
 
+void SetColorValue(uint8_t r, uint8_t g, uint8_t b)
+{
+  //R
+  PWM_UpdatePwmDutycycle(PWM4,kPWM_Module_0, kPWM_PwmA, kPWM_SignedEdgeAligned, r*100/255); //更新占空比
+  PWM_SetPwmLdok(PWM4, kPWM_Control_Module_0, true);    //更新有关设置
+  //G
+  PWM_UpdatePwmDutycycle(PWM4,kPWM_Module_1, kPWM_PwmA, kPWM_SignedEdgeAligned, g*100/255); 
+  PWM_SetPwmLdok(PWM4, kPWM_Control_Module_1, true);    
+  //B
+  PWM_UpdatePwmDutycycle(PWM1,kPWM_Module_3, kPWM_PwmA, kPWM_SignedEdgeAligned, b*100/255); 
+  PWM_SetPwmLdok(PWM1, kPWM_Control_Module_3, true);    
+}
+
+void FlexPWM_Init(void)
+{
+  PWM_gpio_config();
+  PWM_config();
+}
+
+void FlexPWM_DeInit(void)
+{
+  PWM_Deinit(PWM4, kPWM_Module_0);
+  PWM_Deinit(PWM4, kPWM_Module_1);
+  PWM_Deinit(PWM1, kPWM_Module_3);
+}
