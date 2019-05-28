@@ -1,18 +1,14 @@
-/**
-  *********************************************************************
-  * @file    emXGUI.h
-  * @version V1.0
-  * @date    2018-xx-xx
-  * @brief   总的GUI API头文件
-  *********************************************************************
-  * @attention
-  * 官网    :www.emXGUI.com
-  *
-  **********************************************************************
-  */ 
 
-#ifndef	__EMXGUI_H_20190418_1136__
-#define	__EMXGUI_H_20190418_1136__
+/*----------------------------------------------------------------------------/
+/ emXGUI - 通用图形界面组件
+/-----------------------------------------------------------------------------/
+/
+/ Copyright (C) 2006-2018, Liuwei, all right reserved.
+/...
+/----------------------------------------------------------------------------*/
+
+#ifndef	__EMXGUI_H_20190524_1128__
+#define	__EMXGUI_H_20190524_1128__
 
 #ifdef	__cplusplus
 extern	"C"{
@@ -21,7 +17,7 @@ extern	"C"{
 #include	"def.h"
 
 #ifndef	_T
-//#define	_T(s) L##s
+#define	_T(s) L##s
 #endif
 
 
@@ -553,6 +549,7 @@ typedef	struct __FONT_OPS
 	FN_DrawChar		*pfDrawChar;
 }FONT_OPS;
 
+
 /*============================================================================*/
 // 进度条增长方向.
 
@@ -648,7 +645,7 @@ typedef struct tagDLGTEMPLATE
 
 /*============================================================================*/
 /*
- * Virtual Keys, Standard Set
+ * 系统标准虚拟键值.
  */
 #define VK_LBUTTON        0x01
 #define VK_RBUTTON        0x02
@@ -813,25 +810,16 @@ typedef struct tagDLGTEMPLATE
 //#define MK_SHIFT            0x0008
 //#define MK_CONTROL          0x000C
 
-typedef struct tagMOUSEINPUT {
-    LONG  dx;
-    LONG  dy;
-    UINT  Data;
-    UINT  Flags;
-    UINT  Time;
-    UINT  ExtraInfo;
-} MOUSEINPUT;
 
 /*============================================================================*/
 
 typedef	struct tagMSG{
 
 	HWND    hwnd;    //目标窗口
-	UINT	message; //消息
+	UINT  	message; //消息
 	WPARAM  wParam;  //参数0
 	LPARAM  lParam;  //参数1
 	LONG	ExtData; //扩展数据
-	//UINT	time;	 //消息产生时间
 
 }MSG;
 
@@ -848,58 +836,6 @@ typedef struct tagNMHDR
 
 /*============================================================================*/
 /*============================================================================*/
-#if 0
-/*
- * Color Types
- */
-#define CTLCOLOR_MSGBOX         0
-#define CTLCOLOR_EDIT           1
-#define CTLCOLOR_LISTBOX        2
-#define CTLCOLOR_BTN            3
-#define CTLCOLOR_DLG            4
-#define CTLCOLOR_SCROLLBAR      5
-#define CTLCOLOR_STATIC         6
-#define CTLCOLOR_MAX            7
-
-#define COLOR_SCROLLBAR         0
-#define COLOR_BACKGROUND        1
-#define COLOR_ACTIVECAPTION     2
-#define COLOR_INACTIVECAPTION   3
-#define COLOR_MENU              4
-#define COLOR_WINDOW            5
-#define COLOR_WINDOWFRAME       6
-#define COLOR_MENUTEXT          7
-#define COLOR_WINDOWTEXT        8
-#define COLOR_CAPTIONTEXT       9
-#define COLOR_ACTIVEBORDER      10
-#define COLOR_INACTIVEBORDER    11
-#define COLOR_APPWORKSPACE      12
-#define COLOR_HIGHLIGHT         13
-#define COLOR_HIGHLIGHTTEXT     14
-#define COLOR_BTNFACE           15
-#define COLOR_BTNSHADOW         16
-#define COLOR_GRAYTEXT          17
-#define COLOR_BTNTEXT           18
-#define COLOR_INACTIVECAPTIONTEXT 19
-#define COLOR_BTNHIGHLIGHT      20
-
-#define COLOR_3DDKSHADOW        21
-#define COLOR_3DLIGHT           22
-#define COLOR_INFOTEXT          23
-#define COLOR_INFOBK            24
-
-#define COLOR_HOTLIGHT                  26
-#define COLOR_GRADIENTACTIVECAPTION     27
-#define COLOR_GRADIENTINACTIVECAPTION   28
-
-#define COLOR_DESKTOP           COLOR_BACKGROUND
-#define COLOR_3DFACE            COLOR_BTNFACE
-#define COLOR_3DSHADOW          COLOR_BTNSHADOW
-#define COLOR_3DHIGHLIGHT       COLOR_BTNHIGHLIGHT
-#define COLOR_3DHILIGHT         COLOR_BTNHIGHLIGHT
-#define COLOR_BTNHILIGHT        COLOR_BTNHIGHLIGHT
-#endif
-
 
 /*
  * 窗口公共的风格标志(使用高16位,低16位保留给各控件作私有风格标志) / Common Window Styles
@@ -1036,7 +972,6 @@ typedef struct tagNMHDR
 #define	MB_BTN_WIDTH(a)				(0x0000FF00L&(a<<8))  /* 设置按钮宽度,按钮将按中间对齐排列  */
 #define	MB_BTN_AUTOSIZE				MB_BTN_WIDTH(0)       /* 由系统自动设置按钮宽度(根据按钮字符长度),按钮将按右对齐排列 */
 
-
 //// MessageBox Button ID
 #if 0
 #define IDOK		1
@@ -1057,14 +992,12 @@ typedef	struct __MSGBOXOPTIONS
 	u32 Flag;                  //标记.
 }MSGBOX_OPTIONS;
 
-
-/*============================================================================*/	
 /*============================================================================*/
 //GetWindowLong/SetWindowLong commands
 
 //#define GWL_WNDPROC         (1)
-#define GWL_HINSTANCE       (2)  /* 进程标识(保留). */
-#define GWL_HWNDPARENT      (3)  /* 父窗口.  */
+//#define GWL_HINSTANCE       (2)  /* 进程标识(保留). */
+//#define GWL_HWNDPARENT      (3)  /* 父窗口.  */
 #define GWL_STYLE           (4)  /* 窗口风格标志.  */
 #define GWL_EXSTYLE         (5)  /* 窗口扩展风格标志 . */
 #define GWL_USERDATA        (6)  /* 窗口用户数据值.  */
@@ -1139,12 +1072,12 @@ typedef	struct __MSGBOXOPTIONS
  *系统自带的基础控件类.
  */
 
-#define	BUTTON		((WNDCLASS*)L"BUTTON")          /* 按钮/单选按钮/复选按钮 */
-#define	TEXTBOX		((WNDCLASS*)L"TEXTBOX")         /* 文字框 */
-#define	GROUPBOX	((WNDCLASS*)L"GROUPBOX")        /* 分组框 */
-#define	PROGRESSBAR	((WNDCLASS*)L"PROGRESSBAR")     /* 进度条 */
-#define	SCROLLBAR	((WNDCLASS*)L"SCROLLBAR")       /* 滑块 */
-#define	LISTBOX		((WNDCLASS*)L"LISTBOX")         /* 列表框 */
+#define	BUTTON		((WNDCLASS*)L"BUTTON")       //按钮/单选按钮/复选按钮.
+#define	TEXTBOX		((WNDCLASS*)L"TEXTBOX")      //文字框.
+#define	GROUPBOX	((WNDCLASS*)L"GROUPBOX")     //分组框.
+#define	PROGRESSBAR	((WNDCLASS*)L"PROGRESSBAR")  //进度条.
+#define	SCROLLBAR	((WNDCLASS*)L"SCROLLBAR")    //滑块.
+#define	LISTBOX		((WNDCLASS*)L"LISTBOX")      //列表框.
 
 /*============================================================================*/
 //控件颜色结构体。
@@ -1230,16 +1163,6 @@ typedef	struct
 
 #define WM_CAPTURECHANGED               0x0065
 
-#if 0
-/*
- * lParam of WM_COPYDATA message points to...
- */
-typedef struct tagCOPYDATASTRUCT {
-    U32 dwData;
-    U32 cbData;
-    PVOID lpData;
-} COPYDATASTRUCT, *PCOPYDATASTRUCT;
-#endif
 
 #define WM_NOTIFY                       0x004E /* [子窗口事件通知]: <wParam>HIWORD:事件通知码;LOWORD:产生该消息的子窗口ID; <lParam>扩展信息(HMHDR结构体指针); <返回>忽略. */
 //#define WM_INPUTLANGCHANGEREQUEST       0x0050
@@ -1964,7 +1887,7 @@ typedef struct
 
 #define SIF_ALL             (SIF_ARROWSIZE| SIF_TRACKSIZE | SIF_VALUE | SIF_RANGE)
 
-typedef struct tagSCROLLINFO
+typedef struct
 {
     u16  cbSize;     // SCROLLINFO 结构体的字节数(内部用该成员值来判断结构体的合法性).
     u16  fMask;      // 参数的掩码值(相关参数的掩码值有效才能被设置或获取).
@@ -1976,6 +1899,27 @@ typedef struct tagSCROLLINFO
 
 }SCROLLINFO,SCROLLBAR_CFG;
 
+typedef	union
+{
+	struct
+	{
+		RECT Track;        //滑块矩形.
+		RECT LeftArrow;    //左箭头矩形.
+		RECT RightArrow;   //右箭头矩形.
+		RECT LeftPage;     //左滑杆矩形.
+		RECT RightPage;    //右滑杆矩形.
+	}H; //水平滑动条矩形参数.
+
+	struct
+	{
+		RECT Track;        //滑块矩形.
+		RECT TopArrow;     //上箭头矩形.
+		RECT BottomArrow;  //下箭头矩形.
+		RECT TopPage;      //上滑杆矩形.
+		RECT BottomPage;   //下滑杆矩形.
+	}V; //垂直滑动条矩形参数.
+
+}SCROLLBAR_RECT;
 
 /*
  * 滑动条状态值 / Scrollbar State
@@ -2003,6 +1947,7 @@ typedef struct tagSCROLLINFO
 #define SBM_SETSCROLLINFO           0x00E9 //[设置参数]: <wParam>TRUE:重绘;FALSE:不重绘; <lParam>参数(SCROLLINFO指针,cbSize成员需预先设置有效值); <返回>忽略.
 #define SBM_GETSCROLLINFO           0x00EA //[获得参数]: <wParam>忽略; <lParam>参数(SCROLLINFO指针,cbSize成员需预先设置有效值); <返回>忽略.
 #define	SBM_GETTRACKRECT		    0x00EB //[获得滑块矩形参数]: <wParam>忽略; <lParam>RECT指针; <返回>忽略.
+#define	SBM_GETRECT		  	 		0x00EC //[获得所有矩形参数]: <wParam>忽略; <lParam>SCROLLBAR_RECT指针; <返回>忽略.
 
 #if 0
 /*
@@ -2309,6 +2254,7 @@ int	DestroyWindow(HWND hwnd);
 #define	TMR_SINGLE  (1<<0) //如果指定该标记,则为单次定时触发,否则为循环定时触发.
 #define	TMR_START   (1<<1) //如果指定该标记,则启动定时器.
 
+
 HTMR 	SetTimer(HWND hwnd,UINT TMR_Id,U32 IntervalMS,U32 Flags,TIMERPROC Proc);
 BOOL	StartTimer(HWND hwnd,UINT TMR_Id,BOOL bStart);
 BOOL	ResetTimer(HWND hwnd,UINT TMR_Id,U32 IntervalMS,U32 Flags,TIMERPROC Proc);
@@ -2349,14 +2295,15 @@ BOOL	GetCursorPos(POINT *lpPoint);
 
 void MouseInput(int x,int y,u16 mouse_key);
 void PostKeyMessage(U8 key,BOOL IsKeyDown);
-/*===================================================================================*/
-int	gdevRotateBitmap_ARGB8888(const SURFACE *pSurf,int cx,int cy,const BITMAP *bm,int angle);
 
 /*===================================================================================*/
-#include "gui_os_port.h"
-#include "emXGUI_Arch.h"
-#include "gui_drv.h"
-#include "web_color.h"
+/*===================================================================================*/
+
+typedef	int (FN_XFT_GetData)(void *buf,int offset,int size,LONG lParam);
+HFONT	XFT_CreateFont(const void *xft_dat);
+HFONT	XFT_CreateFontEx(FN_XFT_GetData *pfnGetData,LONG lParam);
+
+/*===================================================================================*/
 
 #ifdef	__cplusplus
 }
