@@ -1,11 +1,15 @@
-
-/*----------------------------------------------------------------------------/
-/ emXGUI - 通用图形界面组件
-/-----------------------------------------------------------------------------/
-/
-/ Copyright (C) 2006-2018, Liuwei, all right reserved.
-/...
-/----------------------------------------------------------------------------*/
+/**
+  *********************************************************************
+  * @file    emXGUI.h
+  * @version V1.0
+  * @date    2018-xx-xx
+  * @brief   总的GUI API头文件
+  *********************************************************************
+  * @attention
+  * 官网    :www.emXGUI.com
+  *
+  **********************************************************************
+  */ 
 
 #ifndef	__EMXGUI_H_20190524_1128__
 #define	__EMXGUI_H_20190524_1128__
@@ -17,7 +21,7 @@ extern	"C"{
 #include	"def.h"
 
 #ifndef	_T
-#define	_T(s) L##s
+//#define	_T(s) L##s
 #endif
 
 
@@ -549,7 +553,6 @@ typedef	struct __FONT_OPS
 	FN_DrawChar		*pfDrawChar;
 }FONT_OPS;
 
-
 /*============================================================================*/
 // 进度条增长方向.
 
@@ -810,16 +813,25 @@ typedef struct tagDLGTEMPLATE
 //#define MK_SHIFT            0x0008
 //#define MK_CONTROL          0x000C
 
+typedef struct tagMOUSEINPUT {
+    LONG  dx;
+    LONG  dy;
+    UINT  Data;
+    UINT  Flags;
+    UINT  Time;
+    UINT  ExtraInfo;
+} MOUSEINPUT;
 
 /*============================================================================*/
 
 typedef	struct tagMSG{
 
 	HWND    hwnd;    //目标窗口
-	UINT  	message; //消息
+	UINT	message; //消息
 	WPARAM  wParam;  //参数0
 	LPARAM  lParam;  //参数1
 	LONG	ExtData; //扩展数据
+	//UINT	time;	 //消息产生时间
 
 }MSG;
 
@@ -972,6 +984,7 @@ typedef struct tagNMHDR
 #define	MB_BTN_WIDTH(a)				(0x0000FF00L&(a<<8))  /* 设置按钮宽度,按钮将按中间对齐排列  */
 #define	MB_BTN_AUTOSIZE				MB_BTN_WIDTH(0)       /* 由系统自动设置按钮宽度(根据按钮字符长度),按钮将按右对齐排列 */
 
+
 //// MessageBox Button ID
 #if 0
 #define IDOK		1
@@ -992,6 +1005,8 @@ typedef	struct __MSGBOXOPTIONS
 	u32 Flag;                  //标记.
 }MSGBOX_OPTIONS;
 
+
+/*============================================================================*/	
 /*============================================================================*/
 //GetWindowLong/SetWindowLong commands
 
@@ -1072,12 +1087,12 @@ typedef	struct __MSGBOXOPTIONS
  *系统自带的基础控件类.
  */
 
-#define	BUTTON		((WNDCLASS*)L"BUTTON")       //按钮/单选按钮/复选按钮.
-#define	TEXTBOX		((WNDCLASS*)L"TEXTBOX")      //文字框.
-#define	GROUPBOX	((WNDCLASS*)L"GROUPBOX")     //分组框.
-#define	PROGRESSBAR	((WNDCLASS*)L"PROGRESSBAR")  //进度条.
-#define	SCROLLBAR	((WNDCLASS*)L"SCROLLBAR")    //滑块.
-#define	LISTBOX		((WNDCLASS*)L"LISTBOX")      //列表框.
+#define	BUTTON		((WNDCLASS*)L"BUTTON")          /* 按钮/单选按钮/复选按钮 */
+#define	TEXTBOX		((WNDCLASS*)L"TEXTBOX")         /* 文字框 */
+#define	GROUPBOX	((WNDCLASS*)L"GROUPBOX")        /* 分组框 */
+#define	PROGRESSBAR	((WNDCLASS*)L"PROGRESSBAR")     /* 进度条 */
+#define	SCROLLBAR	((WNDCLASS*)L"SCROLLBAR")       /* 滑块 */
+#define	LISTBOX		((WNDCLASS*)L"LISTBOX")         /* 列表框 */
 
 /*============================================================================*/
 //控件颜色结构体。
@@ -2254,7 +2269,6 @@ int	DestroyWindow(HWND hwnd);
 #define	TMR_SINGLE  (1<<0) //如果指定该标记,则为单次定时触发,否则为循环定时触发.
 #define	TMR_START   (1<<1) //如果指定该标记,则启动定时器.
 
-
 HTMR 	SetTimer(HWND hwnd,UINT TMR_Id,U32 IntervalMS,U32 Flags,TIMERPROC Proc);
 BOOL	StartTimer(HWND hwnd,UINT TMR_Id,BOOL bStart);
 BOOL	ResetTimer(HWND hwnd,UINT TMR_Id,U32 IntervalMS,U32 Flags,TIMERPROC Proc);
@@ -2295,15 +2309,18 @@ BOOL	GetCursorPos(POINT *lpPoint);
 
 void MouseInput(int x,int y,u16 mouse_key);
 void PostKeyMessage(U8 key,BOOL IsKeyDown);
-
 /*===================================================================================*/
-/*===================================================================================*/
+int	gdevRotateBitmap_ARGB8888(const SURFACE *pSurf,int cx,int cy,const BITMAP *bm,int angle);
 
 typedef	int (FN_XFT_GetData)(void *buf,int offset,int size,LONG lParam);
 HFONT	XFT_CreateFont(const void *xft_dat);
 HFONT	XFT_CreateFontEx(FN_XFT_GetData *pfnGetData,LONG lParam);
 
 /*===================================================================================*/
+#include "gui_os_port.h"
+#include "emXGUI_Arch.h"
+#include "gui_drv.h"
+#include "web_color.h"
 
 #ifdef	__cplusplus
 }

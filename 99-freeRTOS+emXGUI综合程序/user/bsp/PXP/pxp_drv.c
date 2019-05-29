@@ -10,7 +10,7 @@
 
 void MEM_Flush(u32 addr,u32 size)
 {
-//  SCB_CleanDCache_by_Addr((uint32_t*)addr,size);
+  SCB_CleanDCache_by_Addr((uint32_t*)addr,size);
 }
 
 /*=========================================================================================*/
@@ -28,8 +28,8 @@ void PXP_IRQHandler(void)
 	PXP_ClearStatusFlags(PXP,kPXP_CompleteFlag);
 	NVIC_ClearPendingIRQ(PXP_IRQn);
 
-	//size =PXP->OUT_PITCH*(PXP->OUT_LRC&0xFFFF);
-	//SCB_InvalidateDCache_by_Addr(PXP->OUT_BUF,size);
+//	uint32_t size =PXP->OUT_PITCH*(PXP->OUT_LRC&0xFFFF);
+//	SCB_InvalidateDCache_by_Addr((uint32_t *)PXP->OUT_BUF,size);
 
 	PXP_Rdy=TRUE;
 	GUI_SemPostISR(sem_pxp);
@@ -110,7 +110,7 @@ BOOL	PXP_fill_rect(const SURFACE *pSurf,int x,int y,int w,int h,u32 c)
 	{
 		return FALSE;
 	}
-
+  PXP_WaitRdy();
 	switch(pSurf->Format)
 	{
 
@@ -142,7 +142,7 @@ BOOL	PXP_fill_rect(const SURFACE *pSurf,int x,int y,int w,int h,u32 c)
 
 	c=pSurf->CC->ToARGB(c);
 
-	PXP_WaitRdy();
+	
 
 	//PXP_SetProcessSurfaceBackGroundColor(PXP,c);
 	PXP->PS_BACKGROUND =c;

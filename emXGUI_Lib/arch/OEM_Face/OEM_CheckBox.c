@@ -92,16 +92,16 @@ static void _Paint(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 	if(di->State&BST_CHECKED)
 	{ //如果是“选中”状态，则绘制CheckBox的“选中标识”.
 
-		InflateRect(&box_rc,-(box_size>>3),-(box_size>>3));
+//		InflateRect(&box_rc,-(box_size>>3),-(box_size>>3));
 
-		SetBrushColor(hdc,MapXRGB8888(hdc,cr->ForeColor));
-		FillRoundRect(hdc,&box_rc,10);
+//		SetBrushColor(hdc,MapXRGB8888(hdc,cr->ForeColor));
+//		FillRoundRect(hdc,&box_rc,10);
 
-		//c=AlphaBlendColor(cr.ForeColor,RGB888(0,0,0),160);
-		c=RGB32_AVG(cr->ForeColor,cr->BorderColor);
-		c=RGB32_Offset(c,-20,-20,-20);
-		SetPenColor(hdc,MapXRGB8888(hdc,c));
-		DrawRoundRect(hdc,&box_rc,10);
+//		//c=AlphaBlendColor(cr.ForeColor,RGB888(0,0,0),160);
+//		c=RGB32_AVG(cr->ForeColor,cr->BorderColor);
+//		c=RGB32_Offset(c,-20,-20,-20);
+//		SetPenColor(hdc,MapXRGB8888(hdc,c));
+//		DrawRoundRect(hdc,&box_rc,10);
 
 	}
 }

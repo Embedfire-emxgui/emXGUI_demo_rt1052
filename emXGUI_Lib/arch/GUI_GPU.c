@@ -69,7 +69,7 @@ BOOL	GPU_FillRectARGB(const SURFACE *pSurf,int x,int y,int w,int h,U8 a,U8 r,U8 
  */
 BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,int width_bytes,int format)
 {
-#if(GPU_EN)
+#if(0)
   if(g_dma2d_en)
 	{
 		switch(format)
@@ -112,7 +112,7 @@ BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,
  */
 BOOL 	GPU_ScaleBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const BITMAP *bm)
 {
-#if(GPU_EN)
+#if(0)
 	{
 		return	PXP_ScaleBitmap(pSurf,x,y,w,h,bm);
 	}

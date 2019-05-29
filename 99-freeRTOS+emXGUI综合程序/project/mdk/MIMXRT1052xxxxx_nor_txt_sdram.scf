@@ -64,8 +64,8 @@
 #define m_text_start                   0x60002400
 #define m_text_size                    0x03FFDC00
 
-#define m_data_start                   0x80000000
-#define m_data_size                    0x01C00000
+#define m_data_start                   0x20200000
+#define m_data_size                    0x00040000
 
 #define m_ncache_start                 0x81C00000
 #define m_ncache_size                  0x00400000

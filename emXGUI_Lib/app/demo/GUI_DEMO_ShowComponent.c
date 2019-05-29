@@ -52,7 +52,8 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       HWND wnd;
       
       GetClientRect(hwnd, &rc_in);
-      InflateRect(&rc_in, -50, -50);
+      //InflateRect(&rc_in, -50, -50);
+      InflateRectEx(&rc_in, -50,-80,-50,0);
       MakeMatrixRect(rc, &rc_in, 20, 0, 3, 1);
       rc[0].w = 120;
       rc[0].h = 40;
@@ -63,10 +64,10 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
                    rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON2, NULL, NULL);    
       OffsetRect(&rc[0], 0, rc[0].h+10);
       CreateWindow(BUTTON, L"3D", BS_3D|WS_VISIBLE,
-                   rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON2, NULL, NULL);  
+                   rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON3, NULL, NULL);  
       OffsetRect(&rc[0], 0, rc[0].h+10);
       CreateWindow(BUTTON, L"ROUND", BS_ROUND|WS_VISIBLE,
-                   rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON2, NULL, NULL);     
+                   rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON4, NULL, NULL);     
 
       OffsetRect(&rc[0], 0, rc[0].h+20); 
 

@@ -114,8 +114,8 @@ void BOARD_ConfigMPU(void)
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_512MB);
 
     /* Region 1 setting: Memory with Device type, not shareable,  non-cacheable. */
-    MPU->RBAR = ARM_MPU_RBAR(1, 0x80000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
+//    MPU->RBAR = ARM_MPU_RBAR(1, 0x80000000U);
+//    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
 
 /* Region 2 setting */
 #if defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1)
@@ -134,25 +134,25 @@ void BOARD_ConfigMPU(void)
 
     /* Region 4 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(4, 0x00000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_128KB);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_128KB);
 
     /* Region 5 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(5, 0x20000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_128KB);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 01, 0, ARM_MPU_REGION_SIZE_128KB);
 
     /* Region 6 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(6, 0x20200000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_256KB);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_256KB);
 
     /* Region 7 setting: Memory with Normal type, not shareable, outer/inner write back */
-    MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_32MB);
+    MPU->RBAR = ARM_MPU_RBAR(7, 0x81000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_16MB);
 
     /* Region 8 setting, set last 2MB of SDRAM can't be accessed by cache, glocal variables which are not expected to be
      * accessed by cache can be put here */
     /* Memory with Normal type, not shareable, non-cacheable */
-    MPU->RBAR = ARM_MPU_RBAR(8, 0x81E00000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 1, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_4MB);
+    MPU->RBAR = ARM_MPU_RBAR(8, 0x80000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_16MB);
 
     /* Enable MPU */
     ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
@@ -168,65 +168,6 @@ void BOARD_ConfigMPU(void)
 }
 
 
-#if defined(USE_RAM_VECTOR_TABLE)
-/**
-  * @brief 把中断向量表复制一份到SDRAM，并使用该中断向量表
-  * @note  适用于nor_sdram_code版本的程序，芯片上电后把所有代码加载至SDRAM中运行，
-           使用SDRAM的中断向量表后，中断产生时CPU不需要访问FLASH
-  * @retval 无
-  */
-void CopyAndUseRAMVectorTable(void)
-{
-/* 根据不同编译平台的分散加载文件得到VECTOR_TABLE 和 VECTOR_RAM的地址*/
-#if defined(__CC_ARM)
-    /* ROM、RAM中的中断向量表基地址（MDK分散加载文件的语法） */
-    extern uint32_t Image$$VECTOR_ROM$$Base[];
-    extern uint32_t Image$$VECTOR_RAM$$Base[];
-    /* SDRAM主体代码的基地址，用于计算VECTOR_RAM占用的空间 */
-    extern uint32_t Image$$ER_m_ram_text$$Base[];
 
-    #define __VECTOR_TABLE                Image$$VECTOR_ROM$$Base
-    #define __VECTOR_RAM                  Image$$VECTOR_RAM$$Base
-    #define __RAM_VECTOR_TABLE_SIZE     (((uint32_t)Image$$ER_m_ram_text$$Base - (uint32_t)Image$$VECTOR_RAM$$Base))
-#elif defined(__ICCARM__)
-    /* ROM、RAM中的中断向量表的大小和基地址（IAR分散加载文件的语法） */
-    extern uint32_t __RAM_VECTOR_TABLE_SIZE[];
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t __VECTOR_RAM[];
-#elif defined(__GNUC__)
-    /* 暂未测试GCC开发环境 */
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t __VECTOR_RAM[];
-    extern uint32_t __RAM_VECTOR_TABLE_SIZE_BYTES[];
-    uint32_t __RAM_VECTOR_TABLE_SIZE = (uint32_t)(__RAM_VECTOR_TABLE_SIZE_BYTES);
-#endif /* defined(__CC_ARM) */
-    uint32_t n;
-    uint32_t irqMaskValue;
-
-    irqMaskValue = DisableGlobalIRQ();
-    if (SCB->VTOR != (uint32_t)__VECTOR_RAM)
-    {
-        /* 把中断向量表的内容从ROM复制至RAM */
-        for (n = 0; n < ((uint32_t)__RAM_VECTOR_TABLE_SIZE) / sizeof(uint32_t); n++)
-        {
-            __VECTOR_RAM[n] = __VECTOR_TABLE[n];
-        }
-        /* 调整Cortex-M内核的VTOR寄存器指向RAM版本的中断向量表
-         * 后面产生中断时会从VTOR寄存器指向的地址加载中断 
-        */
-        SCB->VTOR = (uint32_t)__VECTOR_RAM;
-    }
-
-    EnableGlobalIRQ(irqMaskValue);
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
-
-}
-
-#endif
 
 

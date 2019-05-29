@@ -93,7 +93,7 @@ __IO uint32_t s_frame_count = 0;
 
 /* 显存 */
 AT_NONCACHEABLE_SECTION_ALIGN( pixel_t s_psBufferLcd[2][LCD_MAX_PIXEL_HEIGHT][LCD_MAX_PIXEL_WIDTH], FRAME_BUFFER_ALIGN);
-
+// __attribute((at(0x80000000)))pixel_t s_psBufferLcd[2][LCD_MAX_PIXEL_HEIGHT][LCD_MAX_PIXEL_WIDTH]; 
 /*用于存储当前选择的字体格式*/
 static sFONT *LCD_Currentfonts = &Font24x48;
 /* 用于存储当前字体颜色和字体背景颜色的变量*/

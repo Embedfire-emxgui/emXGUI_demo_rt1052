@@ -460,7 +460,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       /* Home按钮 */    
 			wnd=CreateWindow(BUTTON,L"O",	WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,730,0,70,70,hwnd,ID_EXIT,NULL,NULL); //创建一个按钮.
 			SetWindowFont(wnd,ctrlFont64); //设置控件窗口字体.    
-      wnd=CreateWindow(BUTTON,L"帧率",TBS_FLAT|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w-40,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
+      wnd=CreateWindow(BUTTON,L"帧率",TBS_FLAT|WS_DISABLED|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w-40,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
 			SetWindowFont(wnd,defaultFont); //设置控件窗口字体.
 			OffsetRect(&rc,0,rc.h);
       
@@ -469,7 +469,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 			OffsetRect(&rc,0,rc.h+5);
 
-      wnd=CreateWindow(BUTTON,L"CPU使用率",TBS_FLAT|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
+      wnd=CreateWindow(BUTTON,L"CPU使用率",TBS_FLAT|WS_DISABLED|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
 			SetWindowFont(wnd,defaultFont); //设置控件窗口字体.
       
 			OffsetRect(&rc,0,rc.h);
@@ -478,7 +478,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 			OffsetRect(&rc,0,rc.h+5);
 //			TextOut(hdc,rc.x,rc.y,L"显示内容",-1); 
-      wnd=CreateWindow(BUTTON,L"显示内容",TBS_FLAT|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
+      wnd=CreateWindow(BUTTON,L"显示内容",TBS_FLAT|WS_DISABLED|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
 			SetWindowFont(wnd,defaultFont); //设置控件窗口字体.
 
 			OffsetRect(&rc,0,rc.h);
@@ -487,7 +487,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 			OffsetRect(&rc,0,rc.h+5);
 //			TextOut(hdc,rc.x,rc.y,L"Chrome加速器",-1); 
-      wnd=CreateWindow(BUTTON,L"Chrom加速器",TBS_FLAT|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w+40,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
+      wnd=CreateWindow(BUTTON,L"Chrom加速器",TBS_FLAT|WS_DISABLED|WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w+40,rc.h,hwnd,ID_INFO,NULL,NULL); //创建一个文字框.
 			SetWindowFont(wnd,defaultFont); //设置控件窗口字体.
 
 			OffsetRect(&rc,0,rc.h);
