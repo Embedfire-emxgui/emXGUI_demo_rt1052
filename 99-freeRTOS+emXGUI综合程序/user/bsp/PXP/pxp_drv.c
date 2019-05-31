@@ -10,7 +10,7 @@
 
 void MEM_Flush(u32 addr,u32 size)
 {
-  SCB_CleanDCache_by_Addr((uint32_t*)addr,size);
+//  SCB_CleanDCache_by_Addr((uint32_t*)addr,size);
 }
 
 /*=========================================================================================*/

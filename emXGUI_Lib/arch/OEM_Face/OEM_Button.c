@@ -164,9 +164,10 @@ static void _Paint_ROUND(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 	SetTextColor(hdc,MapXRGB8888(hdc,cr->TextColor));
 	SetPenColor(hdc,MapXRGB8888(hdc,cr->BorderColor));
 	SetBrushColor(hdc,MapXRGB8888(hdc,cr->BackColor));
-	__draw_backgnd(hdc,&rc,cr,state);
-	FillRoundRect(hdc,&rc,10);
-	DrawRoundRect(hdc,&rc,10);
+  //EnableAntiAlias(hdc, TRUE);
+	FillRoundRect(hdc,&rc,MIN(rc.w, rc.h)/2);
+	DrawRoundRect(hdc,&rc,MIN(rc.w, rc.h)/2);
+  
 	c =RGB32_AVG(cr->BorderColor,cr->BackColor);
 	SetPenColor(hdc,MapRGB888(hdc,c));	
   
@@ -177,43 +178,27 @@ static void _Paint_ROUND(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 	}
 	else
 	{
-		COLORREF c1,c2;
+//		COLORREF c1,c2;
 
-		c1 =MapRGB888(hdc,RGB32_Offset(cr->BackColor,33,33,33));
-		c2 =MapRGB888(hdc,RGB32_Offset(cr->BackColor,-33,-33,-33));
+//		c1 =MapRGB888(hdc,RGB32_Offset(cr->BackColor,33,33,33));
+//		c2 =MapRGB888(hdc,RGB32_Offset(cr->BackColor,-33,-33,-33));
 
-		SetPenColor(hdc,c1);
-		HLine(hdc,rc.x+3,rc.y+1,rc.x+rc.w-3);
+//		SetPenColor(hdc,c1);
+//		HLine(hdc,rc.x+3,rc.y+1,rc.x+rc.w-3);
 
-		SetPenColor(hdc,c2);
-		HLine(hdc,rc.x+3,rc.y+rc.h-2,rc.x+rc.w-3);
+//		SetPenColor(hdc,c2);
+//		HLine(hdc,rc.x+3,rc.y+rc.h-2,rc.x+rc.w-3);
 
 		//HLine(hdc,rc.x+3,rc.y+rc.h-2,rc.x+rc.w-3);
 	}
 
 	DrawText(hdc,pText,-1,&rc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
-
+  //EnableAntiAlias(hdc, FALSE);
 }
 
 static void _Paint(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 { //绘制按钮.
 
-//	if(di->Style&BS_FLAT)
-//	{ //平面风格的.
-//		_Paint_FLAT(di,cr,pText);
-//	}
-//	else if(di->Style&BS_3D)
-//	{ //3D风格的.
-
-//	}
-//	else if(di->Style&BS_ROUND)
-//	{ //圆角风格的.
-//    _Paint_ROUND(di,cr,pText);
-//	}
-//	else
-//	{ //其它默认风格的.
-//		_PaintDefault(di,cr,pText);
-//	}
   switch(di->Style & BS_FACE_MASK)
   {
     case BS_FLAT:

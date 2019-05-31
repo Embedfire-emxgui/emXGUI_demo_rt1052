@@ -53,25 +53,58 @@ static void fill_pb_rect(HDC hdc,RECT *prc,COLOR_RGB32 c)
 
 }
 
+//int GetPoint_Y(int x)
+//{
+//  return 
+//}
+
 /*============================================================================*/
+
 
 static void draw_flat_prog_bar(HDC hdc,HWND hwnd,PROGRESSBAR_CFG *pPB,ePB_ORG align,CTLCOLOR *cr)
 {
+  /**************************/
+  
+  
 	RECT m_rc[2],rc;
-
+  EnableAntiAlias(hdc, TRUE);
 	GetClientRect(hwnd,&rc);
-
-	SetPenColor(hdc,MapRGB888(hdc,cr->BorderColor));
-	DrawRect(hdc,&rc);
-
+  SetBrushColor(hdc,MapRGB888(hdc,cr->BackColor));
+//	SetPenColor(hdc,MapRGB888(hdc,cr->BorderColor));
+//	DrawRect(hdc,&rc);
+  FillRoundRect(hdc,&rc, MIN(rc.w, rc.h)/2);
 	InflateRect(&rc,-1,-1);
-	MakeProgressRect(m_rc,&rc,pPB->Rangle,pPB->Value,align);
+   pPB->cbSize =sizeof(pPB);
+	pPB->fMask =PB_CFG_ALL;	
+  SendMessage(hwnd,PBM_GET_CFG,0,(LPARAM)pPB);
+  
+  MakeProgressRect(m_rc,&rc,pPB->Rangle,pPB->Value,align);
 
 	SetBrushColor(hdc,MapRGB888(hdc,cr->ForeColor));
-	FillRect(hdc,&m_rc[0]);
-	SetBrushColor(hdc,MapRGB888(hdc,cr->BackColor));
-	FillRect(hdc,&m_rc[1]);
+//  GUI_DEBUG("%d", MIN(m_rc[0].w, m_rc[0].h)/2);
+//  FillRoundRect(hdc,&m_rc[0], MIN(m_rc[0].w, m_rc[0].h)/2);
+//  VLine(hdc,rc.x+15, rc.y, rc.h);
+//  FillEllipse(hdc, m_rc[0].x/2, m_rc[0].h/2, m_rc[0].w/2, m_rc[0].h/2);
+//  FillRect(hdc,&m_rc[0]);
+//	SetBrushColor(hdc,MapRGB888(hdc,cr->BackColor));
+	//DrawRoundRect(hdc,&m_rc[1], MIN(m_rc[1].w, m_rc[1].h)/2);
+//  FillRect(hdc,&m_rc[1]);
+  
+  
 
+  if(pPB->Value <= MIN(rc.w, rc.h)/2)
+  {
+    int y = sqrt(MIN(rc.w, rc.h)/2*pPB->Value);
+    GUI_DEBUG("%d %d", m_rc[0].w, pPB->Value);
+    FillEllipse(hdc,  m_rc[0].x+m_rc[0].w/2, m_rc[0].y + m_rc[0].h/2, m_rc[0].x+m_rc[0].w/2, y);
+//    SetPixel(hdc, m_rc[0].x+m_rc[0].w/2, m_rc[0].y+13, MapRGB(hdc, 255,0,0));
+  }
+  else
+    FillRoundRect(hdc,&m_rc[0], MIN(m_rc[0].w, m_rc[0].h)/2);
+//  FillCircle(hdc, rc.x, rc.y+rc.h/2, 15);
+
+
+  EnableAntiAlias(hdc, FALSE);
 }
 
 static void draw_3D_prog_bar(HDC hdc,HWND hwnd,PROGRESSBAR_CFG *pPB,ePB_ORG align,CTLCOLOR *cr)

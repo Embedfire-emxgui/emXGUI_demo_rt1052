@@ -66,7 +66,7 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       CreateWindow(BUTTON, L"3D", BS_3D|WS_VISIBLE,
                    rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON3, NULL, NULL);  
       OffsetRect(&rc[0], 0, rc[0].h+10);
-      CreateWindow(BUTTON, L"ROUND", BS_ROUND|WS_VISIBLE,
+      CreateWindow(BUTTON, L"ROUND", BS_ROUND|WS_TRANSPARENT|WS_VISIBLE,
                    rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON4, NULL, NULL);     
 
       OffsetRect(&rc[0], 0, rc[0].h+20); 
@@ -88,7 +88,7 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       sif.cbSize		=sizeof(sif);
       sif.fMask		=SIF_ALL;
       sif.nMin		=0;
-      sif.nMax		=+100;
+      sif.nMax		=+200;
       sif.nValue		=0;
       sif.TrackSize		=30;
       sif.ArrowSize		=20;//20;
@@ -100,18 +100,19 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       cfg.cbSize	 = sizeof(PROGRESSBAR_CFG);
            //开启所有的功能
       cfg.fMask    = PB_CFG_ALL;
+//      cfg.Value = 50;
            //文字格式水平，垂直居中
       cfg.TextFlag = DT_VCENTER|DT_CENTER;  
       OffsetRect(&rc[1], 0, rc[1].h+20);
       
       rc[1].h = 48;
       CreateWindow(PROGRESSBAR,L" ",
-                              PBS_TEXT|PBS_ALIGN_LEFT|WS_VISIBLE,
+                              PBS_FLAT|PBS_TEXT|PBS_ALIGN_LEFT|WS_VISIBLE|WS_TRANSPARENT,
                               rc[1].x,rc[1].y,280,rc[1].h,hwnd,eID_PROGBAR3,NULL,NULL);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_GET_CFG,TRUE,(LPARAM)&cfg);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_SET_CFG,TRUE,(LPARAM)&cfg);
-      SendMessage(GetDlgItem(hwnd, eID_PROGBAR3), PBM_SET_RANGLE, TRUE, 50);   
-     
+      SendMessage(GetDlgItem(hwnd, eID_PROGBAR3), PBM_SET_RANGLE, TRUE, 100);   
+      SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_SET_VALUE,TRUE,10);
       SetTimer(hwnd,1,200,TMR_START,NULL);
       
       /****************************TextBox*********************************/

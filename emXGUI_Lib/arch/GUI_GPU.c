@@ -69,7 +69,7 @@ BOOL	GPU_FillRectARGB(const SURFACE *pSurf,int x,int y,int w,int h,U8 a,U8 r,U8 
  */
 BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,int width_bytes,int format)
 {
-#if(0)
+#if(GPU_EN)
   if(g_dma2d_en)
 	{
 		switch(format)
@@ -84,8 +84,8 @@ BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,
 		case BM_ARGB4444:
 			return	PXP_draw_bitmap_ARGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_AsPixelFormatARGB4444);
 
-		case BM_RGB888:
-			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB888);
+//		case BM_RGB888:
+//			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB888);
 
 		case BM_XRGB8888:
 			return	PXP_draw_bitmap_RGB(pSurf,x,y,w,h,width_bytes,bits,kPXP_PsPixelFormatRGB888);
