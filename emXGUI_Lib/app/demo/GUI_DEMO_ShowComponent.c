@@ -22,6 +22,12 @@ enum	eID{
   eID_RB3,
   eID_RB4,
   
+  eID_RB5,
+  eID_RB6,
+  eID_RB7,
+  eID_RB8,
+  eID_RB9,
+  
   eID_TB1,
   eID_TB2,
   eID_TB3,
@@ -37,7 +43,7 @@ enum	eID{
   eID_CB1,
   eID_CB2,
   eID_CB3,
-  eID_CB4
+  eID_CB4,
 };
 
 static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -129,7 +135,26 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       OffsetRect(&rc[1],0,rc[1].h+10);
       CreateWindow(BUTTON,L"Radiobox4",BS_RADIOBOX|WS_VISIBLE,
                        rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB4,NULL,NULL);
-                       
+ 
+      OffsetRect(&rc[1],0,rc[1].h+30);
+      rc[1].w = 40;
+      rc[1].h = 70;
+      CreateWindow(BUTTON,L"1",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
+                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB5,NULL,NULL);
+
+      OffsetRect(&rc[1],rc[1].w,0);     
+      CreateWindow(BUTTON,L"2",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
+                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB6,NULL,NULL);
+      OffsetRect(&rc[1],rc[1].w,0);     
+      CreateWindow(BUTTON,L"3",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
+                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB7,NULL,NULL);
+      OffsetRect(&rc[1],rc[1].w,0);     
+      CreateWindow(BUTTON,L"4",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
+                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB8,NULL,NULL);
+      OffsetRect(&rc[1],rc[1].w,0);     
+      CreateWindow(BUTTON,L"5",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
+                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB9,NULL,NULL);                       
+/*********************************************************************************************************************/
       OffsetRect(&rc[2], +60, 0);
       rc[2].w = 150;
       rc[2].h = 40;
@@ -252,7 +277,36 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 			}
 		}
 		break;    
-    
+    case  WM_CTLCOLOR:
+    {
+ 			u16 id;
+
+			id =LOWORD(wParam);
+      if(id >= eID_RB5 && id <= eID_RB9)
+      {
+ 				CTLCOLOR *cr;
+				cr =(CTLCOLOR*)lParam;
+        if(SendMessage(GetDlgItem(hwnd,id),BM_GETSTATE,0,0)&BST_PUSHED)
+        {
+        	cr->TextColor =RGB888(250,250,250);
+				  cr->BackColor =RGB888(75,82,88);          
+          cr->BorderColor =RGB888(50,50,50);
+        }
+        else
+        {
+        	cr->TextColor =RGB888(250,250,250);
+				  cr->BackColor =RGB888(46,49,51);
+          cr->BorderColor =RGB888(50,50,50);
+        }
+        
+
+		
+				return TRUE;       
+
+      }
+
+      return FALSE;
+    }
     default:
       return DefWindowProc(hwnd,msg,wParam,lParam);
   }

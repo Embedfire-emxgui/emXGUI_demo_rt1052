@@ -50,8 +50,7 @@ static void _SetColor(HWND hwnd,CTLCOLOR *cr,u32 style,u32 state)
 	}
 
 }
-
-static void _Paint(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
+static void _PaintDefault(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 {
 	HDC hdc;
 	int	box_size,r,cx,cy;
@@ -103,6 +102,54 @@ static void _Paint(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 	}
 }
 
+static void _PaintPUSHLIKE(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
+{
+	HDC hdc =di->hDC;
+	RECT rc=di->rc;
+	int state =di->State;
+
+//	//画按键背景(按状态值).
+//	__draw_backgnd(hdc,&rc,cr,state);
+  
+	//绘制按钮上的文字.
+	if(state&BST_PUSHED) //判断按钮状态.
+	{//按下状态.
+		OffsetRect(&rc,+1,+1);
+		SetTextColor(hdc,MapXRGB8888(hdc,cr->TextColor));
+		DrawText(hdc,pText,-1,&rc,DT_CENTER|DT_VCENTER);
+	}
+	else
+	{//弹起状态.
+
+		SetTextColor(hdc,MapXRGB8888(hdc,cr->TextColor));
+		DrawText(hdc,pText,-1,&rc,DT_CENTER|DT_VCENTER);
+	}
+}
+
+static void _Paint(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
+{ //绘制按钮.
+
+//  switch(di->Style & BS_PUSHLIKE)
+//  {
+//    case BS_FLAT:
+//    {
+//      _Paint_FLAT(di,cr,pText);
+//      break;
+//    }
+
+////    case BS_ROUND:
+////    {
+////      _Paint_ROUND(di,cr,pText);
+////      break;
+////    }
+////    case BS_3D:
+//    default:
+//      _PaintDefault(di,cr,pText);
+//    
+//  }
+  _PaintDefault(di,cr,pText);
+  
+}
 static win_oem_t oem=
 {
 	_SetColor,
