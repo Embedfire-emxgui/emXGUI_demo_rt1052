@@ -94,8 +94,8 @@ static void draw_flat_prog_bar(HDC hdc,HWND hwnd,PROGRESSBAR_CFG *pPB,ePB_ORG al
 
   if(pPB->Value <= MIN(rc.w, rc.h)/2)
   {
-    int y = sqrt(MIN(rc.w, rc.h)/2*pPB->Value);
-    GUI_DEBUG("%d %d", m_rc[0].w, pPB->Value);
+    int y = sqrt(MIN(rc.w, rc.h)/2*(m_rc[0].x+m_rc[0].w/2))-1;
+    
     FillEllipse(hdc,  m_rc[0].x+m_rc[0].w/2, m_rc[0].y + m_rc[0].h/2, m_rc[0].x+m_rc[0].w/2, y);
 //    SetPixel(hdc, m_rc[0].x+m_rc[0].w/2, m_rc[0].y+13, MapRGB(hdc, 255,0,0));
   }

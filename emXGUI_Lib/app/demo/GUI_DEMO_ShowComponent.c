@@ -105,10 +105,10 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       cfg.TextFlag = DT_VCENTER|DT_CENTER;  
       OffsetRect(&rc[1], 0, rc[1].h+20);
       
-      rc[1].h = 48;
+      rc[1].h = 24;
       CreateWindow(PROGRESSBAR,L" ",
                               PBS_FLAT|PBS_TEXT|PBS_ALIGN_LEFT|WS_VISIBLE|WS_TRANSPARENT,
-                              rc[1].x,rc[1].y,280,rc[1].h,hwnd,eID_PROGBAR3,NULL,NULL);
+                              rc[1].x,rc[1].y,240,rc[1].h,hwnd,eID_PROGBAR3,NULL,NULL);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_GET_CFG,TRUE,(LPARAM)&cfg);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_SET_CFG,TRUE,(LPARAM)&cfg);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3), PBM_SET_RANGLE, TRUE, 100);   
