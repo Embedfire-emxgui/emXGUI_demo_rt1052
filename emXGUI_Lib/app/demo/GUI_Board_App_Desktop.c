@@ -49,7 +49,7 @@ static void dummy(void *param)
 extern void GUI_App_Desktop(void *param);
 //extern void GUI_PicViewer_DIALOGTest(void *param);
 extern void GUI_RGBLED_DIALOGTest(void *);
-//extern void GUI_MUSIC_DIALOGTest(void *param);
+extern void GUI_DEMO_Test(void *param);
 //extern void	GUI_Video_DIALOG(void* param);
 //extern void GUI_Camera_DIALOGTest(void*param);
 ////extern void App_LED_DIALOG(void);

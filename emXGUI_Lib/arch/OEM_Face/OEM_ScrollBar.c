@@ -13,7 +13,7 @@ void	*hBmpArrowRight(void);  //“右箭头”的BMP数据。
 #define	SCROLLBAR_TEXTCOLOR		XRGB8888(0,0,0)
 #define	SCROLLBAR_BACKCOLOR		XRGB8888(200,205,220)
 #define	SCROLLBAR_BODERCOLOR	XRGB8888(120,130,140)
-#define	SCROLLBAR_FORECOLOR		XRGB8888(100,150,240)
+#define	SCROLLBAR_FORECOLOR		XRGB8888(55,58,60)
 
 
 static void _SetColor(HWND hwnd,CTLCOLOR *cr,u32 style,u32 state)
@@ -87,11 +87,11 @@ static void draw_page(HDC hdc,const RECT *prc,BOOL act,CTLCOLOR *cr)
 	{
 		c =cr->BackColor;
 		SetBrushColor(hdc,MapRGB888(hdc,c));
-		FillRect(hdc,prc);
+		FillRoundRect(hdc,prc, MIN(prc->w, prc->h)/2);
 	}
 
 }
-
+#if 0
 static void draw_track(HDC hdc,const RECT *prc,BOOL act,BOOL is_vert,CTLCOLOR *cr)
 {//绘制滑块区域.
 
@@ -168,7 +168,20 @@ static void draw_track(HDC hdc,const RECT *prc,BOOL act,BOOL is_vert,CTLCOLOR *c
 	}
 
 }
+#else
+static void draw_track(HDC hdc,const RECT *prc,BOOL act,BOOL is_vert,CTLCOLOR *cr)
+{
+	RECT rc;
+	COLOR_RGB32 c;
 
+	rc =*prc;
+  
+	SetBrushColor(hdc,MapRGB888(hdc,cr->ForeColor));	
+	EnableAntiAlias(hdc, TRUE);
+	FillCircle(hdc, rc.x+rc.w/2, rc.y+rc.h/2, MIN(rc.w,rc.h)/2);
+	EnableAntiAlias(hdc, FALSE);
+}
+#endif
 
 ////
 
@@ -265,34 +278,38 @@ static	void	hscroll_paint(DRAWITEM_HDR *di,CTLCOLOR *cr)
 {//水平风格ScrollBar的绘制.
 
 	RECT rc;
+  COLOR_RGB32 c;
 	SCROLLBAR_RECT rcSL;
 
 	HWND hwnd =di->hwnd;
 	HDC hdc =di->hDC;
 	u32 State =di->State;
-
+	GetClientRect(hwnd, &rc);
+  
+  
+  
+	//获取ScrollBar的相关矩形参数.
 	SendMessage(hwnd,SBM_GETRECT,0,(LPARAM)&rcSL);
+//  if(rcSL.H.Track.w > rc.h)
+//  {
+//    
+//    rcSL.H.Track.w = rc.h;
+//  }
 
-	////DrawPage
-	if(State&SST_PAGELEFT)
-	{
-		draw_page(hdc,&rcSL.H.LeftPage,TRUE,cr);
-	}
-	else
-	{
-		draw_page(hdc,&rcSL.H.LeftPage,FALSE,cr);
-	}
+ 	SetPenColor(hdc,MapRGB888(hdc, cr->BackColor));
+//	DrawRect(hdc,&rc);
+	
+	InflateRect(&rc, 0, -(MIN(rc.w, rc.h)/2/2));
 
-	////
-	if(State&SST_PAGERIGHT)
-	{
-		draw_page(hdc,&rcSL.H.RightPage,TRUE,cr);
-	}
-	else
-	{
-		draw_page(hdc,&rcSL.H.RightPage,FALSE,cr);
-	}
+	SetBrushColor(hdc,MapRGB888(hdc, cr->BackColor));
+	FillRoundRect(hdc,&rc, MIN(rc.w, rc.h)/2);
 
+  
+  c =RGB32_AVG(cr->BackColor,cr->ForeColor);
+  SetBrushColor(hdc,MapRGB888(hdc,c));
+  rc.w = rcSL.H.Track.x + rcSL.H.Track.w/2;
+	FillRoundRect(hdc,&rc, MIN(rc.w, rc.h)/2);  
+  
 	////DrawArrow
 	if(!(di->Style&SBS_NOARROWS))
 	{
@@ -332,11 +349,11 @@ static	void	hscroll_paint(DRAWITEM_HDR *di,CTLCOLOR *cr)
 	}
 
 	////
-	if(State&SST_THUMBTRACK)
-	{
-		draw_track(hdc,&rcSL.H.Track,TRUE,FALSE,cr);
-	}
-	else
+//	if(State&SST_THUMBTRACK)
+//	{
+//		draw_track(hdc,&rcSL.H.Track,TRUE,FALSE,cr);
+//	}
+//	else
 	{
 		draw_track(hdc,&rcSL.H.Track,FALSE,FALSE,cr);
 	}

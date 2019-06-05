@@ -46,6 +46,67 @@ enum	eID{
   eID_CB4,
 };
 
+static void BUTTON1_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外观
+{
+    HWND hwnd;
+    HDC hdc;
+    RECT rc;
+    WCHAR wbuf[128];
+
+    hwnd = ds->hwnd; //button的窗口句柄.
+    hdc = ds->hDC;   //button的绘图上下文句柄.
+    rc = ds->rc;     //button的绘制矩形区.
+//    EnableAntiAlias(hdc, TRUE);
+    
+    
+    
+
+    if (ds->State & BST_PUSHED)
+    { //按钮是按下状态
+  //    GUI_DEBUG("ds->ID=%d,BST_PUSHED",ds->ID);
+  //		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充色(BrushColor用于所有Fill类型的绘图函数)
+  //		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制色(PenColor用于所有Draw类型的绘图函数)
+      SetBrushColor(hdc, MapRGB(hdc, 255,0,0));
+    InflateRect(&rc, 0, -5);
+    FillRoundRect(hdc, &rc, MIN(rc.w, rc.h)/2); //用矩形填充背景  
+      SetBrushColor(hdc, MapRGB(hdc, 255,255,0));
+//      InflateRect(&rc, 0, +2);
+      FillCircle(hdc, rc.x+rc.w/2/2*3,rc.y+rc.h/2, rc.w/2/2);   
+      
+    }
+    else
+    { //按钮是弹起状态
+   SetBrushColor(hdc, MapRGB(hdc, 255,255,255));   
+    InflateRect(&rc, 0, -5);
+    FillRoundRect(hdc, &rc, MIN(rc.w, rc.h)/2); //用矩形填充背景  
+      SetBrushColor(hdc, MapRGB(hdc, 255,255,0));
+//      InflateRect(&rc, 0, +2);
+      FillCircle(hdc, rc.x+rc.w/2/2,rc.y+rc.h/2, rc.w/2/2);
+    
+    }
+
+    //	SetBrushColor(hdc,COLOR_BACK_GROUND);
+
+    //	FillRect(hdc,&rc); //用矩形填充背景
+    //	DrawRect(hdc,&rc); //画矩形外框
+    //  
+    //  FillCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //用矩形填充背景FillCircle
+    //	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外框
+
+      /* 使用控制图标字体 */
+//    SetFont(hdc, controlFont_64);
+    //  SetTextColor(hdc,MapRGB(hdc,255,255,255));
+
+    GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字
+
+    DrawText(hdc, wbuf, -1, &rc, DT_VCENTER | DT_CENTER);//绘制文字(居中对齐方式)
+
+
+    /* 恢复默认字体 */
+    SetFont(hdc, defaultFont);
+//    EnableAntiAlias(hdc, FALSE);
+}
+
 static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
   switch(msg)
@@ -63,13 +124,13 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       MakeMatrixRect(rc, &rc_in, 20, 0, 3, 1);
       rc[0].w = 120;
       rc[0].h = 40;
-      CreateWindow(BUTTON, L"Normal", WS_VISIBLE,
-                   rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON1, NULL, NULL);       
+      CreateWindow(BUTTON, L"", WS_OWNERDRAW|BS_CHECKBOX|WS_VISIBLE,
+                   rc[0].x, rc[0].y, 60, 30, hwnd, eID_BUTTON1, NULL, NULL);       
       OffsetRect(&rc[0], 0, rc[0].h+10);
       CreateWindow(BUTTON, L"Flat", BS_FLAT|WS_VISIBLE,
                    rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON2, NULL, NULL);    
       OffsetRect(&rc[0], 0, rc[0].h+10);
-      CreateWindow(BUTTON, L"3D", BS_3D|WS_VISIBLE,
+      CreateWindow(BUTTON, L"Normal", WS_VISIBLE,
                    rc[0].x, rc[0].y, rc[0].w, rc[0].h, hwnd, eID_BUTTON3, NULL, NULL);  
       OffsetRect(&rc[0], 0, rc[0].h+10);
       CreateWindow(BUTTON, L"ROUND", BS_ROUND|WS_TRANSPARENT|WS_VISIBLE,
@@ -87,8 +148,8 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       SendMessage(wnd,LB_SETITEMHEIGHT,2,40);
       
       OffsetRect(&rc[1], -20, 0);
-      rc[1].w = 240;
-      rc[1].h = 50;
+      rc[1].w = 180;
+      rc[1].h = 36;
 
       SCROLLINFO sif;
       sif.cbSize		=sizeof(sif);
@@ -96,10 +157,10 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       sif.nMin		=0;
       sif.nMax		=+200;
       sif.nValue		=0;
-      sif.TrackSize		=30;
-      sif.ArrowSize		=20;//20;
-      GUI_DEBUG("%d, %d", rc[1].x, rc[1].y);
-      CreateWindow(SCROLLBAR,L"VScroll",WS_VISIBLE,rc[1].x,rc[1].y,rc[1].w,rc[1].h ,hwnd,eID_SCROLLBAR1,NULL,NULL);
+      sif.TrackSize		=rc[1].h;
+      sif.ArrowSize		=0;//20;
+//      GUI_DEBUG("%d, %d", rc[1].x, rc[1].y);
+      CreateWindow(SCROLLBAR,L"VScroll",WS_VISIBLE|SBS_NOARROWS|WS_TRANSPARENT,rc[1].x,rc[1].y,rc[1].w,rc[1].h ,hwnd,eID_SCROLLBAR1,NULL,NULL);
       SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR1),SBM_SETSCROLLINFO,TRUE,(LPARAM)&sif);      
       
       PROGRESSBAR_CFG cfg;	
@@ -306,6 +367,13 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       }
 
       return FALSE;
+    }
+    
+    case	WM_DRAWITEM:
+    {
+      DRAWITEM_HDR *ds = (DRAWITEM_HDR*)lParam;      
+      BUTTON1_OwnerDraw(ds);
+      return TRUE;
     }
     default:
       return DefWindowProc(hwnd,msg,wParam,lParam);

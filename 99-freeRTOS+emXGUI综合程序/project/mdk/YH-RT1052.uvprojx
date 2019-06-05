@@ -1063,6 +1063,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2153,6 +2158,11 @@
               <FileName>GUI_DEMO_ShowComponent.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3245,6 +3255,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4336,6 +4351,11 @@
               <FileName>GUI_DEMO_ShowComponent.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5479,6 +5499,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6571,6 +6596,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7662,6 +7692,11 @@
               <FileName>GUI_DEMO_ShowComponent.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_ShowComponent.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\test.c</FilePath>
             </File>
           </Files>
         </Group>
