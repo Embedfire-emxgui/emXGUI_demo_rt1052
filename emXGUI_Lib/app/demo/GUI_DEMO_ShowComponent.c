@@ -159,21 +159,30 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 
       OffsetRect(&rc[0], 0, rc[0].h+20); 
 
-      wnd=CreateWindow(LISTBOX,L"Listbox2",LBS_LINE|LBS_NOTIFY|WS_BORDER|WS_VISIBLE,rc[0].x,rc[0].y,150,140,hwnd,eID_LISTBOX1,NULL,NULL);
+      wnd=CreateWindow(LISTBOX,L"Listbox2",LBS_LINE|LBS_NOTIFY|WS_BORDER|WS_VISIBLE,rc[0].x,rc[0].y,150,120,hwnd,eID_LISTBOX1,NULL,NULL);
       SendMessage(wnd,LB_ADDSTRING,0,(LPARAM)L"Item-2-0");
       SendMessage(wnd,LB_ADDSTRING,1,(LPARAM)L"Item-2-1");
       SendMessage(wnd,LB_ADDSTRING,2,(LPARAM)L"Item-2-2");
       SendMessage(wnd,LB_ADDSTRING,3,(LPARAM)L"Item-2-3");
+      SendMessage(wnd,LB_ADDSTRING,4,(LPARAM)L"Item-2-0");
+      SendMessage(wnd,LB_ADDSTRING,5,(LPARAM)L"Item-2-1");
+      SendMessage(wnd,LB_ADDSTRING,6,(LPARAM)L"Item-2-2");
+      SendMessage(wnd,LB_ADDSTRING,7,(LPARAM)L"Item-2-3");
+      SendMessage(wnd,LB_ADDSTRING,8,(LPARAM)L"Item-2-0");
+      SendMessage(wnd,LB_ADDSTRING,9,(LPARAM)L"Item-2-1");
+      SendMessage(wnd,LB_ADDSTRING,10,(LPARAM)L"Item-2-2");
+      SendMessage(wnd,LB_ADDSTRING,11,(LPARAM)L"Item-2-3");
 //      SendMessage(wnd,LB_SETITEMHEIGHT,0,40);
 //      SendMessage(wnd,LB_SETITEMHEIGHT,1,40);
 ////      SendMessage(wnd,LB_SETITEMHEIGHT,2,40);
-      
+      int High = SendMessage(wnd,LB_GETITEMHEIGHT,1,0);
+      int count = SendMessage(wnd,LB_GETCOUNT,1,0);
       OffsetRect(&rc[0], 150, 0);
       SCROLLINFO sif;
       sif.cbSize		=sizeof(sif);
       sif.fMask		=SIF_ALL;
       sif.nMin		=0;
-      sif.nMax		=+200;
+      sif.nMax		=+High*count;
       sif.nValue		=0;
       sif.TrackSize		=30;
       sif.ArrowSize		=0;//20;      
@@ -373,11 +382,25 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 			{
 				if(nr->code==LBN_POSCHANGE)
 				{
+          RECT rc;
           int i = 0;
+          int count = 0;
 					i =SendMessage(nr->hwndFrom,LB_GETPOS,0,0);
-					GUI_DEBUG("%d", i);
+					
+          count = SendMessage(nr->hwndFrom,LB_GETCOUNT,0,0);
+          SendMessage(nr->hwndFrom,LB_GETITEMRECT, (count-1),(LPARAM)&rc);
           
-					SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR2),SBM_SETVALUE,TRUE,i);
+          GUI_DEBUG("%d", rc.y);
+          if(rc.y < 0)
+          {
+            int max = 0;
+            SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR2),SBM_GETRANGE,NULL,(LPARAM)&max);
+            GUI_DEBUG("%d", max);
+            SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR2),SBM_SETVALUE,TRUE,max);
+            
+          }
+          else
+            SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR2),SBM_SETVALUE,TRUE,i);
 				}
 			}     
 		}
