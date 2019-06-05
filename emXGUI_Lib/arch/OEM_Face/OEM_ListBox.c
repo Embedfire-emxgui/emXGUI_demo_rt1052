@@ -129,7 +129,7 @@ static void _Paint(DRAWITEM_HDR *di,CTLCOLOR *cr,const WCHAR *pText)
 	if(i==count)
 	{
 		SendMessage(hwnd,LB_GETITEMRECT,i,(LPARAM)&rc); //获得指定Item项的矩形位置参数.
-
+    OffsetRect(&rc, 0, rc.h);
 		if(rc.y < di->rc.h)
 		{
 			rc.h =di->rc.h -rc.y;

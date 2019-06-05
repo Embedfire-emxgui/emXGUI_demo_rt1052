@@ -15,6 +15,7 @@ enum	eID{
   eID_LISTBOX1,
   
   eID_SCROLLBAR1,
+  eID_SCROLLBAR2,
   eID_PROGBAR3,
   
   eID_RB1,
@@ -45,7 +46,27 @@ enum	eID{
   eID_CB3,
   eID_CB4,
 };
-
+static void SCROLLBAR2_OwnerDraw(DRAWITEM_HDR *ds)
+{
+  HWND hwnd;
+  HDC hdc;
+  RECT rc;
+  WCHAR wbuf[128];
+  SCROLLBAR_RECT rcSL;
+  hwnd = ds->hwnd; //button的窗口句柄.
+  hdc = ds->hDC;   //button的绘图上下文句柄.
+  rc = ds->rc;     //button的绘制矩形区.  
+  SetBrushColor(hdc, MapRGB(hdc, 232,235,243));
+  FillRoundRect(hdc, &rc, MIN(rc.w, rc.h)/2); //用矩形填充背景
+  
+  SendMessage(hwnd,SBM_GETRECT,0,(LPARAM)&rcSL);
+  
+  
+  SetBrushColor(hdc, MapRGB(hdc, 119,136,153));
+  FillRoundRect(hdc, &rcSL.V.Track, MIN(rcSL.V.Track.w, rcSL.V.Track.h)/2); //用矩形填充背景
+  
+  
+}
 static void BUTTON1_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
     HWND hwnd;
@@ -138,20 +159,32 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 
       OffsetRect(&rc[0], 0, rc[0].h+20); 
 
-      wnd=CreateWindow(LISTBOX,L"Listbox2",LBS_LINE|WS_BORDER|WS_VISIBLE,rc[0].x,rc[0].y,150,120,hwnd,eID_LISTBOX1,NULL,NULL);
+      wnd=CreateWindow(LISTBOX,L"Listbox2",LBS_LINE|LBS_NOTIFY|WS_BORDER|WS_VISIBLE,rc[0].x,rc[0].y,150,140,hwnd,eID_LISTBOX1,NULL,NULL);
       SendMessage(wnd,LB_ADDSTRING,0,(LPARAM)L"Item-2-0");
       SendMessage(wnd,LB_ADDSTRING,1,(LPARAM)L"Item-2-1");
       SendMessage(wnd,LB_ADDSTRING,2,(LPARAM)L"Item-2-2");
-
-      SendMessage(wnd,LB_SETITEMHEIGHT,0,40);
-      SendMessage(wnd,LB_SETITEMHEIGHT,1,40);
-      SendMessage(wnd,LB_SETITEMHEIGHT,2,40);
+      SendMessage(wnd,LB_ADDSTRING,3,(LPARAM)L"Item-2-3");
+//      SendMessage(wnd,LB_SETITEMHEIGHT,0,40);
+//      SendMessage(wnd,LB_SETITEMHEIGHT,1,40);
+////      SendMessage(wnd,LB_SETITEMHEIGHT,2,40);
       
+      OffsetRect(&rc[0], 150, 0);
+      SCROLLINFO sif;
+      sif.cbSize		=sizeof(sif);
+      sif.fMask		=SIF_ALL;
+      sif.nMin		=0;
+      sif.nMax		=+200;
+      sif.nValue		=0;
+      sif.TrackSize		=30;
+      sif.ArrowSize		=0;//20;      
+      CreateWindow(SCROLLBAR, L"ROUND", SBS_VERT|WS_OWNERDRAW|SBS_NOARROWS|WS_TRANSPARENT|WS_VISIBLE,
+                   rc[0].x, rc[0].y, 10, 120, hwnd, eID_SCROLLBAR2, NULL, NULL);           
+      SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR2),SBM_SETSCROLLINFO,TRUE,(LPARAM)&sif);  
       OffsetRect(&rc[1], -20, 0);
       rc[1].w = 180;
       rc[1].h = 36;
 
-      SCROLLINFO sif;
+      
       sif.cbSize		=sizeof(sif);
       sif.fMask		=SIF_ALL;
       sif.nMin		=0;
@@ -310,7 +343,7 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       
       return TRUE;
     }
-		case	WM_NOTIFY: //通知消息
+		case	WM_NOTIFY: //通知消息LB_GETPOS
 		{
 			NMHDR *nr;
 			nr =(NMHDR*)lParam; //lParam参数，是以NMHDR结构体开头.
@@ -336,6 +369,17 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 
 				}
 			}
+  		if(nr->idFrom == eID_LISTBOX1)
+			{
+				if(nr->code==LBN_POSCHANGE)
+				{
+          int i = 0;
+					i =SendMessage(nr->hwndFrom,LB_GETPOS,0,0);
+					GUI_DEBUG("%d", i);
+          
+					SendMessage(GetDlgItem(hwnd, eID_SCROLLBAR2),SBM_SETVALUE,TRUE,i);
+				}
+			}     
 		}
 		break;    
     case  WM_CTLCOLOR:
@@ -372,7 +416,12 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
     case	WM_DRAWITEM:
     {
       DRAWITEM_HDR *ds = (DRAWITEM_HDR*)lParam;      
-      BUTTON1_OwnerDraw(ds);
+      if(ds->ID == eID_SCROLLBAR2)
+      {
+        SCROLLBAR2_OwnerDraw(ds);
+      }
+      else
+        BUTTON1_OwnerDraw(ds);
       return TRUE;
     }
     default:
