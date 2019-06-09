@@ -256,7 +256,7 @@ struct __x_obj_item *x_obj_get_left(struct __x_obj_item *obj)
 
 		if (obj_find == NULL)
 		{
-			//���û����
+			//���û����?
 			obj_find = obj;
 		}
 	}

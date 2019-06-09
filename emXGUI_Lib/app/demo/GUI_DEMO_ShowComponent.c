@@ -1,6 +1,16 @@
 #include "emXGUI.h"
-
+#include "Dropdown_Listbox.h"
 #define BackGroundCol   59,64,71
+
+//static struct _list_item list_items[] = {
+//  L"Option1",
+
+//};
+WCHAR* list_items[3] = {
+  L"  Option1",
+  L"  Option2",
+  L"  Option3",
+};
 
 //定义控件ID
 enum	eID{
@@ -226,20 +236,20 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       
       /****************************TextBox*********************************/
       
-      OffsetRect(&rc[1], 0, rc[1].h+20);
-      rc[1].w = 150;
-      CreateWindow(BUTTON,L"Radiobox1",BS_RADIOBOX|WS_VISIBLE,
-                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB1,NULL,NULL);
-      OffsetRect(&rc[1],0,rc[1].h+10);
-      CreateWindow(BUTTON,L"Radiobox2",BS_RADIOBOX|WS_VISIBLE,rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB2,NULL,NULL);
-      OffsetRect(&rc[1],0,rc[1].h+10);
-      CreateWindow(BUTTON,L"Radiobox3",BS_RADIOBOX|WS_VISIBLE,
-                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB3,NULL,NULL);
-      OffsetRect(&rc[1],0,rc[1].h+10);
-      CreateWindow(BUTTON,L"Radiobox4",BS_RADIOBOX|WS_VISIBLE,
-                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB4,NULL,NULL);
+//      OffsetRect(&rc[1], 0, rc[1].h+20);
+//      rc[1].w = 150;
+//      CreateWindow(BUTTON,L"Radiobox1",BS_RADIOBOX|WS_VISIBLE,
+//                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB1,NULL,NULL);
+//      OffsetRect(&rc[1],0,rc[1].h+10);
+//      CreateWindow(BUTTON,L"Radiobox2",BS_RADIOBOX|WS_VISIBLE,rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB2,NULL,NULL);
+//      OffsetRect(&rc[1],0,rc[1].h+10);
+//      CreateWindow(BUTTON,L"Radiobox3",BS_RADIOBOX|WS_VISIBLE,
+//                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB3,NULL,NULL);
+//      OffsetRect(&rc[1],0,rc[1].h+10);
+//      CreateWindow(BUTTON,L"Radiobox4",BS_RADIOBOX|WS_VISIBLE,
+//                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(1<<16)|eID_RB4,NULL,NULL);
  
-      OffsetRect(&rc[1],0,rc[1].h+30);
+      OffsetRect(&rc[1],20,rc[1].h+20);
       rc[1].w = 40;
       rc[1].h = 70;
       CreateWindow(BUTTON,L"1",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
@@ -256,7 +266,18 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
                        rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB8,NULL,NULL);
       OffsetRect(&rc[1],rc[1].w,0);     
       CreateWindow(BUTTON,L"5",BS_RADIOBOX|WS_VISIBLE|BS_PUSHLIKE,
-                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB9,NULL,NULL);                       
+                       rc[1].x,rc[1].y,rc[1].w,rc[1].h,hwnd,(2<<16)|eID_RB9,NULL,NULL);   
+
+      list_cfg_t lcfg;
+      lcfg.list_objs = list_items;
+      lcfg.y_num = 3;
+      lcfg.bg_color = 0xffffff;
+      
+      OffsetRect(&rc[1], -rc[1].w*4, rc[1].h+20);
+      rc[1].w = 190;
+      rc[1].h = 40;
+      CreateWindow(&Dropdown_Listbox, L"Flat", BS_FLAT|WS_VISIBLE,
+                   rc[1].x, rc[1].y, rc[1].w, rc[1].h*3, hwnd, 0x1257, NULL, &lcfg);   
 /*********************************************************************************************************************/
       OffsetRect(&rc[2], +60, 0);
       rc[2].w = 150;
@@ -330,7 +351,7 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
                   rc[2].x,rc[2].y,rc[2].w,rc[2].h,hwnd,eID_CB4,NULL,NULL);
       break;
     }
-    case	WM_TIMER:
+    case WM_TIMER:
 		{
 			pb1_val +=1;
 			if(pb1_val > 100)
@@ -352,7 +373,7 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       
       return TRUE;
     }
-		case	WM_NOTIFY: //通知消息LB_GETPOS
+		case WM_NOTIFY: //通知消息LB_GETPOS
 		{
 			NMHDR *nr;
 			nr =(NMHDR*)lParam; //lParam参数，是以NMHDR结构体开头.
