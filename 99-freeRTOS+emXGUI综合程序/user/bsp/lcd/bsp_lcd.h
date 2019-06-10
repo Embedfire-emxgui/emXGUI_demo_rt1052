@@ -198,7 +198,7 @@ void LCD_SetFrameBuffer(uint8_t index);
 void LCD_SetDisplayBuffer(uint8_t index);
 void PutPixel(uint16_t Xpos, uint16_t Ypos);
 void LCD_Clear(uint32_t Color);
-void LCD_DrawLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length, bool Direction);
+//void LCD_DrawLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length, bool Direction);
 void LCD_DrawRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
 void LCD_DrawFullRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
 void LCD_DrawUniLine( uint16_t Xpos1, uint16_t Ypos1, uint16_t Xpos2, uint16_t Ypos2 );

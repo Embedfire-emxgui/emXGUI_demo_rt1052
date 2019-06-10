@@ -644,7 +644,7 @@ uint32_t LCD_SetCursor(uint16_t Xpos, uint16_t Ypos)
 {  
   return CurrentFrameBuffer + LCD_BPP*(Xpos + (LCD_PIXEL_WIDTH*Ypos));
 }
-
+#if 0
 /***************************显示图形相关******************************/
 /**
   * @brief 选择当前要操作的显存区域
@@ -973,4 +973,5 @@ void LCD_DrawFullCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius)
    LCD_DrawCircle(Xpos, Ypos, Radius);
 
 }
+#endif
 /*********************************************END OF FILE**********************/

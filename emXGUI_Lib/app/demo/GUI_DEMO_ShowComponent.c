@@ -140,9 +140,10 @@ static void BUTTON1_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 
 static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
+  static u8 pb1_val=0;
   switch(msg)
   {
-    static u8 pb1_val=0;
+    
     case WM_CREATE:
     {
       RECT rc_in;
@@ -231,7 +232,7 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_GET_CFG,TRUE,(LPARAM)&cfg);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_SET_CFG,TRUE,(LPARAM)&cfg);
       SendMessage(GetDlgItem(hwnd, eID_PROGBAR3), PBM_SET_RANGLE, TRUE, 100);   
-      SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_SET_VALUE,TRUE,10);
+      SendMessage(GetDlgItem(hwnd, eID_PROGBAR3),PBM_SET_VALUE,TRUE,0);
       SetTimer(hwnd,1,200,TMR_START,NULL);
       
       /****************************TextBox*********************************/
@@ -349,6 +350,11 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
       OffsetRect(&rc[2],0,rc[2].h+10);
       CreateWindow(BUTTON,L"Checkbox4",BS_PUSHLIKE|BS_CHECKBOX|WS_VISIBLE,
                   rc[2].x,rc[2].y,rc[2].w,rc[2].h,hwnd,eID_CB4,NULL,NULL);
+                  
+                  
+                  
+      CreateWindow(BUTTON,L"EXIT",WS_VISIBLE,
+                    730,0,70,70,hwnd,0x9999,NULL,NULL);                  
       break;
     }
     case WM_TIMER:
@@ -378,7 +384,9 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 			NMHDR *nr;
 			nr =(NMHDR*)lParam; //lParam参数，是以NMHDR结构体开头.
 			u16 ctr_id;
-
+      u16 code,  id;
+      id  =LOWORD(wParam);//获取消息的ID码
+      code=HIWORD(wParam);//获取消息的类型      
 			ctr_id =LOWORD(wParam); //wParam低16位是发送该消息的控件ID.
 			if(ctr_id == eID_SCROLLBAR1)
 			{
@@ -399,6 +407,10 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 
 				}
 			}
+      if(id == 0x9999 && code == BN_CLICKED)
+      {
+        PostCloseMessage(hwnd);
+      }      
   		if(nr->idFrom == eID_LISTBOX1)
 			{
 				if(nr->code==LBN_POSCHANGE)
@@ -468,6 +480,11 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
         BUTTON1_OwnerDraw(ds);
       return TRUE;
     }
+    case WM_DESTROY:
+    {
+      pb1_val = 0;
+      return PostQuitMessage(hwnd);	
+    }    
     default:
       return DefWindowProc(hwnd,msg,wParam,lParam);
   }

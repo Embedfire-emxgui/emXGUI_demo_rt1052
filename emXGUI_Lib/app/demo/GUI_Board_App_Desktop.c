@@ -52,7 +52,7 @@ extern void GUI_RGBLED_DIALOGTest(void *);
 extern void GUI_DEMO_Test(void *param);
 //extern void	GUI_Video_DIALOG(void* param);
 extern void GUI_DEMO_Listbox(void*param);
-////extern void App_LED_DIALOG(void);
+extern void GUI_NES_DIALOGTest(void *param);
 ////extern void	GUI_App_Desktop(void);
 ////extern void App_GUI_Tutorial_DEMO(void);
 //extern void GUI_VIDEO_DIALOGTest(void *param);
@@ -90,7 +90,7 @@ static const struct __obj_list menu_list_1[] = {
 
       L"以太网",		NULL,	  L"Q", RGB_WHITE,				dummy,
       L"WiFi",		NULL,	  L"P", RGB_WHITE,				dummy,
-      L"游戏",	NULL,	  L"S", RGB_WHITE,				dummy,
+      L"游戏",	NULL,	  L"S", RGB_WHITE,				GUI_NES_DIALOGTest,
 
       L"电话",	NULL, 	L"T", RGB_WHITE,				dummy,
       L"短信",	NULL,   L"U", RGB_WHITE,				dummy,
