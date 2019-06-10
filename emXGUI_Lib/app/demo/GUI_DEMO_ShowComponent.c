@@ -61,7 +61,7 @@ static void SCROLLBAR2_OwnerDraw(DRAWITEM_HDR *ds)
   HWND hwnd;
   HDC hdc;
   RECT rc;
-  WCHAR wbuf[128];
+//  WCHAR wbuf[128];
   SCROLLBAR_RECT rcSL;
   hwnd = ds->hwnd; //button的窗口句柄.
   hdc = ds->hDC;   //button的绘图上下文句柄.
@@ -410,8 +410,8 @@ static LRESULT GUI_ShowComponent_Proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lP
 					
           count = SendMessage(nr->hwndFrom,LB_GETCOUNT,0,0);
           SendMessage(nr->hwndFrom,LB_GETITEMRECT, (count-1),(LPARAM)&rc);
-          
-          GUI_DEBUG("%d", rc.y);
+//          SendMessage(nr->hwndFrom,LB_GETITEMRECT, 0,(LPARAM)&rc1);
+//          GUI_DEBUG("%d", rc1.y);
           if(rc.y < 0)
           {
             int max = 0;

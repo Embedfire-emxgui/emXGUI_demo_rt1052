@@ -195,7 +195,13 @@ void		GUI_SemDelete(GUI_SEM *hSem);
 HANDLE		GUI_GetCurThreadHandle(void);
 U32			GUI_GetTickCount(void);
 void		GUI_Yield(void);
-
+BOOL GUI_Thread_Create(void (*entry)(void *parameter),
+                         const char *name,
+                         u32  stack_size,
+                         void *parameter,
+                         u32  priority,
+                         u32  tick);
+void GUI_Thread_Delete(HANDLE thread);
 /*===================================================================================*/
 
 BOOL 	GPU_CopyBits(const SURFACE *pSurf,int x,int y,int w,int h,void *out,int width_bytes);
