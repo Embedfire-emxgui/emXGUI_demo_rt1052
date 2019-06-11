@@ -3,7 +3,7 @@
 #include "InfoNES_Mapper.h"
 #include "InfoNES_pAPU.h"
 #include "K6502.h"
-//extern void InfoNES_FrameRate(void);
+extern void InfoNES_FrameRate(void);
 //Table for Mirroring
 const NBYTE PPU_MirrorTable[][ 4 ] =
 {
@@ -481,10 +481,10 @@ int InfoNES_HSync()
       break;
 
     case SCAN_UNKNOWN_START:
-//       if ( NES->FrameCnt == 0 )
-//       {
-//					InfoNES_FrameRate();
-//       }
+       if ( NES->FrameCnt == 0 )
+       {
+					InfoNES_FrameRate();
+       }
       break;
 
     case SCAN_VBLANK_START:             //FrameSkip

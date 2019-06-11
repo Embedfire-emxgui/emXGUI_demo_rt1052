@@ -1333,7 +1333,7 @@ char infoexit=0;
 void NES_malloc(void)
 {
 	  Neshd=GUI_VMEM_Alloc(sizeof(NesHeader));		
-    NES=GUI_VMEM_Alloc(sizeof(NesResource));		
+    NES=calloc(1,sizeof(NesResource));		
     CPU=GUI_VMEM_Alloc(sizeof(CpuResource));		
     RAM=GUI_VMEM_Alloc(RAM_SIZE);								
     SRAM=GUI_VMEM_Alloc(SRAM_SIZE);							
@@ -1427,7 +1427,7 @@ void NES_Main(char *poi)
 
 }
 
-#if 0
+#if 1
 int InfoNES_Wait(void)
 {
 		USB_Host_Polling();
@@ -1533,7 +1533,7 @@ void InfoNES_ReleaseRom()
 {
 
 }
-#if 0
+#if 1
 extern uint8_t Gamepad_Val[2];
 void InfoNES_PadState( unsigned long *pdwPad1, unsigned long *pdwPad2, unsigned long *pdwSystem )
 {
@@ -1647,13 +1647,48 @@ void LCD_DrawLine(void)
 		/*填充满一帧画面再刷新*/
 		for(i=0;i<NES_DISP_WIDTH;i++)
 		{
-//				buff[NES->LineCount][i] = NES->Linebuf[0][i];	
-        s_psBufferLcd[0][NES->LineCount][i] = NES->Linebuf[0][i];	
+//				s_psBufferLcd[0][NES->LineCount][i] = NES->Linebuf[0][i];	
+//      buff[NES->LineCount][i] = NES->Linebuf[0][i];
+      g_NES_Dialog.buf[i+NES->LineCount*NES_DISP_WIDTH] = NES->Linebuf[0][i];	
 		}
-//    if(NES->LineCount>=224)
-//    {
-//      InvalidateRect(g_NES_Dialog.hwnd ,NULL, FALSE);
-//    }
-		NES->LineCount++;  
+		/*刷新画面*/
+		if(NES->LineCount>=224)
+		{
+      InvalidateRect(g_NES_Dialog.hwnd , NULL, FALSE);
+			/*缩放显示*/
+//			NES_PIC_Scale();
+			NES->LineCount=0;
+			
+		}	
+		NES->LineCount++; 
 
+}
+
+
+/*!
+ * @brief Main function
+ */
+void InfoNES_FrameRate(void)
+{
+		static	int t0=0;
+		static	int t1=0;
+		static	int frame=0;
+
+		int time;
+		if(frame==0)
+		{
+			t0=xTaskGetTickCount();		
+		}
+					
+		t1=xTaskGetTickCount();
+		time	=(t1-t0);
+		if(time >= 1000)
+		{
+			PRINTF("帧率=%d\r\n",(frame*1000)/time);
+			frame	=0;		
+		}
+		else
+		{
+			frame++;
+		}
 }
