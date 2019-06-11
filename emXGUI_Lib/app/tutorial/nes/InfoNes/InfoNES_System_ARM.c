@@ -11,7 +11,7 @@
 
 
 #include <string.h>
-
+#include "GUI_NES_DIALOG.h"
 #include "MIMXRT1052.h"
 
 #define APP_ELCDIF LCDIF
@@ -1636,7 +1636,8 @@ int InfoNES_ReadRom(char *pszFileName)
   	return 0;
 }
 
-
+extern u16 buff[256][242];
+extern NES_DIALOG_Typedef g_NES_Dialog;
 void LCD_DrawLine(void)
 {
 
@@ -1646,9 +1647,13 @@ void LCD_DrawLine(void)
 		/*填充满一帧画面再刷新*/
 		for(i=0;i<NES_DISP_WIDTH;i++)
 		{
-				s_psBufferLcd[0][NES->LineCount][i] = NES->Linebuf[0][i];	
+//				buff[NES->LineCount][i] = NES->Linebuf[0][i];	
+        s_psBufferLcd[0][NES->LineCount][i] = NES->Linebuf[0][i];	
 		}
-
+//    if(NES->LineCount>=224)
+//    {
+//      InvalidateRect(g_NES_Dialog.hwnd ,NULL, FALSE);
+//    }
 		NES->LineCount++;  
 
 }

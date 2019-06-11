@@ -10,31 +10,23 @@ void Start_NES(void* param)
     NES_Main("0:4.nes");
   }
 }
-
+__attribute__((at(0x81000000)))u16 buff[800][480];
 static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch(msg)
   {
     case WM_CREATE:
     {
-      #if 0
-      GUI_DEBUG("%02x", *(uint8_t *)0x81000200);
-      GUI_DEBUG("%02x", *(uint8_t *)0x81000201);
-      GUI_DEBUG("%02x", *(uint8_t *)0x81000202);
-      GUI_DEBUG("%02x", *(uint8_t *)0x81000203);
-      #else
-      
-      GUI_DEBUG("%02x", *(uint32_t *)0x81000200);
-      #endif
-      g_NES_Dialog.buf = (u16*)GUI_VMEM_Alloc(GUI_XSIZE*GUI_YSIZE*sizeof(u16));
-      memset(g_NES_Dialog.buf,0,GUI_XSIZE*GUI_YSIZE*sizeof(u16));
+
+//      g_NES_Dialog.buf = (u16*)GUI_VMEM_Alloc(GUI_XSIZE*GUI_YSIZE*sizeof(u16));
+//      memset(g_NES_Dialog.buf,0,GUI_XSIZE*GUI_YSIZE*sizeof(u16));
       
       SetTimer(hwnd, 1,10, TMR_SINGLE|TMR_START, NULL);
       break;
     }
     case WM_TIMER:
     {
-//      GUI_Thread_Create(Start_NES,"GUI_Nes",8*1024,NULL,5,5);
+      GUI_Thread_Create(Start_NES,"GUI_Nes",8*1024,NULL,5,5);
       break;
     }
     case WM_PAINT:
@@ -43,10 +35,10 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       SURFACE *pSurf;
       HDC hdc, hdc_mem;
       hdc = BeginPaint(hwnd,&ps);
-      pSurf = CreateSurface(SURF_RGB565, 800, 480, 0, g_NES_Dialog.buf);
+      pSurf = CreateSurface(SURF_RGB565, 256, 242, 0, buff[0]);
       hdc_mem =CreateDC(pSurf,NULL);
       
-      BitBlt(hdc, 0, 0, 800,  480, hdc_mem, 0 , 0, SRCCOPY);
+      BitBlt(hdc, 0, 0, 256,  242, hdc_mem, 0 , 0, SRCCOPY);
       DeleteSurface(pSurf);
       DeleteDC(hdc_mem);
       EndPaint(hwnd,&ps);

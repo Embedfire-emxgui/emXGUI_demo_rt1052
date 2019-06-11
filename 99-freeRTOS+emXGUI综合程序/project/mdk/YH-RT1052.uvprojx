@@ -1096,6 +1096,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2197,6 +2232,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2541,7 +2611,7 @@
 </MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1,CPU_MIMXRT1052DVL6B,SKIP_SYSCLK_INIT,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1,X_GUI_USE_FREERTOS,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\PXP;..\..\..\emXGUI_Lib\app\widget</IncludePath>
+              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\PXP;..\..\..\emXGUI_Lib\app\widget;..\..\..\emXGUI_Lib\app\tutorial\nes;..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3294,6 +3364,41 @@
               <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4400,6 +4505,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -4744,7 +4884,7 @@
 </MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1,CPU_MIMXRT1052DVL6B,XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE =1,XIP_BOOT_HEADER_DCD_ENABLE =1,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1,X_GUI_USE_FREERTOS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\sd_fatfs_test;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\user\bsp\PXP;..\..\..\emXGUI_Lib\app\tutorial\rgb_led;..\..\..\emXGUI_Lib\app\widget</IncludePath>
+              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\sd_fatfs_test;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\user\bsp\PXP;..\..\..\emXGUI_Lib\app\tutorial\rgb_led;..\..\..\emXGUI_Lib\app\widget;..\..\..\emXGUI_Lib\app\tutorial\nes;..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5548,6 +5688,41 @@
               <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6654,6 +6829,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -7752,6 +7962,41 @@
               <FileName>RGBLED_DIALOG_BACKEND.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\rgb_led\RGBLED_DIALOG_BACKEND.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/nes</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_NES_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\GUI_NES_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_System_ARM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_System_ARM.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_Mapper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_Mapper.c</FilePath>
+            </File>
+            <File>
+              <FileName>InfoNES_pAPU.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.c</FilePath>
+            </File>
+            <File>
+              <FileName>K6502.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\K6502.c</FilePath>
             </File>
           </Files>
         </Group>
