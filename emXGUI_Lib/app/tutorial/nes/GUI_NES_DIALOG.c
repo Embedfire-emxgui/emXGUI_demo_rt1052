@@ -28,6 +28,8 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_TIMER:
     {
       GUI_Thread_Create(Start_NES,"GUI_Nes",8*1024,NULL,5,5);
+      
+      
       break;
     }
     case WM_PAINT:
@@ -67,7 +69,7 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
   return WM_NULL;
 
 }
-
+int i = 0;
 extern uint8_t Gamepad_state;
 void	GUI_NES_DIALOG(void *param)
 {
@@ -75,15 +77,7 @@ void	GUI_NES_DIALOG(void *param)
   WNDCLASS	wcex;
 	MSG msg;
 
-//  USB_HostApplicationInit();
-//  while (1)
-//  {
-//      USB_Host_Polling();
-//      if(Gamepad_state==0X0F)
-//      {
-//        break;
-//      }					
-//  }  
+ 
 
 	wcex.Tag = WNDCLASS_TAG;
 

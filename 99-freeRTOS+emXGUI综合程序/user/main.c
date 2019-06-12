@@ -18,7 +18,8 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_elcdif.h"
-
+#include "host_gamepad.h"
+#include "usb_host_app.h"
 
 #include "board.h"
 #include "pin_mux.h"
@@ -60,7 +61,21 @@ static void BSP_Init(void);/* 用于初始化板载相关资源 */
             第二步：创建APP应用任务
             第三步：启动FreeRTOS，开始多任务调度
   ****************************************************************/
+static void USB_HostTask(void *param)
+{
+    while (1)
+    {
+        USB_HostTaskFn(param);
+    }
+}
 
+static void USB_HostApplicationMouseTask(void *param)
+{
+    while (1)
+    {
+        USB_HostHidGamepad1Task(param);
+    }
+}
 /*****************************************************************
   * @brief  主函数
   * @param  无
@@ -72,10 +87,25 @@ static void BSP_Init(void);/* 用于初始化板载相关资源 */
 int main(void)
 {	
   BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
-  
+
+
   /* 开发板硬件初始化 */
   BSP_Init();  
-  
+  USB_HostApplicationInit();
+  while(1)
+  {
+        USB_HostTaskFn(g_HostHandle);
+        USB_HostHidGamepad1Task(&g_HostHidGamepad1);    
+  }
+//  if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, 4, NULL) != pdPASS)
+//  {
+//      usb_echo("create host task error\r\n");
+//  }
+//  if (xTaskCreate(USB_HostApplicationMouseTask, "mouse task", 2000L / sizeof(portSTACK_TYPE), &g_HostHidGamepad1, 3,
+//                  NULL) != pdPASS)
+//  {
+//      usb_echo("create mouse task error\r\n");
+//  }    
    /* 创建AppTaskCreate任务 */
   xReturn = xTaskCreate((TaskFunction_t )GUI_Thread_Entry,  /* 任务入口函数 */
                         (const char*    )"gui",/* 任务名字 */
@@ -94,7 +124,8 @@ int main(void)
 
 
 extern void GUI_Startup(void);
-
+extern uint8_t Gamepad_state;
+int y;
 /**********************************************************************
   * @ 函数名  ： gui_thread_entry
   * @ 功能说明： gui_thread_entry任务主体
