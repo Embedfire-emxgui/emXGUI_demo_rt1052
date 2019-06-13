@@ -76,6 +76,7 @@ static void USB_HostApplicationMouseTask(void *param)
         USB_HostHidGamepad1Task(param);
     }
 }
+
 /*****************************************************************
   * @brief  主函数
   * @param  无
@@ -91,21 +92,7 @@ int main(void)
 
   /* 开发板硬件初始化 */
   BSP_Init();  
-  USB_HostApplicationInit();
-  while(1)
-  {
-        USB_HostTaskFn(g_HostHandle);
-        USB_HostHidGamepad1Task(&g_HostHidGamepad1);    
-  }
-//  if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, 4, NULL) != pdPASS)
-//  {
-//      usb_echo("create host task error\r\n");
-//  }
-//  if (xTaskCreate(USB_HostApplicationMouseTask, "mouse task", 2000L / sizeof(portSTACK_TYPE), &g_HostHidGamepad1, 3,
-//                  NULL) != pdPASS)
-//  {
-//      usb_echo("create mouse task error\r\n");
-//  }    
+  
    /* 创建AppTaskCreate任务 */
   xReturn = xTaskCreate((TaskFunction_t )GUI_Thread_Entry,  /* 任务入口函数 */
                         (const char*    )"gui",/* 任务名字 */
@@ -114,7 +101,7 @@ int main(void)
                         (UBaseType_t    )6, /* 任务的优先级 */
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 
   /* 启动任务调度 */           
-  if(pdPASS == xReturn)
+  if(1)//(pdPASS == xReturn)
     vTaskStartScheduler();   /* 启动任务，开启调度 */
   else
     return -1;  

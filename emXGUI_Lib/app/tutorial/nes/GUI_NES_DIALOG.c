@@ -11,7 +11,23 @@ void Start_NES(void* param)
     NES_Main("0:4.nes");
   }
 }
-__attribute__((at(0x81000000)))u16 buff[256][242];
+static void USB_HostTask(void *param)
+{
+    while (1)
+    {
+        USB_HostTaskFn(g_HostHandle);
+    }
+}
+
+static void USB_HostApplicationMouseTask(void *param)
+{
+    while (1)
+    {
+         USB_HostHidGamepad1Task(&g_HostHidGamepad1);
+    }
+}
+
+//__attribute__((at(0x81000000)))u16 buff[256][242];
 static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch(msg)
@@ -22,14 +38,32 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       g_NES_Dialog.buf = (u16*)GUI_VMEM_Alloc(NES_DISP_WIDTH*NES_DISP_HEIGHT*sizeof(u16));
       memset(g_NES_Dialog.buf,255,NES_DISP_WIDTH*NES_DISP_HEIGHT*sizeof(u16));
       
-      SetTimer(hwnd, 1,10, TMR_SINGLE|TMR_START, NULL);
+      SetTimer(hwnd, 1,1, TMR_START, NULL);
       break;
     }
     case WM_TIMER:
     {
-      GUI_Thread_Create(Start_NES,"GUI_Nes",8*1024,NULL,5,5);
-      
-      
+      static int state = 0;//×´Ì¬»ú
+      switch(state)
+      {
+        case 0:
+        {
+          state++;
+          USB_HostApplicationInit();
+          GUI_Thread_Create(Start_NES,"GUI_Nes",8*1024,NULL,5,5);
+//          GUI_Thread_Create(USB_HostTask,"GUI_Nes",2000L / sizeof(portSTACK_TYPE),NULL,7,5);
+//          GUI_Thread_Create(USB_HostApplicationMouseTask,"GUI_Nes",2000L / sizeof(portSTACK_TYPE),NULL,7,5);
+//          
+          
+          break;
+        }
+        case 1:
+        {
+          USB_HostTaskFn(g_HostHandle); 
+          USB_HostHidGamepad1Task(&g_HostHidGamepad1);
+          break;          
+        }
+      }
       break;
     }
     case WM_PAINT:
@@ -40,7 +74,7 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       hdc = BeginPaint(hwnd,&ps);
       pSurf = CreateSurface(SURF_RGB565, NES_DISP_WIDTH, NES_DISP_HEIGHT, 0, g_NES_Dialog.buf);
       hdc_mem =CreateDC(pSurf,NULL);
-//      
+//      BitBlt(hdc, 0, 0, NES_DISP_WIDTH, NES_DISP_HEIGHT, hdc_mem, 0, 0, SRCCOPY);
       StretchBlt(hdc, 0, 0, 800, 480, hdc_mem, 0, 0, NES_DISP_WIDTH,  NES_DISP_HEIGHT, SRCCOPY);
       DeleteSurface(pSurf);
       DeleteDC(hdc_mem);

@@ -2819,7 +2819,7 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1,CPU_MIMXRT1052DVL6B,SKIP_SYSCLK_INIT,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1,X_GUI_USE_FREERTOS,USB_STACK_BM</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1,CPU_MIMXRT1052DVL6B,SKIP_SYSCLK_INIT,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1,X_GUI_USE_FREERTOS,USB_STACK_FREERTOS</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM7\r0p1;..\..\..\emXGUI_Lib\inc;..\..\..\emXGUI_Lib\drv;..\..\..\emXGUI_Lib\arch\Inc;..\..\..\emXGUI_Lib\app\base;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\user\bsp\PXP;..\..\..\emXGUI_Lib\app\widget;..\..\..\emXGUI_Lib\app\tutorial\nes;..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1;..\..\user\bsp\usb;..\..\user\bsp\usb\host;..\..\user\bsp\usb\include;..\..\user\bsp\usb\host\class;..\..\user\bsp\usb\osa;..\..\user\bsp\usb\phy;..\..\user\bsp\usb\usb_host_app</IncludePath>
             </VariousControls>
@@ -3719,6 +3719,11 @@
               <FileName>usb_osa_freertos.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\usb\osa\usb_osa_freertos.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_osa_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\usb\osa\usb_osa_bm.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3769,11 +3774,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
-            </File>
-            <File>
-              <FileName>usb_osa_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\user\bsp\usb\osa\usb_osa_bm.c</FilePath>
             </File>
           </Files>
         </Group>

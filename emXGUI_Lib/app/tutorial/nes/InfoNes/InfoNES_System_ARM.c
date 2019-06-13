@@ -1430,7 +1430,7 @@ void NES_Main(char *poi)
 #if 1
 int InfoNES_Wait(void)
 {
-		USB_Host_Polling();
+//		USB_Host_Polling();
   	return 0;
 }  
 #else
