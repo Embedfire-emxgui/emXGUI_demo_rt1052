@@ -3,29 +3,35 @@
 #include "host_gamepad.h"
 #include "usb_host_app.h"
 #include "InfoNES.h"
+
+
+extern void InfoNES_ToExit(void);
+
 NES_DIALOG_Typedef g_NES_Dialog;
 void Start_NES(void* param)
 {
   while(1)
   {
     NES_Main("0:4.nes");
+    
+    
   }
 }
-static void USB_HostTask(void *param)
-{
-    while (1)
-    {
-        USB_HostTaskFn(g_HostHandle);
-    }
-}
+//static void USB_HostTask(void *param)
+//{
+//    while (1)
+//    {
+//        USB_HostTaskFn(g_HostHandle);
+//    }
+//}
 
-static void USB_HostApplicationMouseTask(void *param)
-{
-    while (1)
-    {
-         USB_HostHidGamepad1Task(&g_HostHidGamepad1);
-    }
-}
+//static void USB_HostApplicationMouseTask(void *param)
+//{
+//    while (1)
+//    {
+//         USB_HostHidGamepad1Task(&g_HostHidGamepad1);
+//    }
+//}
 
 //__attribute__((at(0x81000000)))u16 buff[256][242];
 static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -37,7 +43,7 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       //分配画面缓冲区
       g_NES_Dialog.buf = (u16*)GUI_VMEM_Alloc(NES_DISP_WIDTH*NES_DISP_HEIGHT*sizeof(u16));
       memset(g_NES_Dialog.buf,255,NES_DISP_WIDTH*NES_DISP_HEIGHT*sizeof(u16));
-      
+      g_NES_Dialog.Exit_Sem = GUI_SemCreate(0,1);
       SetTimer(hwnd, 1,1, TMR_START, NULL);
       break;
     }
@@ -75,7 +81,7 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       pSurf = CreateSurface(SURF_RGB565, NES_DISP_WIDTH, NES_DISP_HEIGHT, 0, g_NES_Dialog.buf);
       hdc_mem =CreateDC(pSurf,NULL);
 //      BitBlt(hdc, 0, 0, NES_DISP_WIDTH, NES_DISP_HEIGHT, hdc_mem, 0, 0, SRCCOPY);
-      StretchBlt(hdc, 0, 0, 800, 480, hdc_mem, 0, 0, NES_DISP_WIDTH,  NES_DISP_HEIGHT, SRCCOPY);
+      StretchBlt(hdc, 0, 0, GUI_XSIZE, GUI_YSIZE, hdc_mem, 0, 0, NES_DISP_WIDTH,  NES_DISP_HEIGHT, SRCCOPY);
       DeleteSurface(pSurf);
       DeleteDC(hdc_mem);
 //      SetBrushColor(hdc, MapRGB(hdc, 255, 255, 255));
@@ -89,7 +95,12 @@ static LRESULT GUI_NES_PROC(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       break;
     }      
     
-    
+    case WM_CLOSE:
+    {
+      InfoNES_ToExit();
+      GUI_SemWait(g_NES_Dialog.Exit_Sem, 0xFFFFFFFF);
+      return DestroyWindow(hwnd); //调用DestroyWindow函数来销毁窗口（该函数会产生WM_DESTROY消息
+    }
     
     case WM_DESTROY:
     {

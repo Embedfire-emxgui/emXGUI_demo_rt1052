@@ -1325,7 +1325,7 @@ BYTE *ROMBANK3;
 BYTE *PPUBANK[ 16 ];//PPU----图片处理器
 
 
-char infoexit=0;
+char infoexit;
 
 //void* calloc(int s, int u)
 //{}
@@ -1340,7 +1340,7 @@ void NES_malloc(void)
     PPURAM=GUI_VMEM_Alloc(PPURAM_SIZE);					
     ChrBuf=GUI_VMEM_Alloc(256*2*8*8);	//游戏有关系					
 		APU = GUI_VMEM_Alloc(sizeof(apu_t));				
-
+    infoexit = 0;
 		NES->Linebuf[1] =	GUI_VMEM_Alloc(512);
 		NES->Linebuf[0] =	GUI_VMEM_Alloc(512);
 }
@@ -1692,3 +1692,9 @@ void InfoNES_FrameRate(void)
 			frame++;
 		}
 }
+
+void InfoNES_ToExit(void)
+{
+  infoexit = 1;
+}
+
