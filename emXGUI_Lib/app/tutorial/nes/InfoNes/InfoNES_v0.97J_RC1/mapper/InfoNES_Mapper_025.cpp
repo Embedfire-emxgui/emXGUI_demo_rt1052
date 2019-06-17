@@ -4,12 +4,12 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map25_Bank_Selector;
-NBYTE Map25_VBank[16];
+BYTE Map25_Bank_Selector;
+BYTE Map25_VBank[16];
 
-NBYTE Map25_IRQ_Count;
-NBYTE Map25_IRQ_State;
-NBYTE Map25_IRQ_Latch;
+BYTE Map25_IRQ_Count;
+BYTE Map25_IRQ_State;
+BYTE Map25_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 25                                             */
@@ -65,7 +65,7 @@ void Map25_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 25 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map25_Write( NWORD wAddr, NBYTE byData )
+void Map25_Write( WORD wAddr, BYTE byData )
 {
   int nBank;
 
@@ -168,7 +168,7 @@ void Map25_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 void Map25_Sync_Vrom( int nBank )
 {
-  NBYTE byValue;
+  BYTE byValue;
   
   byValue  = Map25_VBank[ ( nBank << 1 ) - ( nBank & 0x01 ) ];
   byValue |= Map25_VBank[ ( nBank << 1 ) - ( nBank & 0x01 ) + 2] << 4;

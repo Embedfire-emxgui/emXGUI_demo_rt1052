@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map41_Regs[ 2 ];
+BYTE Map41_Regs[ 2 ];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 41                                             */
@@ -64,12 +64,12 @@ void Map41_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 41 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map41_Write( NWORD wAddr, NBYTE byData )
+void Map41_Write( WORD wAddr, BYTE byData )
 {
   /* Set PPU Banks */
   if ( Map41_Regs[ 0 ] )
   {
-    NBYTE byChrBank;
+    BYTE byChrBank;
     
     byChrBank = Map41_Regs[ 1 ] | ( byData & 0x0003 );
     byChrBank <<= 3;
@@ -91,13 +91,13 @@ void Map41_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 41 Write to SRAM Function                                 */
 /*-------------------------------------------------------------------*/
-void Map41_Sram( NWORD wAddr, NBYTE byData )
+void Map41_Sram( WORD wAddr, BYTE byData )
 {
-  NBYTE byBank;
+  BYTE byBank;
 
   if ( wAddr < 0x6800 )
   {
-    byData = ( NBYTE )( wAddr & 0xff );
+    byData = ( BYTE )( wAddr & 0xff );
 
     /* Set CPU Banks */
     byBank = ( byData & 0x07 ) << 2;

@@ -61,7 +61,7 @@ void Map202_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 202 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map202_Apu( NWORD wAddr, NBYTE byData )
+void Map202_Apu( WORD wAddr, BYTE byData )
 {
 	Map202_WriteSub( wAddr, byData );
 }
@@ -69,7 +69,7 @@ void Map202_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 202 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map202_Write( NWORD wAddr, NBYTE byData )
+void Map202_Write( WORD wAddr, BYTE byData )
 {
 	Map202_WriteSub( wAddr, byData );
 }
@@ -77,7 +77,7 @@ void Map202_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 202 Write Sub Function                                    */
 /*-------------------------------------------------------------------*/
-void Map202_WriteSub( NWORD wAddr, NBYTE byData )
+void Map202_WriteSub( WORD wAddr, BYTE byData )
 {
 	int bank = (wAddr>>1) & 0x07;
 

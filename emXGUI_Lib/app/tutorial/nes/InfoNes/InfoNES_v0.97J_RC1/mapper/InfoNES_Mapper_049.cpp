@@ -4,14 +4,14 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map49_Regs[ 3 ];
-NDWORD Map49_Prg0, Map49_Prg1;
-NDWORD Map49_Chr01, Map49_Chr23;
-NDWORD Map49_Chr4, Map49_Chr5, Map49_Chr6, Map49_Chr7;
+BYTE  Map49_Regs[ 3 ];
+DWORD Map49_Prg0, Map49_Prg1;
+DWORD Map49_Chr01, Map49_Chr23;
+DWORD Map49_Chr4, Map49_Chr5, Map49_Chr6, Map49_Chr7;
 
-NBYTE Map49_IRQ_Enable;
-NBYTE Map49_IRQ_Cnt;
-NBYTE Map49_IRQ_Latch;
+BYTE Map49_IRQ_Enable;
+BYTE Map49_IRQ_Cnt;
+BYTE Map49_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 49                                             */
@@ -85,7 +85,7 @@ void Map49_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 49 Write to Sram Function                                 */
 /*-------------------------------------------------------------------*/
-void Map49_Sram( NWORD wAddr, NBYTE byData )
+void Map49_Sram( WORD wAddr, BYTE byData )
 {
   if ( Map49_Regs[ 2 ] & 0x80 )
   {
@@ -98,7 +98,7 @@ void Map49_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 49 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map49_Write( NWORD wAddr, NBYTE byData )
+void Map49_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xe001 )
   {
@@ -226,7 +226,7 @@ void Map49_HSync()
 /*-------------------------------------------------------------------*/
 void Map49_Set_CPU_Banks()
 {
-  NDWORD dwBank0, dwBank1, dwBank2, dwBank3;
+  DWORD dwBank0, dwBank1, dwBank2, dwBank3;
 
   if ( Map49_Regs[ 1 ] & 0x01 )
   {

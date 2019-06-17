@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE    Map135_Cmd;
-NBYTE	Map135_Chr0l, Map135_Chr1l, Map135_Chr0h, Map135_Chr1h, Map135_Chrch;
+BYTE    Map135_Cmd;
+BYTE	Map135_Chr0l, Map135_Chr1l, Map135_Chr0h, Map135_Chr1h, Map135_Chrch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 135                                            */
@@ -62,7 +62,7 @@ void Map135_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 135 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map135_Apu( NWORD wAddr, NBYTE byData )
+void Map135_Apu( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0x4101 ) {
   case	0x4100:

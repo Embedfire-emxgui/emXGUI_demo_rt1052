@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map57_Reg;
+BYTE	Map57_Reg;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 57                                             */
@@ -66,9 +66,9 @@ void Map57_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 57 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map57_Write( NWORD wAddr, NBYTE byData )
+void Map57_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byChr;
+  BYTE byChr;
 
   switch( wAddr ) {
   case	0x8000:

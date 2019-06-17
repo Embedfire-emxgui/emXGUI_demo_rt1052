@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE    Map255_Reg[4];
+BYTE    Map255_Reg[4];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 255                                            */
@@ -71,9 +71,9 @@ void Map255_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 255 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map255_Write( NWORD wAddr, NBYTE byData )
+void Map255_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE	byPrg = (wAddr & 0x0F80)>>7;
+  BYTE	byPrg = (wAddr & 0x0F80)>>7;
   int	nChr = (wAddr & 0x003F);
   int	nBank = (wAddr & 0x4000)>>14;
 
@@ -115,7 +115,7 @@ void Map255_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 255 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map255_Apu( NWORD wAddr, NBYTE byData )
+void Map255_Apu( WORD wAddr, BYTE byData )
 {
   if( wAddr >= 0x5800 ) {
     Map255_Reg[wAddr&0x0003] = byData & 0x0F;
@@ -125,7 +125,7 @@ void Map255_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 255 Read from APU Function                                */
 /*-------------------------------------------------------------------*/
-NBYTE Map255_ReadApu( NWORD wAddr )
+BYTE Map255_ReadApu( WORD wAddr )
 {
   if( wAddr >= 0x5800 ) {
     return	Map255_Reg[wAddr&0x0003] & 0x0F;

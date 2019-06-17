@@ -63,7 +63,7 @@ extern void GUI_NES_DIALOGTest(void *param);
 
 
 
-//extern void	GUI_Test_DIALOG(void*);
+extern void test1321(void* param);
 
 
 
@@ -90,7 +90,7 @@ static const struct __obj_list menu_list_1[] = {
 
       L"以太网",		NULL,	  L"Q", RGB_WHITE,				dummy,
       L"WiFi",		NULL,	  L"P", RGB_WHITE,				dummy,
-      L"游戏",	NULL,	  L"S", RGB_WHITE,				GUI_NES_DIALOGTest,
+      L"游戏",	NULL,	  L"S", RGB_WHITE,				test1321,
 
       L"电话",	NULL, 	L"T", RGB_WHITE,				dummy,
       L"短信",	NULL,   L"U", RGB_WHITE,				dummy,

@@ -55,10 +55,10 @@ void Map77_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 77 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map77_Write( NWORD wAddr, NBYTE byData )
+void Map77_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byRomBank = byData & 0x07;
-  NBYTE byChrBank = ( byData & 0xf0 ) >> 4;
+  BYTE byRomBank = byData & 0x07;
+  BYTE byChrBank = ( byData & 0xf0 ) >> 4;
 
   /* Set ROM Banks */
   byRomBank <<= 2;

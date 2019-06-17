@@ -61,7 +61,7 @@ void Map200_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 200 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map200_Write( NWORD wAddr, NBYTE byData )
+void Map200_Write( WORD wAddr, BYTE byData )
 {
 	/* Set ROM Banks */
   ROMBANK0 = ROMPAGE((((wAddr&0x07)<<1)+0) % (Neshd->byRomSize<<1));

@@ -61,12 +61,12 @@ void Map229_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 229 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map229_Write( NWORD wAddr, NBYTE byData )
+void Map229_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byChr;
+  BYTE byChr;
 
   if( wAddr & 0x001E ) {
-    NBYTE byPrg = wAddr&0x001F;
+    BYTE byPrg = wAddr&0x001F;
 
     ROMBANK0 = ROMPAGE(((byPrg<<1)+0) % (Neshd->byRomSize<<1));
     ROMBANK1 = ROMPAGE(((byPrg<<1)+1) % (Neshd->byRomSize<<1));

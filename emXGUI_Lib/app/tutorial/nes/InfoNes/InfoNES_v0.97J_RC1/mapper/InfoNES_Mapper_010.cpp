@@ -6,9 +6,9 @@
 
 struct Map10_Latch 
 {
-  NBYTE lo_bank;
-  NBYTE hi_bank;
-  NBYTE state;
+  BYTE lo_bank;
+  BYTE hi_bank;
+  BYTE state;
 };
 
 struct Map10_Latch latch3;    // Latch Selector #1
@@ -80,9 +80,9 @@ void Map10_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 10 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map10_Write( NWORD wAddr, NBYTE byData )
+void Map10_Write( WORD wAddr, BYTE byData )
 {
-  NWORD wMapAddr;
+  WORD wMapAddr;
 
   wMapAddr = wAddr & 0xf000;
   switch ( wMapAddr )
@@ -181,7 +181,7 @@ void Map10_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 10 PPU Function                                           */
 /*-------------------------------------------------------------------*/
-void Map10_PPU( NWORD wAddr )
+void Map10_PPU( WORD wAddr )
 {
   /* Control Latch Selector */ 
   switch ( wAddr & 0x3ff0 )

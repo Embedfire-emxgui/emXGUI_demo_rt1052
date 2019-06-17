@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map95_Regs[ 1 ];
-NDWORD Map95_Prg0, Map95_Prg1;
-NDWORD Map95_Chr01, Map95_Chr23;
-NDWORD Map95_Chr4, Map95_Chr5, Map95_Chr6, Map95_Chr7;
+BYTE  Map95_Regs[ 1 ];
+DWORD Map95_Prg0, Map95_Prg1;
+DWORD Map95_Chr01, Map95_Chr23;
+DWORD Map95_Chr4, Map95_Chr5, Map95_Chr6, Map95_Chr7;
 
 #define Map95_Chr_Swap()    ( Map95_Regs[ 0 ] & 0x80 )
 #define Map95_Prg_Swap()    ( Map95_Regs[ 0 ] & 0x40 )
@@ -77,9 +77,9 @@ void Map95_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 95 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map95_Write( NWORD wAddr, NBYTE byData )
+void Map95_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {

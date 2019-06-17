@@ -62,7 +62,7 @@ void Map101_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 101 Write & Write to SRAM Function                        */
 /*-------------------------------------------------------------------*/
-void Map101_Write( NWORD wAddr, NBYTE byData )
+void Map101_Write( WORD wAddr, BYTE byData )
 {
   byData &= 0x03;
   byData <<= 3;

@@ -62,12 +62,12 @@ void Map97_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 97 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map97_Write( NWORD wAddr, NBYTE byData )
+void Map97_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   if ( wAddr < 0xc000 )
   {
-    NBYTE byPrgBank = byData & 0x0f;
+    BYTE byPrgBank = byData & 0x0f;
 
     byPrgBank <<= 1;
     byPrgBank %= ( NesHeader.byRomSize << 1 );

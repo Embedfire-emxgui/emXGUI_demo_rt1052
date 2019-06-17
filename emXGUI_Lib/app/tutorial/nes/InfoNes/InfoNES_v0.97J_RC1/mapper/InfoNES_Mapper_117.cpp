@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map117_IRQ_Line;
-NBYTE Map117_IRQ_Enable1;
-NBYTE Map117_IRQ_Enable2;
+BYTE Map117_IRQ_Line;
+BYTE Map117_IRQ_Enable1;
+BYTE Map117_IRQ_Enable2;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 117                                            */
@@ -71,7 +71,7 @@ void Map117_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 117 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map117_Write( NWORD wAddr, NBYTE byData )
+void Map117_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

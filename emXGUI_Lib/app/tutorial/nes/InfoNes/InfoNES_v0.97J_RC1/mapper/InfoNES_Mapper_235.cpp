@@ -59,10 +59,10 @@ void Map235_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 235 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map235_Write( NWORD wAddr, NBYTE byData )
+void Map235_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE	byPrg = ((wAddr&0x0300)>>3)|(wAddr&0x001F);
-  NBYTE	byBus = 0;
+  BYTE	byPrg = ((wAddr&0x0300)>>3)|(wAddr&0x001F);
+  BYTE	byBus = 0;
 
   if( (NesHeader.byRomSize<<1) == 64*2 ) {
     // 100-in-1

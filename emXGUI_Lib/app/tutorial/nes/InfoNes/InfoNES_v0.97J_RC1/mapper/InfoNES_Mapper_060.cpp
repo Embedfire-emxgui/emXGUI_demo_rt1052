@@ -61,7 +61,7 @@ void Map60_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 60 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map60_Write( NWORD wAddr, NBYTE byData )
+void Map60_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr & 0x80 ) {
     ROMBANK0 = ROMPAGE((((wAddr&0x70)>>3)+0) % (NesHeader.byRomSize<<1));

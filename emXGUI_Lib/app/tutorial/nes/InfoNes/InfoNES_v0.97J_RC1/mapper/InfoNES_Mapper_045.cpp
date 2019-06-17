@@ -4,15 +4,15 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map45_Regs[7];
-NDWORD Map45_P[4],Map45_Prg0,Map45_Prg1,Map45_Prg2,Map45_Prg3;
+BYTE  Map45_Regs[7];
+DWORD Map45_P[4],Map45_Prg0,Map45_Prg1,Map45_Prg2,Map45_Prg3;
 //zcl subscript out of range
-NDWORD Map45_C[4+4],Map45_Chr0, Map45_Chr1,Map45_Chr2, Map45_Chr3;
-NDWORD Map45_Chr4, Map45_Chr5, Map45_Chr6, Map45_Chr7;
+DWORD Map45_C[4+4],Map45_Chr0, Map45_Chr1,Map45_Chr2, Map45_Chr3;
+DWORD Map45_Chr4, Map45_Chr5, Map45_Chr6, Map45_Chr7;
 
-NBYTE Map45_IRQ_Enable;
-NBYTE Map45_IRQ_Cnt;
-NBYTE Map45_IRQ_Latch;
+BYTE Map45_IRQ_Enable;
+BYTE Map45_IRQ_Cnt;
+BYTE Map45_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 45                                             */
@@ -92,16 +92,16 @@ void Map45_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 45 Write to Sram Function                                 */
 /*-------------------------------------------------------------------*/
-void Map45_Sram( NWORD wAddr, NBYTE byData )
+void Map45_Sram( WORD wAddr, BYTE byData )
 {
 	if(wAddr == 0x6000)
 	{
 		Map45_Regs[Map45_Regs[5]] = byData;
 		Map45_Regs[5]= (Map45_Regs[5]+1) & 0x03;
-		Map45_Set_CPU_Bank4((NBYTE)Map45_Prg0);
-		Map45_Set_CPU_Bank5((NBYTE)Map45_Prg1);
-		Map45_Set_CPU_Bank6((NBYTE)Map45_Prg2);
-		Map45_Set_CPU_Bank7((NBYTE)Map45_Prg3);
+		Map45_Set_CPU_Bank4((BYTE)Map45_Prg0);
+		Map45_Set_CPU_Bank5((BYTE)Map45_Prg1);
+		Map45_Set_CPU_Bank6((BYTE)Map45_Prg2);
+		Map45_Set_CPU_Bank7((BYTE)Map45_Prg3);
 		Map45_Set_PPU_Banks();
   }
 }
@@ -109,9 +109,9 @@ void Map45_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 45 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map45_Write( NWORD wAddr, NBYTE byData )
+void Map45_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD swap;
+  DWORD swap;
 
 	switch(wAddr & 0xE001) 
   {
@@ -261,7 +261,7 @@ void Map45_HSync()
 /*  Mapper 45 Set CPU Banks Function                                 */
 /*-------------------------------------------------------------------*/
 
-void Map45_Set_CPU_Bank4(NBYTE byData)
+void Map45_Set_CPU_Bank4(BYTE byData)
 {
 	byData &= (Map45_Regs[3] & 0x3F) ^ 0xFF;
 	byData &= 0x3F;
@@ -270,7 +270,7 @@ void Map45_Set_CPU_Bank4(NBYTE byData)
 	Map45_P[0] = byData;
 }
 
-void Map45_Set_CPU_Bank5(NBYTE byData)
+void Map45_Set_CPU_Bank5(BYTE byData)
 {
 	byData &= (Map45_Regs[3] & 0x3F) ^ 0xFF;
 	byData &= 0x3F;
@@ -279,7 +279,7 @@ void Map45_Set_CPU_Bank5(NBYTE byData)
 	Map45_P[1] = byData;
 }
 
-void Map45_Set_CPU_Bank6(NBYTE byData)
+void Map45_Set_CPU_Bank6(BYTE byData)
 {
 	byData &= (Map45_Regs[3] & 0x3F) ^ 0xFF;
 	byData &= 0x3F;
@@ -288,7 +288,7 @@ void Map45_Set_CPU_Bank6(NBYTE byData)
 	Map45_P[2] = byData;
 }
 
-void Map45_Set_CPU_Bank7(NBYTE byData)
+void Map45_Set_CPU_Bank7(BYTE byData)
 {
 	byData &= (Map45_Regs[3] & 0x3F) ^ 0xFF;
 	byData &= 0x3F;
@@ -302,8 +302,8 @@ void Map45_Set_CPU_Bank7(NBYTE byData)
 /*-------------------------------------------------------------------*/
 void Map45_Set_PPU_Banks()
 {
-	NBYTE i;
-	NBYTE table[16] =
+	BYTE i;
+	BYTE table[16] =
 	    {
 	        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 	        0x01,0x03,0x07,0x0F,0x1F,0x3F,0x7F,0xFF
@@ -320,7 +320,7 @@ void Map45_Set_PPU_Banks()
 	{
 		Map45_C[i] &= table[Map45_Regs[2] & 0x0F];
 		Map45_C[i] |= Map45_Regs[0] & 0xff;
-		Map45_C[i] += (NBYTE)(Map45_Regs[2] & 0x10) << 4;
+		Map45_C[i] += (BYTE)(Map45_Regs[2] & 0x10) << 4;
 	}
 	if(Map45_Regs[6] & 0x80)
 	{

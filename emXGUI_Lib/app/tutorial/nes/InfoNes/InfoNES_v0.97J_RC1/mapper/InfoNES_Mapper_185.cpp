@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map185_Dummy_Chr_Rom[ 0x400 ];
+BYTE Map185_Dummy_Chr_Rom[ 0x400 ];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 185                                            */
@@ -62,7 +62,7 @@ void Map185_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 185 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map185_Write( NWORD wAddr, NBYTE byData )
+void Map185_Write( WORD wAddr, BYTE byData )
 {
   /* Set PPU Banks */ 
   if ( byData & 0x03 )

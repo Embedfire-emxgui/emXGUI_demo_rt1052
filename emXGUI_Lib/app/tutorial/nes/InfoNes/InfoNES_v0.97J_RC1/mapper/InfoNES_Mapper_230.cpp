@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map230_RomSw;
+BYTE Map230_RomSw;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 230                                            */
@@ -68,7 +68,7 @@ void Map230_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 230 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map230_Write( NWORD wAddr, NBYTE byData )
+void Map230_Write( WORD wAddr, BYTE byData )
 {
   if( Map230_RomSw ) {
     ROMBANK0 = ROMPAGE((((byData&0x07)<<1)+0) % (NesHeader.byRomSize<<1));

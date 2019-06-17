@@ -4,15 +4,15 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map248_Reg[8];
-NBYTE	Map248_Prg0, Map248_Prg1;
-NBYTE	Map248_Chr01, Map248_Chr23, Map248_Chr4, Map248_Chr5, Map248_Chr6, Map248_Chr7;
-NBYTE	Map248_WeSram;
+BYTE	Map248_Reg[8];
+BYTE	Map248_Prg0, Map248_Prg1;
+BYTE	Map248_Chr01, Map248_Chr23, Map248_Chr4, Map248_Chr5, Map248_Chr6, Map248_Chr7;
+BYTE	Map248_WeSram;
 
-NBYTE	Map248_IRQ_Enable;
-NBYTE	Map248_IRQ_Counter;
-NBYTE	Map248_IRQ_Latch;
-NBYTE	Map248_IRQ_Request;
+BYTE	Map248_IRQ_Enable;
+BYTE	Map248_IRQ_Counter;
+BYTE	Map248_IRQ_Latch;
+BYTE	Map248_IRQ_Request;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 248                                            */
@@ -83,7 +83,7 @@ void Map248_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 248 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map248_Write( NWORD wAddr, NBYTE byData )
+void Map248_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xE001 ) {
   case	0x8000:
@@ -155,7 +155,7 @@ void Map248_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 248 Write to SRAM Function                                */
 /*-------------------------------------------------------------------*/
-void Map248_Sram( NWORD wAddr, NBYTE byData )
+void Map248_Sram( WORD wAddr, BYTE byData )
 {
   ROMBANK0 = ROMPAGE(((byData<<1)+0) % (NesHeader.byRomSize<<1));
   ROMBANK1 = ROMPAGE(((byData<<1)+1) % (NesHeader.byRomSize<<1));
@@ -166,7 +166,7 @@ void Map248_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 248 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map248_Apu( NWORD wAddr, NBYTE byData )
+void Map248_Apu( WORD wAddr, BYTE byData )
 {
   Map248_Sram( wAddr, byData );
 }

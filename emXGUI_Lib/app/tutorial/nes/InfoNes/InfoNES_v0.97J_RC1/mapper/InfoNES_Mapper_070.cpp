@@ -52,10 +52,10 @@ void Map70_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 70 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map70_Write( NWORD wAddr, NBYTE byData )
+void Map70_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byChrBank = byData & 0x0f;
-  NBYTE byPrgBank = ( byData & 0x70 ) >> 4;
+  BYTE byChrBank = byData & 0x0f;
+  BYTE byPrgBank = ( byData & 0x70 ) >> 4;
 
   /* Set ROM Banks */
   byPrgBank <<= 1;

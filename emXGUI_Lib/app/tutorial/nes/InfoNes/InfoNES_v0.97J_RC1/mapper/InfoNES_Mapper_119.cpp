@@ -4,14 +4,14 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map119_Reg[8];
-NBYTE	Map119_Prg0, Map119_Prg1;
-NBYTE	Map119_Chr01, Map119_Chr23, Map119_Chr4, Map119_Chr5, Map119_Chr6, Map119_Chr7;
-NBYTE	Map119_WeSram;
+BYTE	Map119_Reg[8];
+BYTE	Map119_Prg0, Map119_Prg1;
+BYTE	Map119_Chr01, Map119_Chr23, Map119_Chr4, Map119_Chr5, Map119_Chr6, Map119_Chr7;
+BYTE	Map119_WeSram;
 
-NBYTE	Map119_IRQ_Enable;
-NBYTE	Map119_IRQ_Counter;
-NBYTE	Map119_IRQ_Latch;
+BYTE	Map119_IRQ_Enable;
+BYTE	Map119_IRQ_Counter;
+BYTE	Map119_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 119                                            */
@@ -81,7 +81,7 @@ void Map119_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 119 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map119_Write( NWORD wAddr, NBYTE byData )
+void Map119_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xE001 ) {
   case	0x8000:

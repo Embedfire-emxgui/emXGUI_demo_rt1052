@@ -7,113 +7,24 @@
 
 //Mapper1Res MAP1;
 
-// NBYTE  Map1_Regs[ 4 ];
-// NDWORD Map1_Cnt;
-// NBYTE  Map1_Latch;
-// NWORD  Map1_Last_Write_Addr;
+// BYTE  Map1_Regs[ 4 ];
+// DWORD Map1_Cnt;
+// BYTE  Map1_Latch;
+// WORD  Map1_Last_Write_Addr;
 // Map1_Size_t Map1_Size;
-// NDWORD Map1_256K_base;
-// NDWORD Map1_swap;
+// DWORD Map1_256K_base;
+// DWORD Map1_swap;
 // // these are the 4 ROM banks currently selected
-// NDWORD Map1_bank1;
-// NDWORD Map1_bank2;
-// NDWORD Map1_bank3;
-// NDWORD Map1_bank4;
+// DWORD Map1_bank1;
+// DWORD Map1_bank2;
+// DWORD Map1_bank3;
+// DWORD Map1_bank4;
 
-// NDWORD Map1_HI1;
-// NDWORD Map1_HI2;
+// DWORD Map1_HI1;
+// DWORD Map1_HI2;
 
-/*-------------------------------------------------------------------*/
-/*  Initialize Mapper 1                                              */
-/*-------------------------------------------------------------------*/
-void Map1_Init()
-{
-  NDWORD size_in_K;
 
-  /* Initialize Mapper */
-  MapperInit = Map1_Init;
-
-  /* Write to Mapper */
-  MapperWrite = Map1_Write;
-
-  /* Write to SRAM */
-  MapperSram = Map0_Sram;
-
-  /* Write to APU */
-  MapperApu = Map0_Apu;
-
-  /* Read from APU */
-  MapperReadApu = Map0_ReadApu;
-
-  /* Callback at VSync */
-  MapperVSync = Map0_VSync;
-
-  /* Callback at HSync */
-  MapperHSync = Map0_HSync;
-
-  /* Callback at PPU */
-  MapperPPU = Map0_PPU;
-
-  /* Callback at Rendering Screen ( 1:BG, 0:Sprite ) */
-  MapperRenderScreen = Map0_RenderScreen;
-
-  /* Set SRAM Banks */
-  SRAMBANK = SRAM;
-
-  /* Initialize State Registers */
-  MAP1->Map1_Cnt = 0;
-  MAP1->Map1_Latch = 0x00;
-
-  MAP1->Map1_Regs[ 0 ] = 0x0c;
-  MAP1->Map1_Regs[ 1 ] = 0x00;
-  MAP1->Map1_Regs[ 2 ] = 0x00;
-  MAP1->Map1_Regs[ 3 ] = 0x00;
-
-  size_in_K = ( Neshd->byRomSize << 1 ) * 8;
-
-  if ( size_in_K == 1024 )
-  {
-    MAP1->Map1_Size = Map1_1024K;
-  } 
-  else if(size_in_K == 512)
-  {
-    MAP1->Map1_Size = Map1_512K;
-  }
-  else
-  {
-    MAP1->Map1_Size = Map1_SMALL;
-  }
-
-  MAP1->Map1_256K_base = 0; // use first 256K
-  MAP1->Map1_swap = 0;
-
-  if( MAP1->Map1_Size == Map1_SMALL )
-  {
-    // set two high pages to last two banks
-    MAP1->Map1_HI1 = ( Neshd->byRomSize << 1 ) - 2;
-    MAP1->Map1_HI2 = ( Neshd->byRomSize << 1 ) - 1;
-  }
-  else
-  {
-    // set two high pages to last two banks of current 256K region
-    MAP1->Map1_HI1 = ( 256 / 8 ) - 2;
-    MAP1->Map1_HI2 = ( 256 / 8 ) - 1;
-  }
-
-  // set CPU bank pointers
-  MAP1->Map1_bank1 = 0;
-  MAP1->Map1_bank2 = 1;
-  MAP1->Map1_bank3 = MAP1->Map1_HI1;
-  MAP1->Map1_bank4 = MAP1->Map1_HI2;
-
-  /* Set ROM Banks */
-  Map1_set_ROM_banks();
-
-  /* Set up wiring of the interrupt pin */
-  K6502_Set_Int_Wiring( 1, 1 );
-}
-
-void Map1_set_ROM_banks()
+static void Map1_set_ROM_banks()
 {
   ROMBANK0 = ROMPAGE( ( (MAP1->Map1_256K_base << 5) + (MAP1->Map1_bank1 & ((256/8)-1)) ) % ( Neshd->byRomSize << 1 ) );  
   ROMBANK1 = ROMPAGE( ( (MAP1->Map1_256K_base << 5) + (MAP1->Map1_bank2 & ((256/8)-1)) ) % ( Neshd->byRomSize << 1 ) );
@@ -124,12 +35,12 @@ void Map1_set_ROM_banks()
 /*-------------------------------------------------------------------*/
 /*  Mapper 1 Write Function                                          */
 /*-------------------------------------------------------------------*/
-void Map1_Write( NWORD wAddr, NBYTE byData )
+static void Map1_Write( WORD wAddr, BYTE byData )
 {
 /*
  * MMC1
  */
-  NDWORD dwRegNum;
+  DWORD dwRegNum;
 
   // if write is to a different reg, reset
   if( ( wAddr & 0x6000 ) != ( MAP1->Map1_Last_Write_Addr & 0x6000 ) )
@@ -190,7 +101,7 @@ void Map1_Write( NWORD wAddr, NBYTE byData )
 
     case 1:
       {
-        NBYTE byBankNum = MAP1->Map1_Regs[1];
+        BYTE byBankNum = MAP1->Map1_Regs[1];
 
         if ( MAP1->Map1_Size == Map1_1024K )
         {
@@ -256,7 +167,7 @@ void Map1_Write( NWORD wAddr, NBYTE byData )
 
     case 2:
       {
-        NBYTE byBankNum = MAP1->Map1_Regs[2];
+        BYTE byBankNum = MAP1->Map1_Regs[2];
 
         if((MAP1->Map1_Size == Map1_1024K) && (MAP1->Map1_Regs[0] & 0x08))
         {
@@ -310,7 +221,7 @@ void Map1_Write( NWORD wAddr, NBYTE byData )
 
     case 3:
       {
-        NBYTE byBankNum = MAP1->Map1_Regs[3];
+        BYTE byBankNum = MAP1->Map1_Regs[3];
 
         // set ROM bank
         if ( MAP1->Map1_Regs[0] & 0x08 )
@@ -356,3 +267,94 @@ void Map1_Write( NWORD wAddr, NBYTE byData )
       break;
   }
 }
+
+/*-------------------------------------------------------------------*/
+/*  Initialize Mapper 1                                              */
+/*-------------------------------------------------------------------*/
+void Map1_Init()
+{
+  DWORD size_in_K;
+
+  /* Initialize Mapper */
+  MapperInit = Map1_Init;
+
+  /* Write to Mapper */
+  MapperWrite = Map1_Write;
+
+  /* Write to SRAM */
+  MapperSram = Map0_Sram;
+
+  /* Write to APU */
+  MapperApu = Map0_Apu;
+
+  /* Read from APU */
+  MapperReadApu = Map0_ReadApu;
+
+  /* Callback at VSync */
+  MapperVSync = Map0_VSync;
+
+  /* Callback at HSync */
+  MapperHSync = Map0_HSync;
+
+  /* Callback at PPU */
+  MapperPPU = Map0_PPU;
+
+  /* Callback at Rendering Screen ( 1:BG, 0:Sprite ) */
+  MapperRenderScreen = Map0_RenderScreen;
+
+  /* Set SRAM Banks */
+  SRAMBANK = SRAM;
+
+  /* Initialize State Registers */
+  MAP1->Map1_Cnt = 0;
+  MAP1->Map1_Latch = 0x00;
+
+  MAP1->Map1_Regs[ 0 ] = 0x0c;
+  MAP1->Map1_Regs[ 1 ] = 0x00;
+  MAP1->Map1_Regs[ 2 ] = 0x00;
+  MAP1->Map1_Regs[ 3 ] = 0x00;
+
+  size_in_K = ( Neshd->byRomSize << 1 ) * 8;
+
+  if ( size_in_K == 1024 )
+  {
+    MAP1->Map1_Size = Map1_1024K;
+  }
+  else if(size_in_K == 512)
+  {
+    MAP1->Map1_Size = Map1_512K;
+  }
+  else
+  {
+    MAP1->Map1_Size = Map1_SMALL;
+  }
+
+  MAP1->Map1_256K_base = 0; // use first 256K
+  MAP1->Map1_swap = 0;
+
+  if( MAP1->Map1_Size == Map1_SMALL )
+  {
+    // set two high pages to last two banks
+    MAP1->Map1_HI1 = ( Neshd->byRomSize << 1 ) - 2;
+    MAP1->Map1_HI2 = ( Neshd->byRomSize << 1 ) - 1;
+  }
+  else
+  {
+    // set two high pages to last two banks of current 256K region
+    MAP1->Map1_HI1 = ( 256 / 8 ) - 2;
+    MAP1->Map1_HI2 = ( 256 / 8 ) - 1;
+  }
+
+  // set CPU bank pointers
+  MAP1->Map1_bank1 = 0;
+  MAP1->Map1_bank2 = 1;
+  MAP1->Map1_bank3 = MAP1->Map1_HI1;
+  MAP1->Map1_bank4 = MAP1->Map1_HI2;
+
+  /* Set ROM Banks */
+  Map1_set_ROM_banks();
+
+  /* Set up wiring of the interrupt pin */
+  K6502_Set_Int_Wiring( 1, 1 );
+}
+

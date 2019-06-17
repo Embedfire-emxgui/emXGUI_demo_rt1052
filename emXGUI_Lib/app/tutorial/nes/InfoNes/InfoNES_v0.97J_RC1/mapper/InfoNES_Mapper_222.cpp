@@ -64,7 +64,7 @@ void Map222_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 222 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map222_Write( NWORD wAddr, NBYTE byData )
+void Map222_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xF003 ) {
   case	0x8000:

@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map67_IRQ_Enable;
-NBYTE Map67_IRQ_Cnt;
-NBYTE Map67_IRQ_Latch;
+BYTE Map67_IRQ_Enable;
+BYTE Map67_IRQ_Cnt;
+BYTE Map67_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 67                                             */
@@ -72,7 +72,7 @@ void Map67_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 67 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map67_Write( NWORD wAddr, NBYTE byData )
+void Map67_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xf800 )
   {

@@ -62,7 +62,7 @@ void Map34_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 34 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map34_Write( NWORD wAddr, NBYTE byData )
+void Map34_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   byData <<= 2;
@@ -77,7 +77,7 @@ void Map34_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 34 Write to SRAM Function                                 */
 /*-------------------------------------------------------------------*/
-void Map34_Sram( NWORD wAddr, NBYTE byData )
+void Map34_Sram( WORD wAddr, BYTE byData )
 {
   switch(wAddr)
   {

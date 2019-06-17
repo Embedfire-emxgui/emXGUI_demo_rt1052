@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map83_Regs[3];
-NDWORD Map83_Chr_Bank;
-NDWORD Map83_IRQ_Cnt;
-NBYTE Map83_IRQ_Enabled;
+BYTE Map83_Regs[3];
+DWORD Map83_Chr_Bank;
+DWORD Map83_IRQ_Cnt;
+BYTE Map83_IRQ_Enabled;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 83                                             */
@@ -86,7 +86,7 @@ void Map83_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 83 Read from APU Function                                 */
 /*-------------------------------------------------------------------*/
-NBYTE Map83_ReadApu( NWORD wAddr )
+BYTE Map83_ReadApu( WORD wAddr )
 {
   if ( ( wAddr & 0x5100 ) == 0x5100 )
   {
@@ -101,7 +101,7 @@ NBYTE Map83_ReadApu( NWORD wAddr )
 /*-------------------------------------------------------------------*/
 /*  Mapper 83 Write to APU Function                                  */
 /*-------------------------------------------------------------------*/
-void Map83_Apu( NWORD wAddr, NBYTE byData )
+void Map83_Apu( WORD wAddr, BYTE byData )
 {
   switch(wAddr)
   {
@@ -116,7 +116,7 @@ void Map83_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 83 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map83_Write( NWORD wAddr, NBYTE byData )
+void Map83_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   switch( wAddr )
@@ -158,11 +158,11 @@ void Map83_Write( NWORD wAddr, NBYTE byData )
       break;
 
     case 0x8200:
-      Map83_IRQ_Cnt = ( Map83_IRQ_Cnt & 0xFF00 ) | (NDWORD)byData;
+      Map83_IRQ_Cnt = ( Map83_IRQ_Cnt & 0xFF00 ) | (DWORD)byData;
       break;
 
     case 0x8201:
-      Map83_IRQ_Cnt = ( Map83_IRQ_Cnt & 0x00FF ) | ((NDWORD)byData << 8);
+      Map83_IRQ_Cnt = ( Map83_IRQ_Cnt & 0x00FF ) | ((DWORD)byData << 8);
       Map83_IRQ_Enabled = byData;
       break;
 

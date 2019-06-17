@@ -4,11 +4,11 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map252_Reg[9];
-NBYTE	Map252_IRQ_Enable;
-NBYTE	Map252_IRQ_Counter;
-NBYTE	Map252_IRQ_Latch;
-NBYTE	Map252_IRQ_Occur;
+BYTE	Map252_Reg[9];
+BYTE	Map252_IRQ_Enable;
+BYTE	Map252_IRQ_Counter;
+BYTE	Map252_IRQ_Latch;
+BYTE	Map252_IRQ_Occur;
 int	Map252_IRQ_Clock;
 
 /*-------------------------------------------------------------------*/
@@ -80,7 +80,7 @@ void Map252_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 252 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map252_Write( NWORD wAddr, NBYTE byData )
+void Map252_Write( WORD wAddr, BYTE byData )
 {
   if( (wAddr & 0xF000) == 0x8000 ) {
     ROMBANK0 = ROMPAGE( byData % (NesHeader.byRomSize<<1));

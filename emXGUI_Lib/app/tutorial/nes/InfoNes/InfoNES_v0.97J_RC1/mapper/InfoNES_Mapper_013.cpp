@@ -63,7 +63,7 @@ void Map13_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 13 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map13_Write( NWORD wAddr, NBYTE byData )
+void Map13_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   ROMBANK0 = ROMPAGE((((byData&0x30)>>2)+0) % (NesHeader.byRomSize<<1));

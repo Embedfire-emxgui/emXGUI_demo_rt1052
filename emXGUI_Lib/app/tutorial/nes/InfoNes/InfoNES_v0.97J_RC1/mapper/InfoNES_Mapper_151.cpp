@@ -62,7 +62,7 @@ void Map151_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 151 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map151_Write( NWORD wAddr, NBYTE byData )
+void Map151_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   switch( wAddr & 0xF000 )

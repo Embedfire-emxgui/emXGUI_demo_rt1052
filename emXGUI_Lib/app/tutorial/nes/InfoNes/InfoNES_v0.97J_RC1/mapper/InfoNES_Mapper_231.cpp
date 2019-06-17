@@ -61,9 +61,9 @@ void Map231_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 231 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map231_Write( NWORD wAddr, NBYTE byData )
+void Map231_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE	byBank = wAddr & 0x1E;
+  BYTE	byBank = wAddr & 0x1E;
 
   if( wAddr & 0x0020 ) {
     ROMBANK0 = ROMPAGE(((byBank<<1)+0) % (Neshd->byRomSize<<1));

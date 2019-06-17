@@ -52,9 +52,9 @@ void Map7_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 7 Write Function                                          */
 /*-------------------------------------------------------------------*/
-void Map7_Write( NWORD wAddr, NBYTE byData )
+void Map7_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byBank;
+  BYTE byBank;
 
   /* Set ROM Banks */
   byBank = ( byData & 0x07 ) << 2;

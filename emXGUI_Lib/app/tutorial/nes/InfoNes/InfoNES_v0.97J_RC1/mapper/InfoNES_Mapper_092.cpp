@@ -62,12 +62,12 @@ void Map92_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 92 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map92_Write( NWORD wAddr, NBYTE byData )
+void Map92_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byRomBank;
-  NBYTE byChrBank;
+  BYTE byRomBank;
+  BYTE byChrBank;
   
-  byData = (NBYTE)wAddr & 0xff;
+  byData = (BYTE)wAddr & 0xff;
   byRomBank = ( byData & 0x0f ) << 1;
   byChrBank = byData & 0x0f;
 

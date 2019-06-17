@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map48_Regs[ 1 ];
-NBYTE Map48_IRQ_Enable;
-NBYTE Map48_IRQ_Cnt;
+BYTE Map48_Regs[ 1 ];
+BYTE Map48_IRQ_Enable;
+BYTE Map48_IRQ_Cnt;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 48                                             */
@@ -71,7 +71,7 @@ void Map48_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 48 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map48_Write( NWORD wAddr, NBYTE byData )
+void Map48_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

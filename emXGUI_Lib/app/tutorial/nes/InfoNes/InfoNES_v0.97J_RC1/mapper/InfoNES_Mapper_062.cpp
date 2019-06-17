@@ -61,7 +61,7 @@ void Map62_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 62 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map62_Write( NWORD wAddr, NBYTE byData )
+void Map62_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xFF00 ) {
   case	0x8100:

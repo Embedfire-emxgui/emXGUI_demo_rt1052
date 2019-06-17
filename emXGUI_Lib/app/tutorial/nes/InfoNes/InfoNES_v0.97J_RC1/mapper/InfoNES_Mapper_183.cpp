@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map183_Reg[8];
-NBYTE	Map183_IRQ_Enable;
+BYTE	Map183_Reg[8];
+BYTE	Map183_IRQ_Enable;
 int	Map183_IRQ_Counter;
 
 /*-------------------------------------------------------------------*/
@@ -73,7 +73,7 @@ void Map183_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 183 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map183_Write( NWORD wAddr, NBYTE byData )
+void Map183_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr ) {
   case	0x8800:

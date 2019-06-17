@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map182_Regs[1];
-NBYTE Map182_IRQ_Enable;
-NBYTE Map182_IRQ_Cnt;
+BYTE Map182_Regs[1];
+BYTE Map182_IRQ_Enable;
+BYTE Map182_IRQ_Cnt;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 182                                            */
@@ -73,7 +73,7 @@ void Map182_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 182 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map182_Write( NWORD wAddr, NBYTE byData )
+void Map182_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xF003 )
   {

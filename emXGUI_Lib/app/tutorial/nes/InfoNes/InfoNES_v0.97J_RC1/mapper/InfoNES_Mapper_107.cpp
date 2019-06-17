@@ -61,7 +61,7 @@ void Map107_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 107 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map107_Write( NWORD wAddr, NBYTE byData )
+void Map107_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   ROMBANK0 = ROMPAGE( ( (((byData>>1)&0x03)<<2) + 0 ) % ( NesHeader.byRomSize << 1 ) );

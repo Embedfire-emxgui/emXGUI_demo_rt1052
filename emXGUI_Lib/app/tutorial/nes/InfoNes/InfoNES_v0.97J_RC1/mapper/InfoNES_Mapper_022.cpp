@@ -62,7 +62,7 @@ void Map22_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 22 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map22_Write( NWORD wAddr, NBYTE byData )
+void Map22_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

@@ -4,18 +4,18 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map47_Regs[ 8 ];
-NDWORD Map47_Rom_Bank;
-NDWORD Map47_Prg0, Map47_Prg1;
-NDWORD Map47_Chr01, Map47_Chr23;
-NDWORD Map47_Chr4, Map47_Chr5, Map47_Chr6, Map47_Chr7;
+BYTE  Map47_Regs[ 8 ];
+DWORD Map47_Rom_Bank;
+DWORD Map47_Prg0, Map47_Prg1;
+DWORD Map47_Chr01, Map47_Chr23;
+DWORD Map47_Chr4, Map47_Chr5, Map47_Chr6, Map47_Chr7;
 
 #define Map47_Chr_Swap()    ( Map47_Regs[ 0 ] & 0x80 )
 #define Map47_Prg_Swap()    ( Map47_Regs[ 0 ] & 0x40 )
 
-NBYTE Map47_IRQ_Enable;
-NBYTE Map47_IRQ_Cnt;
-NBYTE Map47_IRQ_Latch;
+BYTE Map47_IRQ_Enable;
+BYTE Map47_IRQ_Cnt;
+BYTE Map47_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 47                                             */
@@ -93,7 +93,7 @@ void Map47_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 47 Write to Sram Function                                 */
 /*-------------------------------------------------------------------*/
-void Map47_Sram( NWORD wAddr, NBYTE byData )
+void Map47_Sram( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
@@ -108,9 +108,9 @@ void Map47_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 47 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map47_Write( NWORD wAddr, NBYTE byData )
+void Map47_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {

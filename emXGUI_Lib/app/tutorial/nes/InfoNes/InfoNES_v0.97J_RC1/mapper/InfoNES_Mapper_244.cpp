@@ -52,7 +52,7 @@ void Map244_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 244 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map244_Write( NWORD wAddr, NBYTE byData )
+void Map244_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr>=0x8065 && wAddr<=0x80A4 ) {
     /* Set ROM Banks */

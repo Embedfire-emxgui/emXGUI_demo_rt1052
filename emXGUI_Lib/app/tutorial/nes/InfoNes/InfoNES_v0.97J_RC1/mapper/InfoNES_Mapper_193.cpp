@@ -61,7 +61,7 @@ void Map193_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 193 Write to SRAM Function                                */
 /*-------------------------------------------------------------------*/
-void Map193_Sram( NWORD wAddr, NBYTE byData )
+void Map193_Sram( WORD wAddr, BYTE byData )
 {
   switch( wAddr ) {
   case	0x6000:

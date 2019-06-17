@@ -62,10 +62,10 @@ void Map79_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 79 Write to Apu Function                                  */
 /*-------------------------------------------------------------------*/
-void Map79_Apu( NWORD wAddr, NBYTE byData )
+void Map79_Apu( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank = ( byData & 0x08 ) >> 3;
-  NBYTE byChrBank = byData & 0x07;
+  BYTE byPrgBank = ( byData & 0x08 ) >> 3;
+  BYTE byChrBank = byData & 0x07;
  
   /* Set ROM Banks */
   byPrgBank <<= 2;

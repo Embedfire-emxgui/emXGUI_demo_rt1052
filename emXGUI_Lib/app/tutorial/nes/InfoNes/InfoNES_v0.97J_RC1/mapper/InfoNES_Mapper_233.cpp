@@ -52,7 +52,7 @@ void Map233_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 233 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map233_Write( NWORD wAddr, NBYTE byData )
+void Map233_Write( WORD wAddr, BYTE byData )
 {
   if( byData & 0x20 ) {
     ROMBANK0 = ROMPAGE((((byData&0x1F)<<1)+0) % (NesHeader.byRomSize<<1));

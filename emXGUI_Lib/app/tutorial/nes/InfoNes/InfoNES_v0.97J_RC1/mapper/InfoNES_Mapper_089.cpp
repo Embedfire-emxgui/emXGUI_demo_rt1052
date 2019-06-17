@@ -63,12 +63,12 @@ void Map89_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 89 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map89_Write( NWORD wAddr, NBYTE byData )
+void Map89_Write( WORD wAddr, BYTE byData )
 {
   if ( ( wAddr & 0xFF00 ) == 0xC000 )
   {
-    NBYTE byPrgBank = (byData & 0x70) >> 4;
-    NBYTE byChrBank = ((byData & 0x80) >> 4) | (byData & 0x07);
+    BYTE byPrgBank = (byData & 0x70) >> 4;
+    BYTE byChrBank = ((byData & 0x80) >> 4) | (byData & 0x07);
 
     /* Set ROM Banks */
     ROMBANK0 = ROMPAGE( (byPrgBank*2+0) % (NesHeader.byRomSize << 1) );

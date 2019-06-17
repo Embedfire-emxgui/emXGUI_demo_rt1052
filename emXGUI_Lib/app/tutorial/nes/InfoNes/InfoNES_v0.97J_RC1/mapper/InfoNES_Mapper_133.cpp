@@ -61,7 +61,7 @@ void Map133_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 133 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map133_Apu( NWORD wAddr, NBYTE byData )
+void Map133_Apu( WORD wAddr, BYTE byData )
 {
   if ( wAddr == 0x4120 ) {
     /* Set ROM Banks */

@@ -52,7 +52,7 @@ void Map194_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 194 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map194_Write( NWORD wAddr, NBYTE byData )
+void Map194_Write( WORD wAddr, BYTE byData )
 {
   SRAMBANK = ROMPAGE( byData % ( NesHeader.byRomSize << 1 ) );
 }

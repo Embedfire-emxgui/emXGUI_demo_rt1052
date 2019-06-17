@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map40_IRQ_Enable;
-NDWORD Map40_Line_To_IRQ;
+BYTE  Map40_IRQ_Enable;
+DWORD Map40_Line_To_IRQ;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 40                                             */
@@ -69,7 +69,7 @@ void Map40_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 40 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map40_Write( NWORD wAddr, NBYTE byData )
+void Map40_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xe000 )
   {

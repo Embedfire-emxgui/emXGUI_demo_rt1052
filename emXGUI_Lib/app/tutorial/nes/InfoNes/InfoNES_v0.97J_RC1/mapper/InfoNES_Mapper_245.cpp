@@ -4,15 +4,15 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map245_Reg[8];
-NBYTE	Map245_Prg0, Map245_Prg1;
-NBYTE	Map245_Chr01, Map245_Chr23, Map245_Chr4, Map245_Chr5, Map245_Chr6, Map245_Chr7;
-NBYTE	Map245_WeSram;
+BYTE	Map245_Reg[8];
+BYTE	Map245_Prg0, Map245_Prg1;
+BYTE	Map245_Chr01, Map245_Chr23, Map245_Chr4, Map245_Chr5, Map245_Chr6, Map245_Chr7;
+BYTE	Map245_WeSram;
 
-NBYTE	Map245_IRQ_Enable;
-NBYTE	Map245_IRQ_Counter;
-NBYTE	Map245_IRQ_Latch;
-NBYTE	Map245_IRQ_Request;
+BYTE	Map245_IRQ_Enable;
+BYTE	Map245_IRQ_Counter;
+BYTE	Map245_IRQ_Latch;
+BYTE	Map245_IRQ_Request;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 245                                            */
@@ -86,7 +86,7 @@ void Map245_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 245 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map245_Write( NWORD wAddr, NBYTE byData )
+void Map245_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr&0xF7FF ) {
   case	0x8000:

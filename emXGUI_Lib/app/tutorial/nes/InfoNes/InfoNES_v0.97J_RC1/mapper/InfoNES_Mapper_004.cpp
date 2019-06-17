@@ -10,17 +10,17 @@
 
 //Mapper4Res MAP4;
 
-// NBYTE  Map4_Regs[ 8 ];
-// NDWORD Map4_Rom_Bank;
-// NDWORD Map4_Prg0, Map4_Prg1;
-// NDWORD Map4_Chr01, Map4_Chr23;
-// NDWORD Map4_Chr4, Map4_Chr5, Map4_Chr6, Map4_Chr7;
-// NBYTE Map4_IRQ_Enable;
-// NBYTE Map4_IRQ_Cnt;
-// NBYTE Map4_IRQ_Latch;
-// NBYTE Map4_IRQ_Request;
-// NBYTE Map4_IRQ_Present;
-// NBYTE Map4_IRQ_Present_Vbl;
+// BYTE  Map4_Regs[ 8 ];
+// DWORD Map4_Rom_Bank;
+// DWORD Map4_Prg0, Map4_Prg1;
+// DWORD Map4_Chr01, Map4_Chr23;
+// DWORD Map4_Chr4, Map4_Chr5, Map4_Chr6, Map4_Chr7;
+// BYTE Map4_IRQ_Enable;
+// BYTE Map4_IRQ_Cnt;
+// BYTE Map4_IRQ_Latch;
+// BYTE Map4_IRQ_Request;
+// BYTE Map4_IRQ_Present;
+// BYTE Map4_IRQ_Present_Vbl;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 4                                              */
@@ -100,9 +100,9 @@ void Map4_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 4 Write Function                                          */
 /*-------------------------------------------------------------------*/
-void Map4_Write( NWORD wAddr, NBYTE byData )
+void Map4_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {
@@ -270,8 +270,8 @@ void Map4_HSync()
 /*-------------------------------------------------------------------*/
 /*  Mapper 4 Set CPU Banks Function                                  */
 /*-------------------------------------------------------------------*/
-//NBYTE* Get_ROMPAGE(NWORD page,NBYTE num);
-//NBYTE* Get_ROMLASTPAGE(NWORD page,NBYTE num);
+//BYTE* Get_ROMPAGE(WORD page,BYTE num);
+//BYTE* Get_ROMLASTPAGE(WORD page,BYTE num);
 void Map4_Set_CPU_Banks()
 {
     //void *temp1,*temp2,*temp3,*temp4;

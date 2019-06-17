@@ -62,9 +62,9 @@ void Map87_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 87 Write to SRAM Function                                 */
 /*-------------------------------------------------------------------*/
-void Map87_Sram( NWORD wAddr, NBYTE byData )
+void Map87_Sram( WORD wAddr, BYTE byData )
 {
-  NBYTE byChrBank;
+  BYTE byChrBank;
 
   switch ( wAddr )
   {

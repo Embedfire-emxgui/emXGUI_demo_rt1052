@@ -61,7 +61,7 @@ void Map240_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 240 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map240_Apu( NWORD wAddr, NBYTE byData )
+void Map240_Apu( WORD wAddr, BYTE byData )
 {
   if( wAddr>=0x4020 && wAddr<0x6000 ) {
     /* Set ROM Banks */

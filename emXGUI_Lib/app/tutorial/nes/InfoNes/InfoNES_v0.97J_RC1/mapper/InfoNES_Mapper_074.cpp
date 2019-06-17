@@ -4,21 +4,21 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map74_Regs[ 8 ];
-NDWORD Map74_Rom_Bank;
-NDWORD Map74_Prg0, Map74_Prg1;
-NDWORD Map74_Chr01, Map74_Chr23;
-NDWORD Map74_Chr4, Map74_Chr5, Map74_Chr6, Map74_Chr7;
+BYTE  Map74_Regs[ 8 ];
+DWORD Map74_Rom_Bank;
+DWORD Map74_Prg0, Map74_Prg1;
+DWORD Map74_Chr01, Map74_Chr23;
+DWORD Map74_Chr4, Map74_Chr5, Map74_Chr6, Map74_Chr7;
 
 #define Map74_Chr_Swap()    ( Map74_Regs[ 0 ] & 0x80 )
 #define Map74_Prg_Swap()    ( Map74_Regs[ 0 ] & 0x40 )
 
-NBYTE Map74_IRQ_Enable;
-NBYTE Map74_IRQ_Cnt;
-NBYTE Map74_IRQ_Latch;
-NBYTE Map74_IRQ_Request;
-NBYTE Map74_IRQ_Present;
-NBYTE Map74_IRQ_Present_Vbl;
+BYTE Map74_IRQ_Enable;
+BYTE Map74_IRQ_Cnt;
+BYTE Map74_IRQ_Latch;
+BYTE Map74_IRQ_Request;
+BYTE Map74_IRQ_Present;
+BYTE Map74_IRQ_Present_Vbl;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 74                                             */
@@ -101,9 +101,9 @@ void Map74_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 74 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map74_Write( NWORD wAddr, NBYTE byData )
+void Map74_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {

@@ -4,11 +4,11 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map16_Regs[3];
+BYTE  Map16_Regs[3];
 
-NBYTE  Map16_IRQ_Enable;
-NDWORD Map16_IRQ_Cnt;
-NDWORD Map16_IRQ_Latch;
+BYTE  Map16_IRQ_Enable;
+DWORD Map16_IRQ_Cnt;
+DWORD Map16_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 16                                             */
@@ -67,7 +67,7 @@ void Map16_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 16 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map16_Write( NWORD wAddr, NBYTE byData )
+void Map16_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0x000f )
   {
@@ -157,7 +157,7 @@ void Map16_Write( NWORD wAddr, NBYTE byData )
         break;
 
       case 0x000c:
-        Map16_IRQ_Latch = ( (NDWORD)byData << 8 ) | ( Map16_IRQ_Latch & 0x00ff );
+        Map16_IRQ_Latch = ( (DWORD)byData << 8 ) | ( Map16_IRQ_Latch & 0x00ff );
         break;
 
       case 0x000d:

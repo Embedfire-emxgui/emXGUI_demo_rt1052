@@ -61,7 +61,7 @@ void Map58_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 58 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map58_Write( NWORD wAddr, NBYTE byData )
+void Map58_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr & 0x40 ) {
     ROMBANK0 = ROMPAGE((((wAddr&0x07)<<1)+0) % (Neshd->byRomSize<<1));

@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map42_IRQ_Cnt;
-NBYTE Map42_IRQ_Enable;
+BYTE Map42_IRQ_Cnt;
+BYTE Map42_IRQ_Enable;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 42                                             */
@@ -65,7 +65,7 @@ void Map42_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 42 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map42_Write( NWORD wAddr, NBYTE byData )
+void Map42_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xe003 )
   {

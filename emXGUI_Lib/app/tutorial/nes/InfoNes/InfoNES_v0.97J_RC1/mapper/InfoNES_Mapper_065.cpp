@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map65_IRQ_Enable;
-NDWORD Map65_IRQ_Cnt;
-NDWORD Map65_IRQ_Latch;
+BYTE  Map65_IRQ_Enable;
+DWORD Map65_IRQ_Cnt;
+DWORD Map65_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 65                                             */
@@ -66,7 +66,7 @@ void Map65_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 65 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map65_Write( NWORD wAddr, NBYTE byData )
+void Map65_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
@@ -92,11 +92,11 @@ void Map65_Write( NWORD wAddr, NBYTE byData )
       break;
 
     case 0x9005:
-      Map65_IRQ_Latch = ( Map65_IRQ_Latch & 0x00ff ) | ((NDWORD)byData << 8 );
+      Map65_IRQ_Latch = ( Map65_IRQ_Latch & 0x00ff ) | ((DWORD)byData << 8 );
       break;
 
     case 0x9006:
-      Map65_IRQ_Latch = ( Map65_IRQ_Latch & 0xff00 ) | (NDWORD)byData;
+      Map65_IRQ_Latch = ( Map65_IRQ_Latch & 0xff00 ) | (DWORD)byData;
       break;
 
     /* Set PPU Banks */

@@ -4,14 +4,14 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map114_Regs[ 8 ];
-NDWORD Map114_Prg0, Map114_Prg1;
-NDWORD Map114_Chr01, Map114_Chr23;
-NDWORD Map114_Chr4, Map114_Chr5, Map114_Chr6, Map114_Chr7;
+BYTE  Map114_Regs[ 8 ];
+DWORD Map114_Prg0, Map114_Prg1;
+DWORD Map114_Chr01, Map114_Chr23;
+DWORD Map114_Chr4, Map114_Chr5, Map114_Chr6, Map114_Chr7;
 
-NBYTE Map114_IRQ_Enable;
-NBYTE Map114_IRQ_Cnt;
-NBYTE Map114_IRQ_Latch;
+BYTE Map114_IRQ_Enable;
+BYTE Map114_IRQ_Cnt;
+BYTE Map114_IRQ_Latch;
 
 #define Map114_Chr_Swap()    ( Map114_Regs[ 0 ] & 0x80 )
 #define Map114_Prg_Swap()    ( Map114_Regs[ 0 ] & 0x40 )
@@ -91,7 +91,7 @@ void Map114_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 114 Write to Sram Function                                */
 /*-------------------------------------------------------------------*/
-void Map114_Sram( NWORD wAddr, NBYTE byData )
+void Map114_Sram( WORD wAddr, BYTE byData )
 {
   int nPage;
 
@@ -133,9 +133,9 @@ void Map114_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 114 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map114_Write( NWORD wAddr, NBYTE byData )
+void Map114_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {

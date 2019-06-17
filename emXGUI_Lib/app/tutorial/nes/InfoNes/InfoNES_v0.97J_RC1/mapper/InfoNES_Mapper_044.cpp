@@ -4,18 +4,18 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map44_Regs[ 8 ];
-NDWORD Map44_Rom_Bank;
-NDWORD Map44_Prg0, Map44_Prg1;
-NDWORD Map44_Chr01, Map44_Chr23;
-NDWORD Map44_Chr4, Map44_Chr5, Map44_Chr6, Map44_Chr7;
+BYTE  Map44_Regs[ 8 ];
+DWORD Map44_Rom_Bank;
+DWORD Map44_Prg0, Map44_Prg1;
+DWORD Map44_Chr01, Map44_Chr23;
+DWORD Map44_Chr4, Map44_Chr5, Map44_Chr6, Map44_Chr7;
 
 #define Map44_Chr_Swap()    ( Map44_Regs[ 0 ] & 0x80 )
 #define Map44_Prg_Swap()    ( Map44_Regs[ 0 ] & 0x40 )
 
-NBYTE Map44_IRQ_Enable;
-NBYTE Map44_IRQ_Cnt;
-NBYTE Map44_IRQ_Latch;
+BYTE Map44_IRQ_Enable;
+BYTE Map44_IRQ_Cnt;
+BYTE Map44_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 44                                             */
@@ -93,9 +93,9 @@ void Map44_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 44 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map44_Write( NWORD wAddr, NBYTE byData )
+void Map44_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {

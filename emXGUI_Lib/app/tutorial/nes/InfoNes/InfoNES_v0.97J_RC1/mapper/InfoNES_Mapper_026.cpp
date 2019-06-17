@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map26_IRQ_Enable;
-NBYTE Map26_IRQ_Cnt;
-NBYTE Map26_IRQ_Latch;
+BYTE Map26_IRQ_Enable;
+BYTE Map26_IRQ_Cnt;
+BYTE Map26_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 26                                             */
@@ -70,7 +70,7 @@ void Map26_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 26 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map26_Write( NWORD wAddr, NBYTE byData )
+void Map26_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

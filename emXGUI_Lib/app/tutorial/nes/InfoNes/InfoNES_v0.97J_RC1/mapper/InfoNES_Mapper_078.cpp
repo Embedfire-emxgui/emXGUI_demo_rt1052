@@ -62,10 +62,10 @@ void Map78_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 78 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map78_Write( NWORD wAddr, NBYTE byData )
+void Map78_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank = byData & 0x0f;
-  NBYTE byChrBank = ( byData & 0xf0 ) >> 4;
+  BYTE byPrgBank = byData & 0x0f;
+  BYTE byChrBank = ( byData & 0xf0 ) >> 4;
 
   /* Set ROM Banks */
   byPrgBank <<= 1;

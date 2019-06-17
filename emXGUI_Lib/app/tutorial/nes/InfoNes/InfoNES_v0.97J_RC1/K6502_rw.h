@@ -10,6 +10,10 @@
 #ifndef K6502_RW_H_INCLUDED
 #define K6502_RW_H_INCLUDED
 
+#ifdef	__cplusplus
+extern	"C"{
+#endif
+
 /*-------------------------------------------------------------------*/
 /*  Include files                                                    */
 /*-------------------------------------------------------------------*/
@@ -24,13 +28,13 @@
 /*            K6502_ReadZp() : Reading from the zero page            */
 /*                                                                   */
 /*===================================================================*/
-static  NBYTE K6502_ReadZp( NBYTE byAddr )
+static __inline BYTE K6502_ReadZp( BYTE byAddr )
 {
 /*
  *  Reading from the zero page
  *
  *  Parameters
- *    NBYTE byAddr              (Read)
+ *    BYTE byAddr              (Read)
  *      An address inside the zero page
  *
  *  Return values
@@ -45,13 +49,13 @@ static  NBYTE K6502_ReadZp( NBYTE byAddr )
 /*               K6502_Read() : Reading operation                    */
 /*                                                                   */
 /*===================================================================*/
-static  NBYTE K6502_Read( NWORD wAddr )
+static __inline BYTE K6502_Read( WORD wAddr )
 {
 /*
  *  Reading operation
  *
  *  Parameters
- *    NWORD wAddr              (Read)
+ *    WORD wAddr              (Read)
  *      Address to read
  *
  *  Return values
@@ -65,7 +69,7 @@ static  NBYTE K6502_Read( NWORD wAddr )
  *    0x8000 - 0xffff  ROM
  *
  */
-  NBYTE byRet;
+  BYTE byRet;
 
   switch ( wAddr & 0xe000 )
   {
@@ -75,10 +79,10 @@ static  NBYTE K6502_Read( NWORD wAddr )
     case 0x2000:  /* PPU */
       if ( ( wAddr & 0x7 ) == 0x7 )   /* PPU Memory */
       {
-        NWORD addr = NES->PPU_Addr & 0x3fff;
+        WORD addr = NES->PPU_Addr & 0x3fff;
 
         // Set return value;
-	byRet = NES->PPU_R7;
+        byRet = NES->PPU_R7;
 
         // Increment PPU Address
         NES->PPU_Addr += NES->PPU_Increment;
@@ -93,7 +97,7 @@ static  NBYTE K6502_Read( NWORD wAddr )
       {
         return NES->SPRRAM[ NES->PPU_R3++ ];
       }
-      else                            
+      else
       if ( ( wAddr & 0x7 ) == 0x2 )   /* PPU Status */
       {
         // Set return value
@@ -121,21 +125,31 @@ static  NBYTE K6502_Read( NWORD wAddr )
       }
 
     case 0x4000:  /* Sound */
-      if ( wAddr == 0x4014 ) 
+      if ( wAddr == 0x4014 )
       {
 	return wAddr & 0xff;
       }
       else
       if ( wAddr == 0x4015 )
       {
-
-        return InfoNES_pAPURead4015();
+        // APU control
+        byRet = NES->APU_Reg[ /*0x4015*/0x15 ];
+	if ( APU->ApuC1Atl > 0 ) byRet |= (1<<0);
+	if ( APU->ApuC2Atl > 0 ) byRet |= (1<<1);
+	if (  !ApuC3Holdnote ) {
+	  if ( APU->ApuC3Atl > 0 ) byRet |= (1<<2);
+	} else {
+	  if ( APU->ApuC3Llc > 0 ) byRet |= (1<<2);
+	}
+	// FrameIRQ
+        NES->APU_Reg[ /*0x4015*/0x15 ] &= ~0x40;
+        return byRet;
       }
       else
       if ( wAddr == 0x4016 )
       {
         // Set Joypad1 data
-        byRet = (NBYTE)( ( NES->PAD1_Latch >> NES->PAD1_Bit ) & 1 ) | 0x40;
+        byRet = (BYTE)( ( NES->PAD1_Latch >> NES->PAD1_Bit ) & 1 ) | 0x40;
         NES->PAD1_Bit = ( NES->PAD1_Bit == 23 ) ? 0 : ( NES->PAD1_Bit + 1 );
         return byRet;
       }
@@ -143,11 +157,11 @@ static  NBYTE K6502_Read( NWORD wAddr )
       if ( wAddr == 0x4017 )
       {
         // Set Joypad2 data
-        byRet = (NBYTE)( ( NES->PAD2_Latch >> NES->PAD2_Bit ) & 1 ) | 0x40;
+        byRet = (BYTE)( ( NES->PAD2_Latch >> NES->PAD2_Bit ) & 1 ) | 0x40;
         NES->PAD2_Bit = ( NES->PAD2_Bit == 23 ) ? 0 : ( NES->PAD2_Bit + 1 );
         return byRet;
       }
-      else 
+      else
       {
         /* Return Mapper Register*/
         return MapperReadApu( wAddr );
@@ -184,16 +198,16 @@ static  NBYTE K6502_Read( NWORD wAddr )
 /*               K6502_Write() : Writing operation                    */
 /*                                                                   */
 /*===================================================================*/
-static  void K6502_Write( NWORD wAddr, NBYTE byData )
+static __inline void K6502_Write( WORD wAddr, BYTE byData )
 {
 /*
  *  Writing operation
  *
  *  Parameters
- *    NWORD wAddr              (Read)
+ *    WORD wAddr              (Read)
  *      Address to write
  *
- *    NBYTE byData             (Read)
+ *    BYTE byData             (Read)
  *      Data to write
  *
  *  Remarks
@@ -223,7 +237,7 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
           NES->PPU_SP_Height = ( NES->PPU_R0 & R0_SP_SIZE ) ? 16 : 8;
 
           // Account for Loopy's scrolling discoveries
-          NES->PPU_Temp = ( NES->PPU_Temp & 0xF3FF ) | ( ( ( (NWORD)byData ) & 0x0003 ) << 10 );
+          NES->PPU_Temp = ( NES->PPU_Temp & 0xF3FF ) | ( ( ( (WORD)byData ) & 0x0003 ) << 10 );
           break;
 
         case 1:   /* 0x2001 */
@@ -231,7 +245,7 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
           break;
 
         case 2:   /* 0x2002 */
-#if 0	  
+#if 0
           NES->PPU_R2 = byData;     // 0x2002 is not writable
 #endif
           break;
@@ -251,14 +265,14 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
           if ( NES->PPU_Latch_Flag )
           {
             // V-Scroll Register
-            NES->PPU_Scr_V_Next = ( byData > 239 ) ? 0 : byData;	    
-	    if ( byData > 239 ) NES->PPU_NameTableBank ^= NAME_TABLE_V_MASK; 
+            NES->PPU_Scr_V_Next = ( byData > 239 ) ? byData - 240 : byData;
+	    if ( byData > 239 ) NES->PPU_NameTableBank ^= NAME_TABLE_V_MASK;
             NES->PPU_Scr_V_Byte_Next = NES->PPU_Scr_V_Next >> 3;
             NES->PPU_Scr_V_Bit_Next = NES->PPU_Scr_V_Next & 7;
 
             // Added : more Loopy Stuff
-	    NES->PPU_Temp = ( NES->PPU_Temp & 0xFC1F ) | ( ( ( (NWORD)byData ) & 0xF8 ) << 2);
-	    NES->PPU_Temp = ( NES->PPU_Temp & 0x8FFF ) | ( ( ( (NWORD)byData ) & 0x07 ) << 12);
+	    NES->PPU_Temp = ( NES->PPU_Temp & 0xFC1F ) | ( ( ( (WORD)byData ) & 0xF8 ) << 2);
+	    NES->PPU_Temp = ( NES->PPU_Temp & 0x8FFF ) | ( ( ( (WORD)byData ) & 0x07 ) << 12);
           }
           else
           {
@@ -268,7 +282,7 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
             NES->PPU_Scr_H_Bit_Next = NES->PPU_Scr_H_Next & 7;
 
             // Added : more Loopy Stuff
-	    NES->PPU_Temp = ( NES->PPU_Temp & 0xFFE0 ) | ( ( ( (NWORD)byData ) & 0xF8 ) >> 3 );
+	    NES->PPU_Temp = ( NES->PPU_Temp & 0xFFE0 ) | ( ( ( (WORD)byData ) & 0xF8 ) >> 3 );
           }
           NES->PPU_Latch_Flag ^= 1;
           break;
@@ -279,32 +293,33 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
           {
             /* Low */
 #if 0
-            NES->PPU_Addr = ( NES->PPU_Addr & 0xff00 ) | ( (NWORD)byData );
+            NES->PPU_Addr = ( NES->PPU_Addr & 0xff00 ) | ( (WORD)byData );
 #else
-            NES->PPU_Temp = ( NES->PPU_Temp & 0xFF00 ) | ( ( (NWORD)byData ) & 0x00FF);
-	    NES->PPU_Addr = NES->PPU_Temp;
+            NES->PPU_Temp = ( NES->PPU_Temp & 0xFF00 ) | ( ( (WORD)byData ) & 0x00FF);
+            NES->PPU_Addr = NES->PPU_Temp;
 #endif
-	    if ( !( NES->PPU_R2 & R2_IN_VBLANK ) ) {
-	      InfoNES_SetupScr();
-	    }
+			if ( !( NES->PPU_R2 & R2_IN_VBLANK ) )
+			{
+			  InfoNES_SetupScr();
+			}
           }
           else
           {
             /* High */
 #if 0
-            NES->PPU_Addr = ( NES->PPU_Addr & 0x00ff ) | ( (NWORD)( byData & 0x3f ) << 8 );
+            NES->PPU_Addr = ( NES->PPU_Addr & 0x00ff ) | ( (WORD)( byData & 0x3f ) << 8 );
             InfoNES_SetupScr();
 #else
-            NES->PPU_Temp = ( NES->PPU_Temp & 0x00FF ) | ( ( ((NWORD)byData) & 0x003F ) << 8 );
-#endif            
+            NES->PPU_Temp = ( NES->PPU_Temp & 0x00FF ) | ( ( ((WORD)byData) & 0x003F ) << 8 );
+#endif
           }
           NES->PPU_Latch_Flag ^= 1;
           break;
 
         case 7:   /* 0x2007 */
           {
-            NWORD addr = NES->PPU_Addr;
-            
+            WORD addr = NES->PPU_Addr;
+
             // Increment PPU Address
             NES->PPU_Addr += NES->PPU_Increment;
             addr &= 0x3fff;
@@ -327,10 +342,10 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
             if ( !( addr & 0xf ) )  /* 0x3f00 or 0x3f10 */
             {
               // Palette mirror
-              PPURAM[ 0x3f10 ] = PPURAM[ 0x3f14 ] = PPURAM[ 0x3f18 ] = PPURAM[ 0x3f1c ] = 
+              PPURAM[ 0x3f10 ] = PPURAM[ 0x3f14 ] = PPURAM[ 0x3f18 ] = PPURAM[ 0x3f1c ] =
               PPURAM[ 0x3f00 ] = PPURAM[ 0x3f04 ] = PPURAM[ 0x3f08 ] = PPURAM[ 0x3f0c ] = byData;
               NES->PalTable[ 0x00 ] = NES->PalTable[ 0x04 ] = NES->PalTable[ 0x08 ] = NES->PalTable[ 0x0c ] =
-              NES->PalTable[ 0x10 ] = NES->PalTable[ 0x14 ] = NES->PalTable[ 0x18 ] = NES->PalTable[ 0x1c ] = NesPalette[ byData ]|0x0020;
+              NES->PalTable[ 0x10 ] = NES->PalTable[ 0x14 ] = NES->PalTable[ 0x18 ] = NES->PalTable[ 0x1c ] = NesPalette[ byData ];
             }
             else
 	    if ( addr & 3 )
@@ -347,88 +362,75 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
     case 0x4000:  /* Sound */
       switch ( wAddr & 0x1f )
       {
-			#ifdef APU_REG_QUICK_ACCESS	
-				 //Call Function corresponding to Sound Registers	
-        case 0x00:InfoNES_pAPUregwrite4000(byData );break;
-        case 0x01:InfoNES_pAPUregwrite4001(byData );break;
-        case 0x02:InfoNES_pAPUregwrite4002(byData );break;
-        case 0x03:InfoNES_pAPUregwrite4003(byData );break;          
-        case 0x04:InfoNES_pAPUregwrite4004(byData );break;
-        case 0x05:InfoNES_pAPUregwrite4005(byData );break;
-        case 0x06:InfoNES_pAPUregwrite4006(byData );break;
-        case 0x07:InfoNES_pAPUregwrite4007(byData );break;
-        case 0x08:InfoNES_pAPUregwrite4008(byData );break;
-        case 0x09:break;
-        case 0x0a:InfoNES_pAPUregwrite400A( byData );break;
-        case 0x0b:InfoNES_pAPUregwrite400B( byData );break;
-        case 0x0c:InfoNES_pAPUregwrite400C( byData );break;
-        case 0x0d:break;
-        case 0x0e:InfoNES_pAPUregwrite400E( byData );break;
-        case 0x0f:InfoNES_pAPUregwrite400F( byData );break;
-        case 0x10:InfoNES_pAPUregwrite4010( byData );break;
-        case 0x11:InfoNES_pAPUregwrite4011( byData );break;	  
-        case 0x12:InfoNES_pAPUregwrite4012( byData );break;
+        case 0x00:
+        case 0x01:
+        case 0x02:
+        case 0x03:
+        case 0x04:
+        case 0x05:
+        case 0x06:
+        case 0x07:
+        case 0x08:
+        case 0x09:
+        case 0x0a:
+        case 0x0b:
+        case 0x0c:
+        case 0x0d:
+        case 0x0e:
+        case 0x0f:
+        case 0x10:
+        case 0x11:
+        case 0x12:
         case 0x13:
-				if( !NES->APU_Mute)
-				InfoNES_pAPUregwrite4013(byData);break;
-			#else
-				//Call Function corresponding to Sound Registers	
-				case 0x00:case 0x01:case 0x02:case 0x03:case 0x04:
-				case 0x05:case 0x06:case 0x07:case 0x08:case 0x09:
-				case 0x0a:case 0x0b:case 0x0c:case 0x0d:case 0x0e:
-				case 0x0f:case 0x10:case 0x11:case 0x12:case 0x13:
-        if(!NES->APU_Mute)
-				InfoNES_pAPUregwrite(wAddr,byData);break;	
-			#endif
-				
+          // Call Function corresponding to Sound Registers
+          if ( !NES->APU_Mute )
+            pAPUSoundRegs[ wAddr & 0x1f ]( wAddr, byData );
+          break;
+
         case 0x14:  /* 0x4014 */
           // Sprite DMA
           switch ( byData >> 5 )
           {
             case 0x0:  /* RAM */
-              InfoNES_MemoryCopy( NES->SPRRAM, &RAM[ ( (NWORD)byData << 8 ) & 0x7ff ], SPRRAM_SIZE );
+              InfoNES_MemoryCopy( NES->SPRRAM, &RAM[ ( (WORD)byData << 8 ) & 0x7ff ], SPRRAM_SIZE );
               break;
 
             case 0x3:  /* SRAM */
-              InfoNES_MemoryCopy( NES->SPRRAM, &SRAM[ ( (NWORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
+              InfoNES_MemoryCopy( NES->SPRRAM, &SRAM[ ( (WORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
               break;
 
             case 0x4:  /* ROM BANK 0 */
-              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK0[ ( (NWORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
+              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK0[ ( (WORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
               break;
 
             case 0x5:  /* ROM BANK 1 */
-              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK1[ ( (NWORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
+              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK1[ ( (WORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
               break;
 
             case 0x6:  /* ROM BANK 2 */
-              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK2[ ( (NWORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
+              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK2[ ( (WORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
               break;
 
             case 0x7:  /* ROM BANK 3 */
-              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK3[ ( (NWORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
+              InfoNES_MemoryCopy( NES->SPRRAM, &ROMBANK3[ ( (WORD)byData << 8 ) & 0x1fff ], SPRRAM_SIZE );
               break;
           }
           break;
 
         case 0x15:  /* 0x4015 */
-		    #ifdef APU_REG_QUICK_ACCESS	
-					InfoNES_pAPUregwrite4015(byData );
-			  #else
-					InfoNES_pAPUregwrite(wAddr,byData);
-			  #endif
+          InfoNES_pAPUWriteControl( wAddr, byData );
 #if 0
           /* Unknown */
-          if ( byData & 0x10 ) 
+          if ( byData & 0x10 )
           {
-						byData &= ~0x80;
-					}
+	    byData &= ~0x80;
+	  }
 #endif
           break;
 
         case 0x16:  /* 0x4016 */
-	  // For VS-Unisystem
-	  MapperApu( wAddr, byData );
+          // For VS-Unisystem
+         MapperApu( wAddr, byData );
           // Reset joypad
           if ( !( NES->APU_Reg[ 0x16 ] & 1 ) && ( byData & 1 ) )
           {
@@ -481,20 +483,24 @@ static  void K6502_Write( NWORD wAddr, NBYTE byData )
   }
 }
 
-// Reading/Writing operation (NWORD version)
-static  NWORD K6502_ReadW( NWORD wAddr ){ return K6502_Read( wAddr ) | (NWORD)K6502_Read( wAddr + 1 ) << 8; };
-static  void K6502_WriteW( NWORD wAddr, NWORD wData ){ K6502_Write( wAddr, wData & 0xff ); K6502_Write( wAddr + 1, wData >> 8 ); };
-static  NWORD K6502_ReadZpW( NBYTE byAddr ){ return K6502_ReadZp( byAddr ) | ( K6502_ReadZp( byAddr + 1 ) << 8 ); };
+// Reading/Writing operation (WORD version)
+static __inline WORD K6502_ReadW( WORD wAddr ){ return K6502_Read( wAddr ) | (WORD)K6502_Read( wAddr + 1 ) << 8; };
+static __inline void K6502_WriteW( WORD wAddr, WORD wData ){ K6502_Write( wAddr, wData & 0xff ); K6502_Write( wAddr + 1, wData >> 8 ); };
+static __inline WORD K6502_ReadZpW( BYTE byAddr ){ return K6502_ReadZp( byAddr ) | ( K6502_ReadZp( byAddr + 1 ) << 8 ); };
 
 // 6502's indirect absolute jmp(opcode: 6C) has a bug (added at 01/08/15 )
-static  NWORD K6502_ReadW2( NWORD wAddr )
-{ 
+static __inline WORD K6502_ReadW2( WORD wAddr )
+{
   if ( 0x00ff == ( wAddr & 0x00ff ) )
   {
-    return K6502_Read( wAddr ) | (NWORD)K6502_Read( wAddr - 0x00ff ) << 8;
+    return K6502_Read( wAddr ) | (WORD)K6502_Read( wAddr - 0x00ff ) << 8;
   } else {
-    return K6502_Read( wAddr ) | (NWORD)K6502_Read( wAddr + 1 ) << 8;
+    return K6502_Read( wAddr ) | (WORD)K6502_Read( wAddr + 1 ) << 8;
   }
 }
+
+#ifdef	__cplusplus
+}
+#endif
 
 #endif /* !K6502_RW_H_INCLUDED */

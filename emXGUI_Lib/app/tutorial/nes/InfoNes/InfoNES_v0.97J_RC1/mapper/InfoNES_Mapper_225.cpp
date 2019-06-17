@@ -61,10 +61,10 @@ void Map225_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 225 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map225_Write( NWORD wAddr, NBYTE byData )
+void Map225_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank = (wAddr & 0x0F80) >> 7;
-  NBYTE byChrBank = wAddr & 0x003F;
+  BYTE byPrgBank = (wAddr & 0x0F80) >> 7;
+  BYTE byChrBank = wAddr & 0x003F;
   
   PPUBANK[ 0 ] = VROMPAGE(((byChrBank<<3)+0) % ( Neshd->byVRomSize << 3 ) );
   PPUBANK[ 1 ] = VROMPAGE(((byChrBank<<3)+1) % ( Neshd->byVRomSize << 3 ) );

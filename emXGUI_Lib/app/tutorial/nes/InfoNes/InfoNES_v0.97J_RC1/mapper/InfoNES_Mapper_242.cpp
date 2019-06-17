@@ -52,7 +52,7 @@ void Map242_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 242 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map242_Write( NWORD wAddr, NBYTE byData )
+void Map242_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr & 0x01 ) {
     /* Set ROM Banks */

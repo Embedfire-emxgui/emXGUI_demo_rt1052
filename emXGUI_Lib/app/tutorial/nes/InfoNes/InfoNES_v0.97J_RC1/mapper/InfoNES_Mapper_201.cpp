@@ -61,9 +61,9 @@ void Map201_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 201 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map201_Write( NWORD wAddr, NBYTE byData )
+void Map201_Write( WORD wAddr, BYTE byData )
 {
-	NBYTE byBank = (NBYTE)wAddr & 0x03;
+	BYTE byBank = (BYTE)wAddr & 0x03;
 	if (!(wAddr&0x08) )
 		byBank = 0;
 

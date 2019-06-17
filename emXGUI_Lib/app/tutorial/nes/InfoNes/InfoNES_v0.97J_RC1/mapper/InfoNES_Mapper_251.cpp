@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map251_Reg[11];
-NBYTE	Map251_Breg[4];
+BYTE	Map251_Reg[11];
+BYTE	Map251_Breg[4];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 251                                            */
@@ -65,7 +65,7 @@ void Map251_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 251 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map251_Write( NWORD wAddr, NBYTE byData )
+void Map251_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xE001 ) {
   case	0x8000:
@@ -90,7 +90,7 @@ void Map251_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 251 Write to SRAM Function                                */
 /*-------------------------------------------------------------------*/
-void Map251_Sram( NWORD wAddr, NBYTE byData )
+void Map251_Sram( WORD wAddr, BYTE byData )
 {
   if( (wAddr & 0xE001) == 0x6000 ) {
     if( Map251_Reg[9] ) {

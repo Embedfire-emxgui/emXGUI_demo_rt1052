@@ -4,29 +4,29 @@
 /*                                                                   */
 /*===================================================================*/
 #pragma arm section zidata = "EXTSDRAM_ZI"
-NBYTE Map5_Wram[ 0x2000 * 8 ];
+BYTE Map5_Wram[ 0x2000 * 8 ];
 #pragma arm section zidata
 
-NBYTE Map5_Ex_Ram[ 0x400 ]; 
-NBYTE Map5_Ex_Vram[ 0x400 ];
-NBYTE Map5_Ex_Nam[ 0x400 ];
+BYTE Map5_Ex_Ram[ 0x400 ]; 
+BYTE Map5_Ex_Vram[ 0x400 ];
+BYTE Map5_Ex_Nam[ 0x400 ];
 
-NBYTE Map5_Prg_Reg[ 8 ];
-NBYTE Map5_Wram_Reg[ 8 ];
-NBYTE Map5_Chr_Reg[ 8 ][ 2 ];
+BYTE Map5_Prg_Reg[ 8 ];
+BYTE Map5_Wram_Reg[ 8 ];
+BYTE Map5_Chr_Reg[ 8 ][ 2 ];
 
-NBYTE Map5_IRQ_Enable;
-NBYTE Map5_IRQ_Status;
-NBYTE Map5_IRQ_Line;
+BYTE Map5_IRQ_Enable;
+BYTE Map5_IRQ_Status;
+BYTE Map5_IRQ_Line;
 
-NDWORD Map5_Value0;
-NDWORD Map5_Value1;
+DWORD Map5_Value0;
+DWORD Map5_Value1;
 
-NBYTE Map5_Wram_Protect0;
-NBYTE Map5_Wram_Protect1;
-NBYTE Map5_Prg_Size;
-NBYTE Map5_Chr_Size;
-NBYTE Map5_Gfx_Mode;
+BYTE Map5_Wram_Protect0;
+BYTE Map5_Wram_Protect1;
+BYTE Map5_Prg_Size;
+BYTE Map5_Chr_Size;
+BYTE Map5_Gfx_Mode;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 5                                              */
@@ -34,7 +34,7 @@ NBYTE Map5_Gfx_Mode;
 void Map5_Init()
 {
   int nPage;
-  NBYTE byPage;
+  BYTE byPage;
 
   /* Initialize Mapper */
   MapperInit = Map5_Init;
@@ -113,9 +113,9 @@ void Map5_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 5 Read from APU Function                                  */
 /*-------------------------------------------------------------------*/
-NBYTE Map5_ReadApu( NWORD wAddr )
+BYTE Map5_ReadApu( WORD wAddr )
 {
-  NBYTE byRet = (NBYTE)( wAddr >> 8 );
+  BYTE byRet = (BYTE)( wAddr >> 8 );
 
   switch ( wAddr )
   {
@@ -125,11 +125,11 @@ NBYTE Map5_ReadApu( NWORD wAddr )
       break;
 
     case 0x5205:
-      byRet = (NBYTE)( ( Map5_Value0 * Map5_Value1 ) & 0x00ff );
+      byRet = (BYTE)( ( Map5_Value0 * Map5_Value1 ) & 0x00ff );
       break;
 
     case 0x5206:
-      byRet = (NBYTE)( ( ( Map5_Value0 * Map5_Value1 ) & 0xff00 ) >> 8 );
+      byRet = (BYTE)( ( ( Map5_Value0 * Map5_Value1 ) & 0xff00 ) >> 8 );
       break;
 
     default:
@@ -145,7 +145,7 @@ NBYTE Map5_ReadApu( NWORD wAddr )
 /*-------------------------------------------------------------------*/
 /*  Mapper 5 Write to APU Function                                   */
 /*-------------------------------------------------------------------*/
-void Map5_Apu( NWORD wAddr, NBYTE byData )
+void Map5_Apu( WORD wAddr, BYTE byData )
 {
   int nPage;
 
@@ -174,7 +174,7 @@ void Map5_Apu( NWORD wAddr, NBYTE byData )
     case 0x5105:
       for ( nPage = 0; nPage < 4; nPage++ )
       {
-        NBYTE byNamReg;
+        BYTE byNamReg;
         
         byNamReg = byData & 0x03;
         byData = byData >> 2;
@@ -299,7 +299,7 @@ void Map5_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 5 Write to SRAM Function                                  */
 /*-------------------------------------------------------------------*/
-void Map5_Sram( NWORD wAddr, NBYTE byData )
+void Map5_Sram( WORD wAddr, BYTE byData )
 {
   if ( Map5_Wram_Protect0 == 0x02 && Map5_Wram_Protect1 == 0x01 )
   {
@@ -313,7 +313,7 @@ void Map5_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 5 Write Function                                          */
 /*-------------------------------------------------------------------*/
-void Map5_Write( NWORD wAddr, NBYTE byData )
+void Map5_Write( WORD wAddr, BYTE byData )
 {
   if ( Map5_Wram_Protect0 == 0x02 && Map5_Wram_Protect1 == 0x01 )
   {
@@ -371,14 +371,14 @@ void Map5_HSync()
 /*-------------------------------------------------------------------*/
 /*  Mapper 5 Rendering Screen Function                               */
 /*-------------------------------------------------------------------*/
-void Map5_RenderScreen( NBYTE byMode )
+void Map5_RenderScreen( BYTE byMode )
 {
-  NDWORD dwPage[ 8 ];
+  DWORD dwPage[ 8 ];
 
   switch ( Map5_Chr_Size )
   {
     case 0:
-      dwPage[ 7 ] = ( (NDWORD)Map5_Chr_Reg[7][byMode] << 3 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 7 ] = ( (DWORD)Map5_Chr_Reg[7][byMode] << 3 ) % ( NesHeader.byVRomSize << 3 );
 
       PPUBANK[ 0 ] = VROMPAGE( dwPage[ 7 ] + 0 );
       PPUBANK[ 1 ] = VROMPAGE( dwPage[ 7 ] + 1 );
@@ -392,8 +392,8 @@ void Map5_RenderScreen( NBYTE byMode )
       break;
 
     case 1:
-      dwPage[ 3 ] = ( (NDWORD)Map5_Chr_Reg[3][byMode] << 2 ) % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 7 ] = ( (NDWORD)Map5_Chr_Reg[7][byMode] << 2 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 3 ] = ( (DWORD)Map5_Chr_Reg[3][byMode] << 2 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 7 ] = ( (DWORD)Map5_Chr_Reg[7][byMode] << 2 ) % ( NesHeader.byVRomSize << 3 );
 
       PPUBANK[ 0 ] = VROMPAGE( dwPage[ 3 ] + 0 );
       PPUBANK[ 1 ] = VROMPAGE( dwPage[ 3 ] + 1 );
@@ -407,10 +407,10 @@ void Map5_RenderScreen( NBYTE byMode )
       break;
 
     case 2:
-      dwPage[ 1 ] = ( (NDWORD)Map5_Chr_Reg[1][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 3 ] = ( (NDWORD)Map5_Chr_Reg[3][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 5 ] = ( (NDWORD)Map5_Chr_Reg[5][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 7 ] = ( (NDWORD)Map5_Chr_Reg[7][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 1 ] = ( (DWORD)Map5_Chr_Reg[1][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 3 ] = ( (DWORD)Map5_Chr_Reg[3][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 5 ] = ( (DWORD)Map5_Chr_Reg[5][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 7 ] = ( (DWORD)Map5_Chr_Reg[7][byMode] << 1 ) % ( NesHeader.byVRomSize << 3 );
 
       PPUBANK[ 0 ] = VROMPAGE( dwPage[ 1 ] + 0 );
       PPUBANK[ 1 ] = VROMPAGE( dwPage[ 1 ] + 1 );
@@ -424,14 +424,14 @@ void Map5_RenderScreen( NBYTE byMode )
       break;
 
     default:
-      dwPage[ 0 ] = (NDWORD)Map5_Chr_Reg[0][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 1 ] = (NDWORD)Map5_Chr_Reg[1][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 2 ] = (NDWORD)Map5_Chr_Reg[2][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 3 ] = (NDWORD)Map5_Chr_Reg[3][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 4 ] = (NDWORD)Map5_Chr_Reg[4][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 5 ] = (NDWORD)Map5_Chr_Reg[5][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 6 ] = (NDWORD)Map5_Chr_Reg[6][byMode] % ( NesHeader.byVRomSize << 3 );
-      dwPage[ 7 ] = (NDWORD)Map5_Chr_Reg[7][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 0 ] = (DWORD)Map5_Chr_Reg[0][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 1 ] = (DWORD)Map5_Chr_Reg[1][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 2 ] = (DWORD)Map5_Chr_Reg[2][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 3 ] = (DWORD)Map5_Chr_Reg[3][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 4 ] = (DWORD)Map5_Chr_Reg[4][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 5 ] = (DWORD)Map5_Chr_Reg[5][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 6 ] = (DWORD)Map5_Chr_Reg[6][byMode] % ( NesHeader.byVRomSize << 3 );
+      dwPage[ 7 ] = (DWORD)Map5_Chr_Reg[7][byMode] % ( NesHeader.byVRomSize << 3 );
 
       PPUBANK[ 0 ] = VROMPAGE( dwPage[ 0 ] );
       PPUBANK[ 1 ] = VROMPAGE( dwPage[ 1 ] );

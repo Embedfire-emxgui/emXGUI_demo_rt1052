@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map18_Regs[11];
-NBYTE Map18_IRQ_Enable;
-NWORD Map18_IRQ_Latch;
-NWORD Map18_IRQ_Cnt;
+BYTE Map18_Regs[11];
+BYTE Map18_IRQ_Enable;
+WORD Map18_IRQ_Latch;
+WORD Map18_IRQ_Cnt;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 18                                             */
@@ -68,7 +68,7 @@ void Map18_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 18 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map18_Write( NWORD wAddr, NBYTE byData )
+void Map18_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr )
   {

@@ -9,11 +9,36 @@
 #ifndef InfoNES_H_INCLUDED
 #define InfoNES_H_INCLUDED
 
+#include "InfoNES_Types.h"
+
+/* Initialize Mapper */
+extern void (*MapperInit)();
+/* Write to Mapper */
+extern void (*MapperWrite)( WORD wAddr, BYTE byData );
+/* Write to SRAM */
+extern void (*MapperSram)( WORD wAddr, BYTE byData );
+/* Write to APU */
+extern void (*MapperApu)( WORD wAddr, BYTE byData );
+/* Read from Apu */
+extern BYTE (*MapperReadApu)( WORD wAddr );
+/* Callback at VSync */
+extern void (*MapperVSync)();
+/* Callback at HSync */
+extern void (*MapperHSync)();
+/* Callback at PPU read/write */
+extern void (*MapperPPU)( WORD wAddr );
+/* Callback at Rendering Screen 1:BG, 0:Sprite */
+extern void (*MapperRenderScreen)( BYTE byMode );
+
+#ifdef	__cplusplus
+extern "C"{
+#endif
+
 /*-------------------------------------------------------------------*/
 /*  Include files                                                    */
 /*-------------------------------------------------------------------*/
 
-#include "InfoNES_Types.h"
+
 
 /*-------------------------------------------------------------------*/
 /*  NES resources                                                    */
@@ -25,188 +50,175 @@
 #define SPRRAM_SIZE  256
 
 
-
-
 typedef struct
 {
-    NDWORD PAD1_Latch;
-    NDWORD PAD2_Latch;
-    NDWORD PAD_System;
-    NDWORD PAD1_Bit;
-    NDWORD PAD2_Bit; 
-    NBYTE *PPU_BG_Base;//BG Base Address
-    NBYTE *PPU_SP_Base;//Sprite Base Address    
+    DWORD PAD1_Latch;
+    DWORD PAD2_Latch;
+    DWORD PAD_System;
+    DWORD PAD1_Bit;
+    DWORD PAD2_Bit; 
+    BYTE *PPU_BG_Base;//BG Base Address
+    BYTE *PPU_SP_Base;//Sprite Base Address    
     int  SpriteJustHit;//Sprite #0 Scanline Hit Position
     int  APU_Mute;//APU Mute(0:OFF,1:ON)     
-    NWORD PPU_Addr;//PPU Address
-    NWORD PPU_Temp;//PPU Address
-    NWORD PPU_Increment;//The increase value of the PPU Address
-    NWORD PPU_Scanline;//Current Scanline 
-    NWORD PPU_SP_Height;//Sprite Height
-    NWORD FrameStep;
-    NWORD LcdRes;  //LcdResolution	
-    NWORD PalTable[32];//Palette Table 
-    NWORD *Linebuf[2];//Includding padding bytes 
-	  NBYTE LineCount;
-    NBYTE PPU_NameTableBank;//Name Table Bank    
-    NBYTE byVramWriteEnable;//VRAM Write Enable ( 0: Disable, 1: Enable )
-    NBYTE PPU_Latch_Flag;//PPU Address and Scroll Latch Flag
-    NBYTE PPU_UpDown_Clip;//Up and Down Clipping Flag (0:non-clip,1:clip)
-    NBYTE FrameIRQ_Enable;//Frame IRQ (0:Disabled,1:Enabled)  
-    NBYTE ChrBufUpdate;//Update flag for ChrBuf                                       
-    NBYTE MapperNo;//Mapper Number
-    NBYTE ROM_Mirroring;//Mirroring 0:Horizontal 1:Vertical
-    NBYTE ROM_SRAM;//It has SRAM
-    NBYTE ROM_Trainer;//It has Trainer
-    NBYTE ROM_FourScr;//Four screen VRAM 
-    NBYTE PPU_R0;
-    NBYTE PPU_R1;
-    NBYTE PPU_R2;
-    NBYTE PPU_R3;
-    NBYTE PPU_R7;
-    NBYTE PPU_Scr_V;
-    NBYTE PPU_Scr_V_Next;
-    NBYTE PPU_Scr_V_Byte;
-    NBYTE PPU_Scr_V_Byte_Next;
-    NBYTE PPU_Scr_V_Bit;
-    NBYTE PPU_Scr_V_Bit_Next; 
-    NBYTE PPU_Scr_H;
-    NBYTE PPU_Scr_H_Next;
-    NBYTE PPU_Scr_H_Byte;
-    NBYTE PPU_Scr_H_Byte_Next;
-    NBYTE PPU_Scr_H_Bit;
-    NBYTE PPU_Scr_H_Bit_Next;
-    NBYTE FrameCnt;      
-    NBYTE APU_Reg[ 0x18 ];//APU Register    
-    NBYTE PPU_ScanTable[ 264 ];//Scanline Table
-    NBYTE SPRRAM[SPRRAM_SIZE];   
+    WORD PPU_Addr;//PPU Address
+    WORD PPU_Temp;//PPU Address
+    WORD PPU_Increment;//The increase value of the PPU Address
+    WORD PPU_Scanline;//Current Scanline 
+    WORD PPU_SP_Height;//Sprite Height
+    WORD FrameStep;       
+    WORD PalTable[32];//Palette Table 
+ //   WORD Linebuf[322];//Includding padding bytes
+    BYTE PPU_NameTableBank;//Name Table Bank    
+    BYTE byVramWriteEnable;//VRAM Write Enable ( 0: Disable, 1: Enable )
+    BYTE PPU_Latch_Flag;//PPU Address and Scroll Latch Flag
+    BYTE PPU_UpDown_Clip;//Up and Down Clipping Flag (0:non-clip,1:clip)
+    BYTE FrameIRQ_Enable;//Frame IRQ (0:Disabled,1:Enabled)  
+    BYTE ChrBufUpdate;//Update flag for ChrBuf                                       
+    BYTE MapperNo;//Mapper Number
+    BYTE ROM_Mirroring;//Mirroring 0:Horizontal 1:Vertical
+    BYTE ROM_SRAM;//It has SRAM
+    BYTE ROM_Trainer;//It has Trainer
+    BYTE ROM_FourScr;//Four screen VRAM 
+    BYTE PPU_R0;
+    BYTE PPU_R1;
+    BYTE PPU_R2;
+    BYTE PPU_R3;
+    BYTE PPU_R7;
+    BYTE PPU_Scr_V;
+    BYTE PPU_Scr_V_Next;
+    BYTE PPU_Scr_V_Byte;
+    BYTE PPU_Scr_V_Byte_Next;
+    BYTE PPU_Scr_V_Bit;
+    BYTE PPU_Scr_V_Bit_Next; 
+    BYTE PPU_Scr_H;
+    BYTE PPU_Scr_H_Next;
+    BYTE PPU_Scr_H_Byte;
+    BYTE PPU_Scr_H_Byte_Next;
+    BYTE PPU_Scr_H_Bit;
+    BYTE PPU_Scr_H_Bit_Next;
+    BYTE FrameCnt;      
+    BYTE APU_Reg[ 0x18 ];//APU Register    
+    BYTE PPU_ScanTable[ 264 ];//Scanline Table
+    BYTE SPRRAM[SPRRAM_SIZE];   
 }NesResource;
 
-
-/**************文件头说明****************/
-/*
-  0－3  4   字符串“NES^Z”用来识别.NES文件  
-     4  1   16kB ROM的数目  
-     5  1   8kB VROM的数目  
-     6  1   D0：1＝垂直镜像，0＝水平镜像  
-            D1：1＝有电池记忆，SRAM地址$6000-$7FFF  
-            D2：1＝在$7000-$71FF有一个512字节的trainer  
-            D3：1＝屏幕VRAM布局  
-            D4－D7：ROM Mapper的低4位  
-     7  1   D0－D3：保留，必须是0（准备作为副Mapper号^_^）  
-            D4－D7：ROM Mapper的高4位  
-  8－F  8   保留，必须是0
-以下为文件内容：y的值取决于文件头结构体的byRomSize。PROM的大小是16K，VROM是8K
-  16-y      ROM段升序排列，如果存在trainer，它的512字节摆在ROM段之前
-   y-EOF    VROM段, 升序排列 
-*/
+/* .nes File Header */
 #pragma pack(1)
 typedef struct 
 {
-  NBYTE byID[ 4 ];
-  NBYTE byRomSize;
-  NBYTE byVRomSize;
-  NBYTE byInfo1;
-  NBYTE byInfo2;
-  NBYTE byReserve[ 8 ];
+  BYTE byID[ 4 ];
+  BYTE byRomSize;
+  BYTE byVRomSize;
+  BYTE byInfo1;
+  BYTE byInfo2;
+  BYTE byReserve[ 8 ];
 }NesHeader;
 #pragma pack()
 
 extern NesResource *NES;
 /* RAM */
-extern NBYTE *RAM;
+extern BYTE *RAM;
 /* SRAM */
-extern NBYTE *SRAM;
+extern BYTE *SRAM;
 /* ROM */
-extern NBYTE *ROM;
+extern BYTE *ROM;
 /* SRAM BANK ( 8Kb ) */
-extern NBYTE *SRAMBANK;
+extern BYTE *SRAMBANK;
 /* ROM BANK ( 8Kb * 4 ) */
-extern NBYTE *ROMBANK0;
-extern NBYTE *ROMBANK1;
-extern NBYTE *ROMBANK2;
-extern NBYTE *ROMBANK3;
+extern BYTE *ROMBANK0;
+extern BYTE *ROMBANK1;
+extern BYTE *ROMBANK2;
+extern BYTE *ROMBANK3;
 /*-------------------------------------------------------------------*/
 /*  PPU resources                                                    */
 /*-------------------------------------------------------------------*/
 /* PPU RAM */
-extern NBYTE *PPURAM;
+extern BYTE *PPURAM;
 /* VROM */
-extern NBYTE *VROM;
+extern BYTE *VROM;
 /* PPU BANK ( 1Kb * 16 ) */
-extern NBYTE *PPUBANK[];
+extern BYTE *PPUBANK[];
 /* Sprite RAM */
-extern NBYTE SPRRAM[];
+extern BYTE SPRRAM[];
+
+#if 0
 /* PPU Register */
-extern NBYTE PPU_R0;
-extern NBYTE PPU_R1;
-extern NBYTE PPU_R2;
-extern NBYTE PPU_R3;
-extern NBYTE PPU_R7;
-extern NBYTE PPU_Scr_V;
-extern NBYTE PPU_Scr_V_Next;
-extern NBYTE PPU_Scr_V_Byte;
-extern NBYTE PPU_Scr_V_Byte_Next;
-extern NBYTE PPU_Scr_V_Bit;
-extern NBYTE PPU_Scr_V_Bit_Next;
-extern NBYTE PPU_Scr_H;
-extern NBYTE PPU_Scr_H_Next;
-extern NBYTE PPU_Scr_H_Byte;
-extern NBYTE PPU_Scr_H_Byte_Next;
-extern NBYTE PPU_Scr_H_Bit;
-extern NBYTE PPU_Scr_H_Bit_Next;
-extern NBYTE PPU_Latch_Flag;
-extern NWORD PPU_Addr;
-extern NWORD PPU_Temp;
-extern NWORD PPU_Increment;
-extern NBYTE PPU_Latch_Flag;
-extern NBYTE PPU_UpDown_Clip;
+extern BYTE PPU_R0;
+extern BYTE PPU_R1;
+extern BYTE PPU_R2;
+extern BYTE PPU_R3;
+extern BYTE PPU_R7;
+extern BYTE PPU_Scr_V;
+extern BYTE PPU_Scr_V_Next;
+extern BYTE PPU_Scr_V_Byte;
+extern BYTE PPU_Scr_V_Byte_Next;
+extern BYTE PPU_Scr_V_Bit;
+extern BYTE PPU_Scr_V_Bit_Next;
+extern BYTE PPU_Scr_H;
+extern BYTE PPU_Scr_H_Next;
+extern BYTE PPU_Scr_H_Byte;
+extern BYTE PPU_Scr_H_Byte_Next;
+extern BYTE PPU_Scr_H_Bit;
+extern BYTE PPU_Scr_H_Bit_Next;
+extern BYTE PPU_Latch_Flag;
+extern WORD PPU_Addr;
+extern WORD PPU_Temp;
+extern WORD PPU_Increment;
+extern BYTE PPU_Latch_Flag;
+extern BYTE PPU_UpDown_Clip;
+
 /* Current Scanline */
-extern NWORD PPU_Scanline;
+extern WORD PPU_Scanline;
 /* Scanline Table */
-extern NBYTE PPU_ScanTable[];
+extern BYTE PPU_ScanTable[];
 /* Name Table Bank */
-extern NBYTE PPU_NameTableBank;
+extern BYTE PPU_NameTableBank;
 /* BG Base Address */
-extern NBYTE *PPU_BG_Base;
+extern BYTE *PPU_BG_Base;
 /* Sprite Base Address */
-extern NBYTE *PPU_SP_Base;
+extern BYTE *PPU_SP_Base;
 /* Sprite Height */
-extern NWORD PPU_SP_Height;
+extern WORD PPU_SP_Height;
 /* VRAM Write Enable ( 0: Disable, 1: Enable ) */
-extern NBYTE byVramWriteEnable;
+extern BYTE byVramWriteEnable;
 /* Frame IRQ ( 0: Disabled, 1: Enabled )*/
-extern NBYTE FrameIRQ_Enable;
-extern NWORD FrameStep;
+extern BYTE FrameIRQ_Enable;
+extern WORD FrameStep;
+#endif
 /*-------------------------------------------------------------------*/
 /*  Display and Others resouces                                      */
 /*-------------------------------------------------------------------*/
 /* Frame Skip */
-extern NWORD FrameSkip;
-extern NWORD FrameCnt;
-extern NWORD FrameWait;
-extern NBYTE *ChrBuf;
-extern NBYTE ChrBufUpdate;
-extern NWORD PalTable[];
+extern WORD FrameSkip;
+extern WORD FrameCnt;
+extern WORD FrameWait;
+extern BYTE *ChrBuf;
+extern BYTE ChrBufUpdate;
+extern WORD PalTable[];
 /*-------------------------------------------------------------------*/
 /*  APU and Pad resources                                            */
 /*-------------------------------------------------------------------*/
-extern NBYTE APU_Reg[];
+extern BYTE APU_Reg[];
 extern int APU_Mute;
-extern NDWORD PAD1_Latch;
-extern NDWORD PAD2_Latch;
-extern NDWORD PAD_System;
-extern NDWORD PAD1_Bit;
-extern NDWORD PAD2_Bit;
+extern DWORD PAD1_Latch;
+extern DWORD PAD2_Latch;
+extern DWORD PAD_System;
+extern DWORD PAD1_Bit;
+extern DWORD PAD2_Bit;
+
 /* .nes File Header */
 extern NesHeader *Neshd;
+
+#if 0
 /* Mapper No. */
-extern NBYTE MapperNo;
+extern BYTE MapperNo;
 /* Other */
-extern NBYTE ROM_Mirroring;
-extern NBYTE ROM_SRAM;
-extern NBYTE ROM_Trainer;
-extern NBYTE ROM_FourScr;
+extern BYTE ROM_Mirroring;
+extern BYTE ROM_SRAM;
+extern BYTE ROM_Trainer;
+extern BYTE ROM_FourScr;
+#endif
 
 #define NAME_TABLE0  8
 #define NAME_TABLE1  9
@@ -250,24 +262,22 @@ extern NBYTE ROM_FourScr;
 #define SCAN_UNKNOWN_START            240
 #define SCAN_VBLANK_START             243
 #define SCAN_VBLANK_END               262
-#define STEP_PER_SCANLINE             113
-#define STEP_PER_FRAME                29828
+
+#define STEP_PER_SCANLINE             (113)
+#define STEP_PER_FRAME                (29828)
+
 /* NES display size */
 #define NES_DISP_WIDTH      256
-#define NES_DISP_HEIGHT     224
-
-#define RESOLUTION256_224 256
-#define RESOLUTION320_224 320
+#define NES_DISP_HEIGHT     240
 
 /* Develop Scroll Registers */
 #define InfoNES_SetupScr() \
 { \
   /* V-Scroll Register */ \
-	 NES->PPU_Scr_V_Next = ( NBYTE )( NES->PPU_Addr & 0x001f ); \
-   NES->PPU_Scr_V_Byte_Next = NES->PPU_Scr_V_Next >> 3; \
-  /*PPU_Scr_V_Bit_Next = PPU_Scr_V_Next & 0x07;*/ \
+  /* PPU_Scr_V_Byte_Next = ( BYTE )( ( PPU_Addr & 0x03e0 ) >> 5 ); */ \
+  /* PPU_Scr_V_Bit_Next = ( BYTE )( ( PPU_Addr & 0x7000 ) >> 12 ); */ \
   /* H-Scroll Register */ \
-  /* PPU_Scr_H_Byte_Next = ( NBYTE )( PPU_Addr & 0x001f ); */ \
+  /* PPU_Scr_H_Byte_Next = ( BYTE )( PPU_Addr & 0x001f ); */ \
   /* NameTableBank */ \
   NES->PPU_NameTableBank = NAME_TABLE0 + ( ( NES->PPU_Addr & 0x0C00 ) >> 10 ); \
 }
@@ -285,24 +295,6 @@ extern NBYTE ROM_FourScr;
 /*  Mapper Function                                                  */
 /*-------------------------------------------------------------------*/
 
-/* Initialize Mapper */
-extern void (*MapperInit)();
-/* Write to Mapper */
-extern void (*MapperWrite)( NWORD wAddr, NBYTE byData );
-/* Write to SRAM */
-extern void (*MapperSram)( NWORD wAddr, NBYTE byData );
-/* Write to APU */
-extern void (*MapperApu)( NWORD wAddr, NBYTE byData );
-/* Read from Apu */
-extern NBYTE (*MapperReadApu)( NWORD wAddr );
-/* Callback at VSync */
-extern void (*MapperVSync)();
-/* Callback at HSync */
-extern void (*MapperHSync)();
-/* Callback at PPU read/write */
-extern void (*MapperPPU)( NWORD wAddr );
-/* Callback at Rendering Screen 1:BG, 0:Sprite */
-extern void (*MapperRenderScreen)( NBYTE byMode );
 
 /*-------------------------------------------------------------------*/
 /*  ROM information                                                  */
@@ -337,5 +329,9 @@ void InfoNES_GetSprHitY(void);
 /* Develop character data */
 void InfoNES_SetupChr(void);
 
+
+#ifdef	__cplusplus
+}
+#endif
 
 #endif /* !InfoNES_H_INCLUDED */

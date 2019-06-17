@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE    Map134_Cmd, Map134_Prg, Map134_Chr;
+BYTE    Map134_Cmd, Map134_Prg, Map134_Chr;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 134                                            */
@@ -63,7 +63,7 @@ void Map134_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 134 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map134_Apu( NWORD wAddr, NBYTE byData )
+void Map134_Apu( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0x4101 ) {
   case	0x4100:

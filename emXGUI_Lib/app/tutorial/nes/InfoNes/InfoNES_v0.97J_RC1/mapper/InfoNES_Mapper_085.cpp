@@ -4,13 +4,13 @@
 /*                                                                   */
 /*===================================================================*/
 #pragma arm section zidata = "EXTSDRAM_ZI"
-NBYTE Map85_Chr_Ram[ 0x100 * 0x400 ];
+BYTE Map85_Chr_Ram[ 0x100 * 0x400 ];
 #pragma arm section zidata
 
-NBYTE Map85_Regs[ 1 ];
-NBYTE Map85_IRQ_Enable;
-NBYTE Map85_IRQ_Cnt;
-NBYTE Map85_IRQ_Latch;
+BYTE Map85_Regs[ 1 ];
+BYTE Map85_IRQ_Enable;
+BYTE Map85_IRQ_Cnt;
+BYTE Map85_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 85                                             */
@@ -77,7 +77,7 @@ void Map85_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 85 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map85_Write( NWORD wAddr, NBYTE byData )
+void Map85_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xf030 )
   {

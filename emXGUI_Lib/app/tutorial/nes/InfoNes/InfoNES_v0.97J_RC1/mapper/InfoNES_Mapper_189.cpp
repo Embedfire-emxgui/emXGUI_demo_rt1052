@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map189_Regs[ 1 ];
-NBYTE Map189_IRQ_Cnt;
-NBYTE Map189_IRQ_Latch;
-NBYTE Map189_IRQ_Enable;
+BYTE Map189_Regs[ 1 ];
+BYTE Map189_IRQ_Cnt;
+BYTE Map189_IRQ_Latch;
+BYTE Map189_IRQ_Enable;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 189                                            */
@@ -74,7 +74,7 @@ void Map189_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 189 Write to Apu Function                                 */
 /*-------------------------------------------------------------------*/
-void Map189_Apu( NWORD wAddr, NBYTE byData )
+void Map189_Apu( WORD wAddr, BYTE byData )
 {
   if ( wAddr >= 0x4100 && wAddr <= 0x41FF )
   {
@@ -89,7 +89,7 @@ void Map189_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 189 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map189_Write( NWORD wAddr, NBYTE byData )
+void Map189_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   switch( wAddr )

@@ -52,12 +52,12 @@ void Map122_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 122 Write to Sram Function                                */
 /*-------------------------------------------------------------------*/
-void Map122_Sram( NWORD wAddr, NBYTE byData )
+void Map122_Sram( WORD wAddr, BYTE byData )
 {
   if ( wAddr == 0x6000 )
   {
-    NBYTE byChrBank0 = byData & 0x07;
-    NBYTE byChrBank1 = ( byData & 0x70 ) >> 4;
+    BYTE byChrBank0 = byData & 0x07;
+    BYTE byChrBank1 = ( byData & 0x70 ) >> 4;
 
     byChrBank0 = ( byChrBank0 << 2 ) % ( NesHeader.byVRomSize << 3 );
     byChrBank1 = ( byChrBank1 << 2 ) % ( NesHeader.byVRomSize << 3 );

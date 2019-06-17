@@ -4,6 +4,106 @@
 /*                                                                   */
 /*===================================================================*/
 
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 Write Function                                          */
+/*-------------------------------------------------------------------*/
+static void Map0_Write( WORD wAddr, BYTE byData )
+{
+/*
+ *  Dummy Write to Mapper
+ *
+ */
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 Write to SRAM Function                                  */
+/*-------------------------------------------------------------------*/
+static void Map0_Sram( WORD wAddr, BYTE byData )
+{
+/*
+ *  Dummy Write to Sram
+ *
+ */
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 Write to APU Function                                   */
+/*-------------------------------------------------------------------*/
+static void Map0_Apu( WORD wAddr, BYTE byData )
+{
+/*
+ *  Dummy Write to Apu
+ *
+ */
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 Read from APU Function                                  */
+/*-------------------------------------------------------------------*/
+static BYTE Map0_ReadApu( WORD wAddr )
+{
+/*
+ *  Dummy Read from Apu
+ *
+ */
+  return ( wAddr >> 8 );
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 V-Sync Function                                         */
+/*-------------------------------------------------------------------*/
+static void Map0_VSync()
+{
+/*
+ *  Dummy Callback at VSync
+ *
+ */
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 H-Sync Function                                         */
+/*-------------------------------------------------------------------*/
+static void Map0_HSync()
+{
+/*
+ *  Dummy Callback at HSync
+ *
+ */
+#if 0 
+  // Frame IRQ
+  FrameStep += STEP_PER_SCANLINE;
+  if ( FrameStep > STEP_PER_FRAME && FrameIRQ_Enable )
+  {
+    FrameStep %= STEP_PER_FRAME;
+    IRQ_REQ;
+    APU_Reg[ 0x4015 ] |= 0x40;
+  }
+#endif
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 PPU Function                                            */
+/*-------------------------------------------------------------------*/
+static void Map0_PPU( WORD wAddr )
+{
+/*
+ *  Dummy Callback at PPU
+ *
+ */
+}
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 0 Rendering Screen Function                               */
+/*-------------------------------------------------------------------*/
+static void Map0_RenderScreen( BYTE byMode )
+{
+/*
+ *  Dummy Callback at Rendering Screen
+ *
+ */
+}
+
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 0                                              */
 /*-------------------------------------------------------------------*/
@@ -70,104 +170,5 @@ void Map0_Init()
   }
 
   /* Set up wiring of the interrupt pin */
-  K6502_Set_Int_Wiring( 1, 1 ); 
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 Write Function                                          */
-/*-------------------------------------------------------------------*/
-void Map0_Write( NWORD wAddr, NBYTE byData )
-{
-/*
- *  Dummy Write to Mapper
- *
- */
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 Write to SRAM Function                                  */
-/*-------------------------------------------------------------------*/
-void Map0_Sram( NWORD wAddr, NBYTE byData )
-{
-/*
- *  Dummy Write to Sram
- *
- */
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 Write to APU Function                                   */
-/*-------------------------------------------------------------------*/
-void Map0_Apu( NWORD wAddr, NBYTE byData )
-{
-/*
- *  Dummy Write to Apu
- *
- */
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 Read from APU Function                                  */
-/*-------------------------------------------------------------------*/
-NBYTE Map0_ReadApu( NWORD wAddr )
-{
-/*
- *  Dummy Read from Apu
- *
- */
-  return ( wAddr >> 8 );
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 V-Sync Function                                         */
-/*-------------------------------------------------------------------*/
-void Map0_VSync()
-{
-/*
- *  Dummy Callback at VSync
- *
- */
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 H-Sync Function                                         */
-/*-------------------------------------------------------------------*/
-void Map0_HSync()
-{
-/*
- *  Dummy Callback at HSync
- *
- */
-#if 0 
-  // Frame IRQ
-  FrameStep += STEP_PER_SCANLINE;
-  if ( FrameStep > STEP_PER_FRAME && FrameIRQ_Enable )
-  {
-    FrameStep %= STEP_PER_FRAME;
-    IRQ_REQ;
-    APU_Reg[ 0x4015 ] |= 0x40;
-  }
-#endif
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 PPU Function                                            */
-/*-------------------------------------------------------------------*/
-void Map0_PPU( NWORD wAddr )
-{
-/*
- *  Dummy Callback at PPU
- *
- */
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 0 Rendering Screen Function                               */
-/*-------------------------------------------------------------------*/
-void Map0_RenderScreen( NBYTE byMode )
-{
-/*
- *  Dummy Callback at Rendering Screen
- *
- */
+  K6502_Set_Int_Wiring( 1, 1 );
 }

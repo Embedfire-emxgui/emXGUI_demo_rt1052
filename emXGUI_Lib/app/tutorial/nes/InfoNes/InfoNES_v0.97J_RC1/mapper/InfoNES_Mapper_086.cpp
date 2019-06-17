@@ -62,10 +62,10 @@ void Map86_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 86 Write to Sram Function                                 */
 /*-------------------------------------------------------------------*/
-void Map86_Sram( NWORD wAddr, NBYTE byData )
+void Map86_Sram( WORD wAddr, BYTE byData )
 {
-  NBYTE byChrBank;
-  NBYTE byPrgBank;
+  BYTE byChrBank;
+  BYTE byPrgBank;
 
   switch ( wAddr )
   {

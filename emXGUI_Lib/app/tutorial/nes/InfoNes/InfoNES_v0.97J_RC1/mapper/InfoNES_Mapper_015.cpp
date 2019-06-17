@@ -52,9 +52,9 @@ void Map15_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 15 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map15_Write( NWORD wAddr, NBYTE byData )
+void Map15_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byBank;
+  BYTE byBank;
 
   switch ( wAddr )
   {

@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-// NBYTE Map64_Cmd;
-// NBYTE Map64_Prg;
-// NBYTE Map64_Chr;
+static BYTE Map64_Cmd;
+static BYTE Map64_Prg;
+static BYTE Map64_Chr;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 64                                             */
@@ -60,9 +60,9 @@ void Map64_Init()
   }
 
   /* Initialize state flag */
-  MAPMIS->Map64_Cmd = 0x00;
-  MAPMIS->Map64_Prg = 0x00;
-  MAPMIS->Map64_Chr = 0x00;
+  Map64_Cmd = 0x00;
+  Map64_Prg = 0x00;
+  Map64_Chr = 0x00;
 
   /* Set up wiring of the interrupt pin */
   K6502_Set_Int_Wiring( 1, 1 ); 
@@ -71,24 +71,24 @@ void Map64_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 64 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map64_Write( NWORD wAddr, NBYTE byData )
+void Map64_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
     case 0x8000:
       /* Set state flag */
-      MAPMIS->Map64_Cmd = byData & 0x0f;
-      MAPMIS->Map64_Prg = ( byData & 0x40 ) >> 6;
-      MAPMIS->Map64_Chr = ( byData & 0x80 ) >> 7;
+      Map64_Cmd = byData & 0x0f;
+      Map64_Prg = ( byData & 0x40 ) >> 6;
+      Map64_Chr = ( byData & 0x80 ) >> 7;
       break;
 
     case 0x8001:
-      switch ( MAPMIS->Map64_Cmd )
+      switch ( Map64_Cmd )
       {
         case 0x00:
           /* Set PPU Banks */
           byData %= ( Neshd->byVRomSize << 3 );
-          if ( MAPMIS->Map64_Chr )
+          if ( Map64_Chr )
           {
             PPUBANK[ 4 ] = VROMPAGE( byData );
             PPUBANK[ 5 ] = VROMPAGE( byData + 1 );      
@@ -102,7 +102,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x01:
           /* Set PPU Banks */
           byData %= ( Neshd->byVRomSize << 3 );
-          if ( MAPMIS->Map64_Chr )
+          if ( Map64_Chr )
           {
             PPUBANK[ 6 ] = VROMPAGE( byData );
             PPUBANK[ 7 ] = VROMPAGE( byData + 1 );      
@@ -116,7 +116,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x02:
           /* Set PPU Banks */
           byData %= ( Neshd->byVRomSize << 3 );
-          if ( MAPMIS->Map64_Chr )
+          if ( Map64_Chr )
           {
             PPUBANK[ 0 ] = VROMPAGE( byData );
           } else {
@@ -128,7 +128,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x03:
           /* Set PPU Banks */
           byData %= ( Neshd->byVRomSize << 3 );
-          if ( MAPMIS->Map64_Chr )
+          if ( Map64_Chr )
           {
             PPUBANK[ 1 ] = VROMPAGE( byData );
           } else {
@@ -140,7 +140,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x04:
           /* Set PPU Banks */
           byData %= ( Neshd->byVRomSize << 3 );
-          if ( MAPMIS->Map64_Chr )
+          if ( Map64_Chr )
           {
             PPUBANK[ 2 ] = VROMPAGE( byData );
           } else {
@@ -152,7 +152,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x05:
           /* Set PPU Banks */
           byData %= ( Neshd->byVRomSize << 3 );
-          if ( MAPMIS->Map64_Chr )
+          if ( Map64_Chr )
           {
             PPUBANK[ 3 ] = VROMPAGE( byData );
           } else {
@@ -164,7 +164,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x06:
           /* Set ROM Banks */
           byData %= ( Neshd->byRomSize << 1 );
-          if ( MAPMIS->Map64_Prg )
+          if ( Map64_Prg )
           {
             ROMBANK1 = ROMPAGE( byData );
           } else {
@@ -175,7 +175,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x07:
           /* Set ROM Banks */
           byData %= ( Neshd->byRomSize << 1 );
-          if ( MAPMIS->Map64_Prg )
+          if ( Map64_Prg )
           {
             ROMBANK2 = ROMPAGE( byData );
           } else {
@@ -200,7 +200,7 @@ void Map64_Write( NWORD wAddr, NBYTE byData )
         case 0x0f:
           /* Set ROM Banks */
           byData %= ( Neshd->byRomSize << 1 );
-          if ( MAPMIS->Map64_Prg )
+          if ( Map64_Prg )
           {
             ROMBANK0 = ROMPAGE( byData );
           } else {

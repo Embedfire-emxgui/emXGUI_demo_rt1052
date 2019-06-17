@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-// NBYTE Map21_Regs[ 10 ];
-// NBYTE Map21_IRQ_Enable;
-// NBYTE Map21_IRQ_Cnt;
-// NBYTE Map21_IRQ_Latch;
+// BYTE Map21_Regs[ 10 ];
+// BYTE Map21_IRQ_Enable;
+// BYTE Map21_IRQ_Cnt;
+// BYTE Map21_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 21                                             */
@@ -70,7 +70,7 @@ void Map21_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 21 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map21_Write( NWORD wAddr, NBYTE byData )
+void Map21_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xf00f )
   {

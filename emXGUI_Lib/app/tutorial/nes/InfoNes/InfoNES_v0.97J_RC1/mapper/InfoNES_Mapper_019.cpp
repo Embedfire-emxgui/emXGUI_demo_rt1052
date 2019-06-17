@@ -5,14 +5,14 @@
 /*===================================================================*/
 
 
-NBYTE  Map19_Chr_Ram[ 0x2000 ];
+BYTE  Map19_Chr_Ram[ 0x2000 ];
 
 
 //zcl subscript out of range
-NBYTE  Map19_Regs[ 2+1 ];
+BYTE  Map19_Regs[ 2+1 ];
 
-NBYTE  Map19_IRQ_Enable;
-NDWORD Map19_IRQ_Cnt;
+BYTE  Map19_IRQ_Enable;
+DWORD Map19_IRQ_Cnt;
 
 
 
@@ -60,7 +60,7 @@ void Map19_Init()
   /* Set PPU Banks */
   if ( NesHeader.byVRomSize > 0 )
   {
-    NDWORD dwLastPage = (NDWORD)NesHeader.byVRomSize << 3;
+    DWORD dwLastPage = (DWORD)NesHeader.byVRomSize << 3;
     PPUBANK[ 0 ] = VROMPAGE( dwLastPage - 8 );
     PPUBANK[ 1 ] = VROMPAGE( dwLastPage - 7 );
     PPUBANK[ 2 ] = VROMPAGE( dwLastPage - 6 );
@@ -84,7 +84,7 @@ void Map19_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 19 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map19_Write( NWORD wAddr, NBYTE byData )
+void Map19_Write( WORD wAddr, BYTE byData )
 {
   /* Set PPU Banks */
   switch ( wAddr & 0xf800 )
@@ -250,7 +250,7 @@ void Map19_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 19 Write to APU Function                                  */
 /*-------------------------------------------------------------------*/
-void Map19_Apu( NWORD wAddr, NBYTE byData )
+void Map19_Apu( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xf800 )
   {
@@ -266,7 +266,7 @@ void Map19_Apu( NWORD wAddr, NBYTE byData )
       break;
 
     case 0x5800:  /* $5800-5fff */
-      Map19_IRQ_Cnt = ( Map19_IRQ_Cnt & 0x00ff ) | ( (NDWORD)( byData & 0x7f ) << 8 );
+      Map19_IRQ_Cnt = ( Map19_IRQ_Cnt & 0x00ff ) | ( (DWORD)( byData & 0x7f ) << 8 );
       Map19_IRQ_Enable = ( byData & 0x80 ) >> 7;
       break;
   }
@@ -275,7 +275,7 @@ void Map19_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 19 Read from APU Function                                 */
 /*-------------------------------------------------------------------*/
-NBYTE Map19_ReadApu( NWORD wAddr )
+BYTE Map19_ReadApu( WORD wAddr )
 {
   switch ( wAddr & 0xf800 )
   {
@@ -284,16 +284,16 @@ NBYTE Map19_ReadApu( NWORD wAddr )
       {
         // Extra Sound
       }
-      return (NBYTE)( wAddr >> 8 );
+      return (BYTE)( wAddr >> 8 );
 
     case 0x5000:  /* $5000-57ff */
-      return (NBYTE)(Map19_IRQ_Cnt & 0x00ff );
+      return (BYTE)(Map19_IRQ_Cnt & 0x00ff );
 
     case 0x5800:  /* $5800-5fff */
-      return (NBYTE)( (Map19_IRQ_Cnt & 0x7f00) >> 8 );
+      return (BYTE)( (Map19_IRQ_Cnt & 0x7f00) >> 8 );
 
     default:
-      return (NBYTE)( wAddr >> 8 );
+      return (BYTE)( wAddr >> 8 );
   }
 }
 
@@ -306,11 +306,11 @@ void Map19_HSync()
  *  Callback at HSync
  *
  */
-  NBYTE Map19_IRQ_Timing = 113;
+  BYTE Map19_IRQ_Timing = 113;
 
   if ( Map19_IRQ_Enable )
   {
-    if ( Map19_IRQ_Cnt >= (NDWORD)(0x7fff - Map19_IRQ_Timing) )
+    if ( Map19_IRQ_Cnt >= (DWORD)(0x7fff - Map19_IRQ_Timing) )
     {
       Map19_IRQ_Cnt = 0x7fff;
       IRQ_REQ;

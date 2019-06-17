@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map243_Regs[4];
+BYTE Map243_Regs[4];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 243                                            */
@@ -69,7 +69,7 @@ void Map243_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 243 Write to Apu Function                                 */
 /*-------------------------------------------------------------------*/
-void Map243_Apu( NWORD wAddr, NBYTE byData )
+void Map243_Apu( WORD wAddr, BYTE byData )
 {
   if ( wAddr == 0x4100 )
   {
@@ -105,7 +105,7 @@ void Map243_Apu( NWORD wAddr, NBYTE byData )
     /* Set PPU Banks */
     if ( ( NesHeader.byVRomSize << 3 ) <= 64 )
     {
-      NBYTE chr_bank = ( Map243_Regs[2] + Map243_Regs[3] ) >> 1;
+      BYTE chr_bank = ( Map243_Regs[2] + Map243_Regs[3] ) >> 1;
 
       PPUBANK[ 0 ] = VROMPAGE( ( chr_bank * 8 + 0 ) % ( NesHeader.byVRomSize << 3 ) );
       PPUBANK[ 1 ] = VROMPAGE( ( chr_bank * 8 + 1 ) % ( NesHeader.byVRomSize << 3 ) );
@@ -119,7 +119,7 @@ void Map243_Apu( NWORD wAddr, NBYTE byData )
     }
     else
     {
-      NBYTE chr_bank = Map243_Regs[1] + Map243_Regs[2] + Map243_Regs[3];
+      BYTE chr_bank = Map243_Regs[1] + Map243_Regs[2] + Map243_Regs[3];
 
       PPUBANK[ 0 ] = VROMPAGE( ( chr_bank * 8 + 0 ) % ( NesHeader.byVRomSize << 3 ) );
       PPUBANK[ 1 ] = VROMPAGE( ( chr_bank * 8 + 1 ) % ( NesHeader.byVRomSize << 3 ) );

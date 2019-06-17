@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE    Map236_Bank, Map236_Mode;
+BYTE    Map236_Bank, Map236_Mode;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 236                                            */
@@ -57,7 +57,7 @@ void Map236_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 236 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map236_Write( NWORD wAddr, NBYTE byData )
+void Map236_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr >= 0x8000 && wAddr <= 0xBFFF ) {
     Map236_Bank = ((wAddr&0x03)<<4)|(Map236_Bank&0x07);

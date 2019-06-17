@@ -52,7 +52,7 @@ void Map94_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 94 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map94_Write( NWORD wAddr, NBYTE byData )
+void Map94_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xfff0 )
   {

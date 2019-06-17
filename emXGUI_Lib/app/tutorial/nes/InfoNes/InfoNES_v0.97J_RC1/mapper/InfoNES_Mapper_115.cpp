@@ -4,18 +4,18 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map115_Reg[8];
-NBYTE	Map115_Prg0, Map115_Prg1, Map115_Prg2, Map115_Prg3;
-NBYTE	Map115_Prg0L, Map115_Prg1L;
-NBYTE	Map115_Chr0, Map115_Chr1, Map115_Chr2, Map115_Chr3;
-NBYTE    Map115_Chr4, Map115_Chr5, Map115_Chr6, Map115_Chr7;
+BYTE	Map115_Reg[8];
+BYTE	Map115_Prg0, Map115_Prg1, Map115_Prg2, Map115_Prg3;
+BYTE	Map115_Prg0L, Map115_Prg1L;
+BYTE	Map115_Chr0, Map115_Chr1, Map115_Chr2, Map115_Chr3;
+BYTE    Map115_Chr4, Map115_Chr5, Map115_Chr6, Map115_Chr7;
 
-NBYTE	Map115_IRQ_Enable;
-NBYTE	Map115_IRQ_Counter;
-NBYTE	Map115_IRQ_Latch;
+BYTE	Map115_IRQ_Enable;
+BYTE	Map115_IRQ_Counter;
+BYTE	Map115_IRQ_Latch;
 
-NBYTE	Map115_ExPrgSwitch;
-NBYTE	Map115_ExChrSwitch;
+BYTE	Map115_ExPrgSwitch;
+BYTE	Map115_ExChrSwitch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 115                                            */
@@ -97,7 +97,7 @@ void Map115_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 115 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map115_Write( NWORD wAddr, NBYTE byData )
+void Map115_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xE001 ) {
   case	0x8000:
@@ -177,7 +177,7 @@ void Map115_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 115 Write to SRAM Function                                */
 /*-------------------------------------------------------------------*/
-void Map115_Sram( NWORD wAddr, NBYTE byData )
+void Map115_Sram( WORD wAddr, BYTE byData )
 {
   switch ( wAddr ) {
   case	0x6000:

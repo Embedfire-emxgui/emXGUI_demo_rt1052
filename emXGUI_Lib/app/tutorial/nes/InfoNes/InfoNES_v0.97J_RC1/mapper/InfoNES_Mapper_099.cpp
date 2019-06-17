@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map99_Coin;
+BYTE Map99_Coin;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 099                                            */
@@ -81,7 +81,7 @@ void Map99_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 99 Write to APU Function                                  */
 /*-------------------------------------------------------------------*/
-void Map99_Apu( NWORD wAddr, NBYTE byData )
+void Map99_Apu( WORD wAddr, BYTE byData )
 {
   if( wAddr == 0x4016 ) {
     if( byData & 0x04 ) {
@@ -115,7 +115,7 @@ void Map99_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 99 Read from APU Function                                 */
 /*-------------------------------------------------------------------*/
-NBYTE Map99_ReadApu( NWORD wAddr )
+BYTE Map99_ReadApu( WORD wAddr )
 {
   if( wAddr == 0x4020 ) {
     return Map99_Coin;

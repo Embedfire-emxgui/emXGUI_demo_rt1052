@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map24_IRQ_Count;
-NBYTE Map24_IRQ_State;
-NBYTE Map24_IRQ_Latch;
+BYTE Map24_IRQ_Count;
+BYTE Map24_IRQ_State;
+BYTE Map24_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 24                                             */
@@ -56,7 +56,7 @@ void Map24_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 24 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map24_Write( NWORD wAddr, NBYTE byData )
+void Map24_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

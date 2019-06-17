@@ -65,7 +65,7 @@ void Map91_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 91 Write to Sram Function                                 */
 /*-------------------------------------------------------------------*/
-void Map91_Sram( NWORD wAddr, NBYTE byData )
+void Map91_Sram( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xF00F)
   {

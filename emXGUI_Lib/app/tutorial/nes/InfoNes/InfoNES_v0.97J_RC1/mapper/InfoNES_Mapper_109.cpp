@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map109_Reg;
-NBYTE	Map109_Chr0, Map109_Chr1, Map109_Chr2, Map109_Chr3;
-NBYTE	Map109_Chrmode0, Map109_Chrmode1;
+BYTE	Map109_Reg;
+BYTE	Map109_Chr0, Map109_Chr1, Map109_Chr2, Map109_Chr3;
+BYTE	Map109_Chrmode0, Map109_Chrmode1;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 109                                            */
@@ -68,7 +68,7 @@ void Map109_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 109 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map109_Apu( NWORD wAddr, NBYTE byData )
+void Map109_Apu( WORD wAddr, BYTE byData )
 {
   switch( wAddr ) {
   case	0x4100:

@@ -62,10 +62,10 @@ void Map8_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 8 Write Function                                          */
 /*-------------------------------------------------------------------*/
-void Map8_Write( NWORD wAddr, NBYTE byData )
+void Map8_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank = ( byData & 0xf8 ) >> 3;
-  NBYTE byChrBank = byData & 0x07;
+  BYTE byPrgBank = ( byData & 0xf8 ) >> 3;
+  BYTE byChrBank = byData & 0x07;
 
   /* Set ROM Banks */
   byPrgBank <<= 1;

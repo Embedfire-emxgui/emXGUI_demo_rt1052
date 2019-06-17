@@ -4,6 +4,20 @@
 /*                                                                   */
 /*===================================================================*/
 
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 2 Write Function                                          */
+/*-------------------------------------------------------------------*/
+static void Map2_Write( WORD wAddr, BYTE byData )
+{
+  /* Set ROM Banks */
+  byData %= Neshd->byRomSize;
+  byData <<= 1;
+
+  ROMBANK0 = ROMPAGE( byData );
+  ROMBANK1 = ROMPAGE( byData + 1 );
+}
+
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 2                                              */
 /*-------------------------------------------------------------------*/
@@ -49,15 +63,3 @@ void Map2_Init()
   K6502_Set_Int_Wiring( 1, 1 ); 
 }
 
-/*-------------------------------------------------------------------*/
-/*  Mapper 2 Write Function                                          */
-/*-------------------------------------------------------------------*/
-void Map2_Write( NWORD wAddr, NBYTE byData )
-{
-  /* Set ROM Banks */
-  byData %= Neshd->byRomSize;
-  byData <<= 1;
-
-  ROMBANK0 = ROMPAGE( byData );
-  ROMBANK1 = ROMPAGE( byData + 1 );
-}

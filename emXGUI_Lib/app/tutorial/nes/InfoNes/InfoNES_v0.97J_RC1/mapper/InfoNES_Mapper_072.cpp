@@ -62,9 +62,9 @@ void Map72_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 72 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map72_Write( NWORD wAddr, NBYTE byData )
+void Map72_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byBank = byData & 0x0f;
+  BYTE byBank = byData & 0x0f;
 
   if ( byData & 0x80 )
   {

@@ -20,8 +20,8 @@
 
 
 extern void DMA2D_DrvInit(void);
-
-
+//AT_NONCACHEABLE_SECTION_ALIGN( pixel_t s_psBuffer[LCD_MAX_PIXEL_HEIGHT][LCD_MAX_PIXEL_WIDTH], FRAME_BUFFER_ALIGN);
+//AT_NONCACHEABLE_SECTION_ALIGN(U16 bits[800*480],FRAME_BUFFER_ALIGN);
 /**
   * @brief  液晶屏初始化接口
   * @param  fb_addr 要使用的显存地址

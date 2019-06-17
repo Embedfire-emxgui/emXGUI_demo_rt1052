@@ -4,13 +4,13 @@
 /*                                                                   */
 /*===================================================================*/
 
-// NBYTE  Map118_Regs[ 8 ];
-// NDWORD Map118_Prg0, Map118_Prg1;
-// NDWORD Map118_Chr0, Map118_Chr1, Map118_Chr2, Map118_Chr3;
-// NDWORD Map118_Chr4, Map118_Chr5, Map118_Chr6, Map118_Chr7;
-// NBYTE Map118_IRQ_Enable;
-// NBYTE Map118_IRQ_Cnt;
-// NBYTE Map118_IRQ_Latch;
+// BYTE  Map118_Regs[ 8 ];
+// DWORD Map118_Prg0, Map118_Prg1;
+// DWORD Map118_Chr0, Map118_Chr1, Map118_Chr2, Map118_Chr3;
+// DWORD Map118_Chr4, Map118_Chr5, Map118_Chr6, Map118_Chr7;
+// BYTE Map118_IRQ_Enable;
+// BYTE Map118_IRQ_Cnt;
+// BYTE Map118_IRQ_Latch;
 
 #define Map118_Chr_Swap()    ( MAP118->Map118_Regs[ 0 ] & 0x80 )
 #define Map118_Prg_Swap()    ( MAP118->Map118_Regs[ 0 ] & 0x40 )
@@ -92,9 +92,9 @@ void Map118_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 118 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map118_Write( NWORD wAddr, NBYTE byData )
+void Map118_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   switch ( wAddr & 0xe001 )
   {

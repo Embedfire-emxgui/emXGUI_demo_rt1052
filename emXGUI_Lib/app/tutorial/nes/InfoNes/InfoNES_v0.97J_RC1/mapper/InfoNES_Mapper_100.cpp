@@ -4,14 +4,14 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map100_Reg[8];
-NBYTE	Map100_Prg0, Map100_Prg1, Map100_Prg2, Map100_Prg3;
-NBYTE	Map100_Chr0, Map100_Chr1, Map100_Chr2, Map100_Chr3; 
-NBYTE	Map100_Chr4, Map100_Chr5, Map100_Chr6, Map100_Chr7;
+BYTE	Map100_Reg[8];
+BYTE	Map100_Prg0, Map100_Prg1, Map100_Prg2, Map100_Prg3;
+BYTE	Map100_Chr0, Map100_Chr1, Map100_Chr2, Map100_Chr3; 
+BYTE	Map100_Chr4, Map100_Chr5, Map100_Chr6, Map100_Chr7;
 
-NBYTE	Map100_IRQ_Enable;
-NBYTE	Map100_IRQ_Cnt;
-NBYTE	Map100_IRQ_Latch;
+BYTE	Map100_IRQ_Enable;
+BYTE	Map100_IRQ_Cnt;
+BYTE	Map100_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 100                                            */
@@ -86,7 +86,7 @@ void Map100_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 100 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map100_Write( NWORD wAddr, NBYTE byData )
+void Map100_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xE001 )
   {

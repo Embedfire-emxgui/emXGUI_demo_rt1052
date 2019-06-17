@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map160_IRQ_Enable;
-NBYTE Map160_IRQ_Cnt;
-NBYTE Map160_IRQ_Latch;
-NBYTE Map160_Refresh_Type;
+BYTE Map160_IRQ_Enable;
+BYTE Map160_IRQ_Cnt;
+BYTE Map160_IRQ_Latch;
+BYTE Map160_Refresh_Type;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 160                                            */
@@ -63,7 +63,7 @@ void Map160_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 160 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map160_Write( NWORD wAddr, NBYTE byData )
+void Map160_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

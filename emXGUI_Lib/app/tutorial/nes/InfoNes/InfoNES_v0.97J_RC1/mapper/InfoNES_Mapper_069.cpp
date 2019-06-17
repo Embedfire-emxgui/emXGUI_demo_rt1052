@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-// NBYTE  Map69_IRQ_Enable;
-// NDWORD Map69_IRQ_Cnt;
-// NBYTE  Map69_Regs[ 1 ];
+static DWORD Map69_IRQ_Cnt;
+static BYTE  Map69_IRQ_Enable;
+static BYTE  Map69_Regs[ 1 ];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 69                                             */
@@ -60,8 +60,8 @@ void Map69_Init()
   }
 
   /* Initialize IRQ Reg */
-  MAPMIS->Map69_IRQ_Enable = 0;
-  MAPMIS->Map69_IRQ_Cnt    = 0;
+  Map69_IRQ_Enable = 0;
+  Map69_IRQ_Cnt    = 0;
 
   /* Set up wiring of the interrupt pin */
   K6502_Set_Int_Wiring( 1, 1 ); 
@@ -70,16 +70,16 @@ void Map69_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 69 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map69_Write( NWORD wAddr, NBYTE byData )
+void Map69_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
     case 0x8000:
-      MAPMIS->Map69_Regs[ 0 ] = byData & 0x0f;
+      Map69_Regs[ 0 ] = byData & 0x0f;
       break;
 
     case 0xA000:
-      switch ( MAPMIS->Map69_Regs[ 0 ] )
+      switch ( Map69_Regs[ 0 ] )
       {
         /* Set PPU Banks */
         case 0x00:
@@ -91,7 +91,7 @@ void Map69_Write( NWORD wAddr, NBYTE byData )
         case 0x06:
         case 0x07:
           byData %= ( Neshd->byVRomSize << 3 );
-          PPUBANK[ MAPMIS->Map69_Regs[ 0 ] ] = VROMPAGE( byData );
+          PPUBANK[ Map69_Regs[ 0 ] ] = VROMPAGE( byData );
           InfoNES_SetupChr();
           break;
 
@@ -141,15 +141,15 @@ void Map69_Write( NWORD wAddr, NBYTE byData )
           break;
 
         case 0x0d:
-          MAPMIS->Map69_IRQ_Enable = byData;
+          Map69_IRQ_Enable = byData;
           break;
 
         case 0x0e:
-          MAPMIS->Map69_IRQ_Cnt = ( MAPMIS->Map69_IRQ_Cnt & 0xff00) | (NDWORD)byData;
+          Map69_IRQ_Cnt = ( Map69_IRQ_Cnt & 0xff00) | (DWORD)byData;
           break;
 
         case 0x0f:
-          MAPMIS->Map69_IRQ_Cnt = ( MAPMIS->Map69_IRQ_Cnt & 0x00ff) | ( (NDWORD)byData << 8 );
+          Map69_IRQ_Cnt = ( Map69_IRQ_Cnt & 0x00ff) | ( (DWORD)byData << 8 );
           break;
       }
       break;
@@ -165,14 +165,14 @@ void Map69_HSync()
  *  Callback at HSync
  *
  */
-  if ( MAPMIS->Map69_IRQ_Enable )
+  if ( Map69_IRQ_Enable )
   {
-    if ( MAPMIS->Map69_IRQ_Cnt <= 113 )
+    if ( Map69_IRQ_Cnt <= 113 )
     {
       IRQ_REQ;
-      MAPMIS->Map69_IRQ_Cnt = 0;
+      Map69_IRQ_Cnt = 0;
     } else {
-      MAPMIS->Map69_IRQ_Cnt -= 113;
+      Map69_IRQ_Cnt -= 113;
     }
   }
 }

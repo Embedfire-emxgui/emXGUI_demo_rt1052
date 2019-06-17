@@ -72,7 +72,7 @@ void Map6_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 6 Write to APU Function                                   */
 /*-------------------------------------------------------------------*/
-void Map6_Apu( NWORD wAddr, NBYTE byData )
+void Map6_Apu( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
@@ -100,11 +100,11 @@ void Map6_Apu( NWORD wAddr, NBYTE byData )
       break;
 
     case 0x4502:
-      MAP6->Map6_IRQ_Cnt = ( MAP6->Map6_IRQ_Cnt & 0xff00 ) | (NDWORD)byData;
+      MAP6->Map6_IRQ_Cnt = ( MAP6->Map6_IRQ_Cnt & 0xff00 ) | (DWORD)byData;
       break;
 
     case 0x4503:
-      MAP6->Map6_IRQ_Cnt = ( MAP6->Map6_IRQ_Cnt & 0x00ff ) | ( (NDWORD)byData << 8 );
+      MAP6->Map6_IRQ_Cnt = ( MAP6->Map6_IRQ_Cnt & 0x00ff ) | ( (DWORD)byData << 8 );
       MAP6->Map6_IRQ_Enable = 1;
       break;
   }
@@ -113,10 +113,10 @@ void Map6_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 6 Write Function                                          */
 /*-------------------------------------------------------------------*/
-void Map6_Write( NWORD wAddr, NBYTE byData )
+void Map6_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank = ( byData & 0x3c ) >> 2;
-  NBYTE byChrBank = byData & 0x03;
+  BYTE byPrgBank = ( byData & 0x3c ) >> 2;
+  BYTE byChrBank = byData & 0x03;
 
   /* Set ROM Banks */
   byPrgBank <<= 1;

@@ -52,7 +52,7 @@ void Map108_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 108 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map108_Write( NWORD wAddr, NBYTE byData )
+void Map108_Write( WORD wAddr, BYTE byData )
 {
   /* Set SRAM Banks */
   SRAMBANK = ROMPAGE( byData % ( NesHeader.byRomSize << 1 ) );

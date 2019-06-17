@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map46_Regs[ 4 ];
+BYTE Map46_Regs[ 4 ];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 46                                             */
@@ -55,7 +55,7 @@ void Map46_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 46 Write to SRAM Function                                 */
 /*-------------------------------------------------------------------*/
-void Map46_Sram( NWORD wAddr, NBYTE byData )
+void Map46_Sram( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   Map46_Regs[ 0 ] = byData & 0x0f;
@@ -66,7 +66,7 @@ void Map46_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 46 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map46_Write( NWORD wAddr, NBYTE byData )
+void Map46_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   Map46_Regs[ 2 ] = byData & 0x01;

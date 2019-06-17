@@ -61,7 +61,7 @@ void Map241_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 241 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map241_Write( NWORD wAddr, NBYTE byData )
+void Map241_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr == 0x8000 ) {
     /* Set ROM Banks */

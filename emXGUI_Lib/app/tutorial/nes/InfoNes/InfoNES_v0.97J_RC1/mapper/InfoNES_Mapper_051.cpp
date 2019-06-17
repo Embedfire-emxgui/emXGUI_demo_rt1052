@@ -62,7 +62,7 @@ void Map51_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 51 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map51_Write( NWORD wAddr, NBYTE byData )
+void Map51_Write( WORD wAddr, BYTE byData )
 {
   Map51_Bank = (byData & 0x0f) << 2;
   if( 0xC000 <= wAddr && wAddr <= 0xDFFF ) {
@@ -74,7 +74,7 @@ void Map51_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 51 Write to SRAM Function                                 */
 /*-------------------------------------------------------------------*/
-void Map51_Sram( NWORD wAddr, NBYTE byData )
+void Map51_Sram( WORD wAddr, BYTE byData )
 {
   if( wAddr>=0x6000 ) {
     Map51_Mode = ((byData & 0x10) >> 3) | ((byData & 0x02) >> 1);

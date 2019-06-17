@@ -52,9 +52,9 @@ void Map61_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 61 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map61_Write( NWORD wAddr, NBYTE byData )
+void Map61_Write( WORD wAddr, BYTE byData )
 {
-	NBYTE byBank;
+	BYTE byBank;
 
 	switch( wAddr & 0x30 ) {
 		case	0x00:

@@ -4,18 +4,18 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map116_Reg[8];
-NBYTE	Map116_Prg0, Map116_Prg1, Map116_Prg2, Map116_Prg3;
-NBYTE	Map116_Prg0L, Map116_Prg1L;
-NBYTE	Map116_Chr0, Map116_Chr1, Map116_Chr2, Map116_Chr3;
-NBYTE    Map116_Chr4, Map116_Chr5, Map116_Chr6, Map116_Chr7;
+BYTE	Map116_Reg[8];
+BYTE	Map116_Prg0, Map116_Prg1, Map116_Prg2, Map116_Prg3;
+BYTE	Map116_Prg0L, Map116_Prg1L;
+BYTE	Map116_Chr0, Map116_Chr1, Map116_Chr2, Map116_Chr3;
+BYTE    Map116_Chr4, Map116_Chr5, Map116_Chr6, Map116_Chr7;
 
-NBYTE	Map116_IRQ_Enable;
-NBYTE	Map116_IRQ_Counter;
-NBYTE	Map116_IRQ_Latch;
+BYTE	Map116_IRQ_Enable;
+BYTE	Map116_IRQ_Counter;
+BYTE	Map116_IRQ_Latch;
 
-NBYTE	Map116_ExPrgSwitch;
-NBYTE	Map116_ExChrSwitch;
+BYTE	Map116_ExPrgSwitch;
+BYTE	Map116_ExChrSwitch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 116                                            */
@@ -97,7 +97,7 @@ void Map116_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 116 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map116_Write( NWORD wAddr, NBYTE byData )
+void Map116_Write( WORD wAddr, BYTE byData )
 {
   switch( wAddr & 0xE001 ) {
   case	0x8000:

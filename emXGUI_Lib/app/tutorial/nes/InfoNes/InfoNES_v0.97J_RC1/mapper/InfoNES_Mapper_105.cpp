@@ -4,12 +4,12 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map105_Init_State;
-NBYTE	Map105_Write_Count;
-NBYTE	Map105_Bits;
-NBYTE	Map105_Reg[4];
+BYTE	Map105_Init_State;
+BYTE	Map105_Write_Count;
+BYTE	Map105_Bits;
+BYTE	Map105_Reg[4];
 
-NBYTE	Map105_IRQ_Enable;
+BYTE	Map105_IRQ_Enable;
 int	Map105_IRQ_Counter;
 
 /*-------------------------------------------------------------------*/
@@ -73,9 +73,9 @@ void Map105_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 105 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map105_Write( NWORD wAddr, NBYTE byData )
+void Map105_Write( WORD wAddr, BYTE byData )
 {
-  NWORD reg_num = (wAddr & 0x7FFF) >> 13;
+  WORD reg_num = (wAddr & 0x7FFF) >> 13;
 
   if( byData & 0x80 ) {
     Map105_Bits = Map105_Write_Count = 0;

@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map226_Reg[2];
+BYTE	Map226_Reg[2];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 226                                            */
@@ -58,9 +58,9 @@ void Map226_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 226 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map226_Write( NWORD wAddr, NBYTE byData )
+void Map226_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE	byBank;
+  BYTE	byBank;
 
   if( wAddr & 0x0001 ) {
     Map226_Reg[1] = byData;

@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map191_Reg[8];
-NBYTE	Map191_Prg0, Map191_Prg1;
-NBYTE	Map191_Chr0, Map191_Chr1, Map191_Chr2, Map191_Chr3;
-NBYTE	Map191_Highbank;
+BYTE	Map191_Reg[8];
+BYTE	Map191_Prg0, Map191_Prg1;
+BYTE	Map191_Chr0, Map191_Chr1, Map191_Chr2, Map191_Chr3;
+BYTE	Map191_Highbank;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 191                                            */
@@ -71,7 +71,7 @@ void Map191_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 191 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map191_Apu( NWORD wAddr, NBYTE byData )
+void Map191_Apu( WORD wAddr, BYTE byData )
 {
   switch( wAddr ) {
   case	0x4100:

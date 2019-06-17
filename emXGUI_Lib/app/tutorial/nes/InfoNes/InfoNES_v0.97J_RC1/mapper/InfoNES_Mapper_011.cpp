@@ -65,10 +65,10 @@ void Map11_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 11 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map11_Write( NWORD wAddr, NBYTE byData )
+void Map11_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank = ( byData & 0x01 ) << 2;
-  NBYTE byChrBank = ( ( byData & 0x70 ) >> 4 ) << 3;
+  BYTE byPrgBank = ( byData & 0x01 ) << 2;
+  BYTE byChrBank = ( ( byData & 0x70 ) >> 4 ) << 3;
 
   /* Set ROM Banks */
   ROMBANK0 = ROMPAGE( ( byPrgBank + 0 ) % ( Neshd->byRomSize << 1 ) );

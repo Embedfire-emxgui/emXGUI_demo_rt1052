@@ -4,19 +4,19 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map187_Prg[4];
+BYTE	Map187_Prg[4];
 int	Map187_Chr[8];
-NBYTE	Map187_Bank[8];
+BYTE	Map187_Bank[8];
 
-NBYTE	Map187_ExtMode;
-NBYTE	Map187_ChrMode;
-NBYTE	Map187_ExtEnable;
+BYTE	Map187_ExtMode;
+BYTE	Map187_ChrMode;
+BYTE	Map187_ExtEnable;
 
-NBYTE	Map187_IRQ_Enable;
-NBYTE	Map187_IRQ_Counter;
-NBYTE	Map187_IRQ_Latch;
-NBYTE	Map187_IRQ_Occur;
-NBYTE	Map187_LastWrite;
+BYTE	Map187_IRQ_Enable;
+BYTE	Map187_IRQ_Counter;
+BYTE	Map187_IRQ_Latch;
+BYTE	Map187_IRQ_Occur;
+BYTE	Map187_LastWrite;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 187                                            */
@@ -85,7 +85,7 @@ void Map187_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 187 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map187_Write( NWORD wAddr, NBYTE byData )
+void Map187_Write( WORD wAddr, BYTE byData )
 {
   Map187_LastWrite = byData;
   switch( wAddr ) {
@@ -201,7 +201,7 @@ void Map187_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 187 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map187_Apu( NWORD wAddr, NBYTE byData )
+void Map187_Apu( WORD wAddr, BYTE byData )
 {
   Map187_LastWrite = byData;
   if( wAddr == 0x5000 ) {
@@ -229,7 +229,7 @@ void Map187_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 187 Read from APU Function                                */
 /*-------------------------------------------------------------------*/
-NBYTE Map187_ReadApu( NWORD wAddr )
+BYTE Map187_ReadApu( WORD wAddr )
 {
   switch( Map187_LastWrite&0x03 ) {
   case 0:

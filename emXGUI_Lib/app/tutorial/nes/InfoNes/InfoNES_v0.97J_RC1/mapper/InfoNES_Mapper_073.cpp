@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map73_IRQ_Enable;
-NDWORD Map73_IRQ_Cnt;
+BYTE  Map73_IRQ_Enable;
+DWORD Map73_IRQ_Cnt;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 73                                             */
@@ -59,7 +59,7 @@ void Map73_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 73 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map73_Write( NWORD wAddr, NBYTE byData )
+void Map73_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

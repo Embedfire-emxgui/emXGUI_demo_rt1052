@@ -4,25 +4,25 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map90_Prg_Reg[ 4 ];
-NBYTE Map90_Chr_Low_Reg[ 8 ];
-NBYTE Map90_Chr_High_Reg[ 8 ];
-NBYTE Map90_Nam_Low_Reg[ 4 ];
-NBYTE Map90_Nam_High_Reg[ 4 ];
+BYTE Map90_Prg_Reg[ 4 ];
+BYTE Map90_Chr_Low_Reg[ 8 ];
+BYTE Map90_Chr_High_Reg[ 8 ];
+BYTE Map90_Nam_Low_Reg[ 4 ];
+BYTE Map90_Nam_High_Reg[ 4 ];
 
-NBYTE Map90_Prg_Bank_Size;
-NBYTE Map90_Prg_Bank_6000;
-NBYTE Map90_Prg_Bank_E000;
-NBYTE Map90_Chr_Bank_Size;
-NBYTE Map90_Mirror_Mode;
-NBYTE Map90_Mirror_Type;
+BYTE Map90_Prg_Bank_Size;
+BYTE Map90_Prg_Bank_6000;
+BYTE Map90_Prg_Bank_E000;
+BYTE Map90_Chr_Bank_Size;
+BYTE Map90_Mirror_Mode;
+BYTE Map90_Mirror_Type;
 
-NDWORD Map90_Value1;
-NDWORD Map90_Value2;
+DWORD Map90_Value1;
+DWORD Map90_Value2;
 
-NBYTE Map90_IRQ_Enable;
-NBYTE Map90_IRQ_Cnt;
-NBYTE Map90_IRQ_Latch;
+BYTE Map90_IRQ_Enable;
+BYTE Map90_IRQ_Cnt;
+BYTE Map90_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 90                                             */
@@ -30,7 +30,7 @@ NBYTE Map90_IRQ_Latch;
 void Map90_Init()
 {
   int nPage;
-  NBYTE byPage;
+  BYTE byPage;
 
   /* Initialize Mapper */
   MapperInit = Map90_Init;
@@ -99,7 +99,7 @@ void Map90_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 90 Write to APU Function                                  */
 /*-------------------------------------------------------------------*/
-void Map90_Apu( NWORD wAddr, NBYTE byData )
+void Map90_Apu( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
@@ -116,20 +116,20 @@ void Map90_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 90 Read from APU Function                                 */
 /*-------------------------------------------------------------------*/
-NBYTE Map90_ReadApu( NWORD wAddr )
+BYTE Map90_ReadApu( WORD wAddr )
 {
   if ( wAddr == 0x5000 )
   {
-    return ( NBYTE )( ( Map90_Value1 * Map90_Value2 ) & 0x00ff );
+    return ( BYTE )( ( Map90_Value1 * Map90_Value2 ) & 0x00ff );
   } else {
-    return ( NBYTE )( wAddr >> 8 );
+    return ( BYTE )( wAddr >> 8 );
   }
 }
 
 /*-------------------------------------------------------------------*/
 /*  Mapper 90 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map90_Write( NWORD wAddr, NBYTE byData )
+void Map90_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
@@ -256,13 +256,13 @@ void Map90_HSync()
 /*-------------------------------------------------------------------*/
 void Map90_Sync_Mirror( void )
 {
-  NBYTE byPage;
-  NDWORD dwNamBank[ 4 ];
+  BYTE byPage;
+  DWORD dwNamBank[ 4 ];
 
   for ( byPage = 0; byPage < 4; byPage++ )
   {
     dwNamBank[ byPage ] = 
-      ( (NDWORD)Map90_Nam_High_Reg[ byPage ] << 8 ) | (NDWORD)Map90_Nam_Low_Reg[ byPage ];
+      ( (DWORD)Map90_Nam_High_Reg[ byPage ] << 8 ) | (DWORD)Map90_Nam_Low_Reg[ byPage ];
   }
 
   if ( Map90_Mirror_Mode )
@@ -305,13 +305,13 @@ void Map90_Sync_Mirror( void )
 /*-------------------------------------------------------------------*/
 void Map90_Sync_Chr_Banks( void )
 {
-  NBYTE byPage;
-  NDWORD dwChrBank[ 8 ];
+  BYTE byPage;
+  DWORD dwChrBank[ 8 ];
 
   for ( byPage = 0; byPage < 8; byPage++ )
   {
     dwChrBank[ byPage ] =
-      ( (NDWORD)Map90_Chr_High_Reg[ byPage ] << 8 ) | (NDWORD)Map90_Chr_Low_Reg[ byPage ];
+      ( (DWORD)Map90_Chr_High_Reg[ byPage ] << 8 ) | (DWORD)Map90_Chr_Low_Reg[ byPage ];
   }
 
   switch ( Map90_Chr_Bank_Size )

@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map234_Reg[2];
+BYTE	Map234_Reg[2];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 234                                            */
@@ -58,7 +58,7 @@ void Map234_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 234 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map234_Write( NWORD wAddr, NBYTE byData )
+void Map234_Write( WORD wAddr, BYTE byData )
 {
   if( wAddr >= 0xFF80 && wAddr <= 0xFF9F ) {
     if( !Map234_Reg[0] ) {
@@ -78,7 +78,7 @@ void Map234_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 void Map234_Set_Banks()
 {
-  NBYTE byPrg, byChr;
+  BYTE byPrg, byChr;
 
   if( Map234_Reg[0] & 0x80 ) {
     InfoNES_Mirroring( 0 );

@@ -12,17 +12,17 @@
 /*-------------------------------------------------------------------*/
 /*  Type definition                                                  */
 /*-------------------------------------------------------------------*/
-#ifndef NDWORD
-typedef unsigned long  NDWORD;
-#endif /* !NDWORD */
+#ifndef DWORD
+typedef unsigned long  DWORD;
+#endif /* !DWORD */
 
-#ifndef NWORD
-typedef unsigned short NWORD;
-#endif /* !NWORD */
+#ifndef WORD
+typedef unsigned short WORD;
+#endif /* !WORD */
 
-#ifndef NBYTE
-typedef unsigned char  NBYTE;
-#endif /* !NBYTE */
+#ifndef BYTE
+typedef unsigned char  BYTE;
+#endif /* !BYTE */
 
 /*-------------------------------------------------------------------*/
 /*  NULL definition                                                  */

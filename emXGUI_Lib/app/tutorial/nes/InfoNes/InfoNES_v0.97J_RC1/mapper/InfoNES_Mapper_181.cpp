@@ -61,7 +61,7 @@ void Map181_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 181 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map181_Apu( NWORD wAddr, NBYTE byData )
+void Map181_Apu( WORD wAddr, BYTE byData )
 {
   if( wAddr == 0x4120 ) {
       /* Set ROM Banks */

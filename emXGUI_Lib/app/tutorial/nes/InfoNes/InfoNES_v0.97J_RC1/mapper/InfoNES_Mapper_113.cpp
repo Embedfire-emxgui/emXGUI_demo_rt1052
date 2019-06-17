@@ -62,9 +62,9 @@ void Map113_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 113 Write to Apu Function                                 */
 /*-------------------------------------------------------------------*/
-void Map113_Apu( NWORD wAddr, NBYTE byData )
+void Map113_Apu( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank, byChrBank;
+  BYTE byPrgBank, byChrBank;
 
   switch ( wAddr )
   {
@@ -109,9 +109,9 @@ void Map113_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 113 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map113_Write( NWORD wAddr, NBYTE byData )
+void Map113_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byPrgBank, byChrBank;
+  BYTE byPrgBank, byChrBank;
 
   switch ( wAddr )
   {

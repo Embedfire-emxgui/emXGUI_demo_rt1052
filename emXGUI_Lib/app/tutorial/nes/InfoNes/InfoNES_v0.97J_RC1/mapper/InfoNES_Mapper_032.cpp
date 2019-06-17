@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-//NBYTE Map32_Saved;
+static BYTE Map32_Saved;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 32                                             */
@@ -41,7 +41,7 @@ void Map32_Init()
   MapperRenderScreen = Map0_RenderScreen;
 
   /* Initialize state flag */
-  MAPMIS->Map32_Saved = 0x00;
+  Map32_Saved = 0x00;
 
   /* Set SRAM Banks */
   SRAMBANK = SRAM;
@@ -67,7 +67,7 @@ void Map32_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 32 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map32_Write( NWORD wAddr, NBYTE byData )
+void Map32_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xf000 )
   {
@@ -75,7 +75,7 @@ void Map32_Write( NWORD wAddr, NBYTE byData )
       /* Set ROM Banks */
       byData %= ( Neshd->byRomSize << 1 );
 
-      if ( MAPMIS->Map32_Saved & 0x02 ) 
+      if ( Map32_Saved & 0x02 )
       {
         ROMBANK2 = ROMPAGE( byData );
       } else {
@@ -84,7 +84,7 @@ void Map32_Write( NWORD wAddr, NBYTE byData )
       break;
       
     case 0x9000:
-      MAPMIS->Map32_Saved = byData;
+      Map32_Saved = byData;
       
       // Name Table Mirroring
       InfoNES_Mirroring( byData & 0x01 );

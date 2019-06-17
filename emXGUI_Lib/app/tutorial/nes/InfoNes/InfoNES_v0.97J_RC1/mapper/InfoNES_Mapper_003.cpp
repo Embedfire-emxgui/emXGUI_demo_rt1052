@@ -4,6 +4,30 @@
 /*                                                                   */
 /*===================================================================*/
 
+
+/*-------------------------------------------------------------------*/
+/*  Mapper 3 Write Function                                          */
+/*-------------------------------------------------------------------*/
+static void Map3_Write( WORD wAddr, BYTE byData )
+{
+  DWORD dwBase;
+
+  /* Set PPU Banks */
+  byData %= Neshd->byVRomSize;
+  dwBase = ( (DWORD)byData ) << 3;
+
+  PPUBANK[ 0 ] = VROMPAGE( dwBase + 0 );
+  PPUBANK[ 1 ] = VROMPAGE( dwBase + 1 );
+  PPUBANK[ 2 ] = VROMPAGE( dwBase + 2 );
+  PPUBANK[ 3 ] = VROMPAGE( dwBase + 3 );
+  PPUBANK[ 4 ] = VROMPAGE( dwBase + 4 );
+  PPUBANK[ 5 ] = VROMPAGE( dwBase + 5 );
+  PPUBANK[ 6 ] = VROMPAGE( dwBase + 6 );
+  PPUBANK[ 7 ] = VROMPAGE( dwBase + 7 );
+
+  InfoNES_SetupChr();
+}
+
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 3                                              */
 /*-------------------------------------------------------------------*/
@@ -68,27 +92,4 @@ void Map3_Init()
   /* Set up wiring of the interrupt pin */
   /* "DragonQuest" doesn't run if IRQ isn't made to occur in CLI */
   K6502_Set_Int_Wiring( 1, 1 ); 
-}
-
-/*-------------------------------------------------------------------*/
-/*  Mapper 3 Write Function                                          */
-/*-------------------------------------------------------------------*/
-void Map3_Write( NWORD wAddr, NBYTE byData )
-{
-  NDWORD dwBase;
-
-  /* Set PPU Banks */
-  byData %= Neshd->byVRomSize;
-  dwBase = ( (NDWORD)byData ) << 3;
-
-  PPUBANK[ 0 ] = VROMPAGE( dwBase + 0 );
-  PPUBANK[ 1 ] = VROMPAGE( dwBase + 1 );
-  PPUBANK[ 2 ] = VROMPAGE( dwBase + 2 );
-  PPUBANK[ 3 ] = VROMPAGE( dwBase + 3 );
-  PPUBANK[ 4 ] = VROMPAGE( dwBase + 4 );
-  PPUBANK[ 5 ] = VROMPAGE( dwBase + 5 );
-  PPUBANK[ 6 ] = VROMPAGE( dwBase + 6 );
-  PPUBANK[ 7 ] = VROMPAGE( dwBase + 7 );
-
-  InfoNES_SetupChr();
 }

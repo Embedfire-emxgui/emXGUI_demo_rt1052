@@ -4,11 +4,11 @@
 /*                                                                   */
 /*===================================================================*/
 
-// NBYTE Map23_Regs[ 9 ];
+// BYTE Map23_Regs[ 9 ];
 
-// NBYTE Map23_IRQ_Enable;
-// NBYTE Map23_IRQ_Cnt;
-// NBYTE Map23_IRQ_Latch;
+// BYTE Map23_IRQ_Enable;
+// BYTE Map23_IRQ_Cnt;
+// BYTE Map23_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 23                                             */
@@ -83,7 +83,7 @@ void Map23_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 23 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map23_Write( NWORD wAddr, NBYTE byData )
+void Map23_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

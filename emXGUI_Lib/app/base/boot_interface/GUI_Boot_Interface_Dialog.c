@@ -260,7 +260,7 @@ void	GUI_Boot_Interface_Dialog(void *param)
   GUI_SetDefFont(defaultFontEn);  
 
   wcex.Tag 		    = WNDCLASS_TAG;
-
+  
   wcex.Style			= CS_HREDRAW | CS_VREDRAW;
   wcex.lpfnWndProc	= win_proc;
   wcex.cbClsExtra		= 0;

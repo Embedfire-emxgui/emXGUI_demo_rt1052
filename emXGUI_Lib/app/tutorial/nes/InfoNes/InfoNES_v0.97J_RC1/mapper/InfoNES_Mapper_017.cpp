@@ -4,9 +4,9 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map17_IRQ_Enable;
-NDWORD Map17_IRQ_Cnt;
-NDWORD Map17_IRQ_Latch;
+BYTE  Map17_IRQ_Enable;
+DWORD Map17_IRQ_Cnt;
+DWORD Map17_IRQ_Latch;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 17                                             */
@@ -70,7 +70,7 @@ void Map17_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 17 Write to APU Function                                  */
 /*-------------------------------------------------------------------*/
-void Map17_Apu( NWORD wAddr, NBYTE byData )
+void Map17_Apu( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {
@@ -101,7 +101,7 @@ void Map17_Apu( NWORD wAddr, NBYTE byData )
       break;
 
     case 0x4503:
-      Map17_IRQ_Latch = ( Map17_IRQ_Latch & 0x00ff ) | ( (NDWORD)byData << 8 );
+      Map17_IRQ_Latch = ( Map17_IRQ_Latch & 0x00ff ) | ( (DWORD)byData << 8 );
       Map17_IRQ_Cnt = Map17_IRQ_Latch;
       Map17_IRQ_Enable = 1;
       break;

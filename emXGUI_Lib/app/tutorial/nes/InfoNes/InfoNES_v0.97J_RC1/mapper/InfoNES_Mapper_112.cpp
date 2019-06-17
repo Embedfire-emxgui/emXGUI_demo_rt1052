@@ -4,13 +4,13 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE  Map112_Regs[8];
-NDWORD Map112_Prg0,Map112_Prg1;
-NDWORD Map112_Chr01,Map112_Chr23,Map112_Chr4,Map112_Chr5,Map112_Chr6,Map112_Chr7;
+BYTE  Map112_Regs[8];
+DWORD Map112_Prg0,Map112_Prg1;
+DWORD Map112_Chr01,Map112_Chr23,Map112_Chr4,Map112_Chr5,Map112_Chr6,Map112_Chr7;
 
-NBYTE  Map112_IRQ_Enable;  /* IRQs enabled */
-NBYTE  Map112_IRQ_Cnt;     /* IRQ scanline counter, decreasing */
-NBYTE  Map112_IRQ_Latch;   /* IRQ scanline counter latch */
+BYTE  Map112_IRQ_Enable;  /* IRQs enabled */
+BYTE  Map112_IRQ_Cnt;     /* IRQ scanline counter, decreasing */
+BYTE  Map112_IRQ_Latch;   /* IRQ scanline counter latch */
 
 #define Map112_Chr_Swap()  ( Map112_Regs[0] & 0x80 )
 #define Map112_Prg_Swap()  ( Map112_Regs[0] & 0x40 )
@@ -90,9 +90,9 @@ void Map112_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 112 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map112_Write( NWORD wAddr, NBYTE byData )
+void Map112_Write( WORD wAddr, BYTE byData )
 {
-  NDWORD dwBankNum;
+  DWORD dwBankNum;
 
   /* Set ROM Banks */
   switch( wAddr & 0xE001 )

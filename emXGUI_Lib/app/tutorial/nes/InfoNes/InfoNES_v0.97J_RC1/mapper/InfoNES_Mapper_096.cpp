@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map96_Reg[2];
+BYTE	Map96_Reg[2];
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 96                                             */
@@ -61,7 +61,7 @@ void Map96_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 96 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map96_Write( NWORD wAddr, NBYTE byData )
+void Map96_Write( WORD wAddr, BYTE byData )
 {
   ROMBANK0 = ROMPAGE((((byData & 0x03)<<2)+0) % (NesHeader.byRomSize<<1));
   ROMBANK1 = ROMPAGE((((byData & 0x03)<<2)+1) % (NesHeader.byRomSize<<1));
@@ -75,7 +75,7 @@ void Map96_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 96 PPU Function                                           */
 /*-------------------------------------------------------------------*/
-void Map96_PPU( NWORD wAddr )
+void Map96_PPU( WORD wAddr )
 {
   if( (wAddr & 0xF000) == 0x2000 ) {
     Map96_Reg[1] = (wAddr>>8)&0x03;

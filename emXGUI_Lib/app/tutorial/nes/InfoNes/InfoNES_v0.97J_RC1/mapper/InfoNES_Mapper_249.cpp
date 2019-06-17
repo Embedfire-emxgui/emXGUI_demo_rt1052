@@ -4,13 +4,13 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE	Map249_Spdata;
-NBYTE	Map249_Reg[8];
+BYTE	Map249_Spdata;
+BYTE	Map249_Reg[8];
 
-NBYTE	Map249_IRQ_Enable;
-NBYTE	Map249_IRQ_Counter;
-NBYTE	Map249_IRQ_Latch;
-NBYTE	Map249_IRQ_Request;
+BYTE	Map249_IRQ_Enable;
+BYTE	Map249_IRQ_Counter;
+BYTE	Map249_IRQ_Latch;
+BYTE	Map249_IRQ_Request;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 249                                            */
@@ -85,9 +85,9 @@ void Map249_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 249 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map249_Write( NWORD wAddr, NBYTE byData )
+void Map249_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE	byM0,byM1,byM2,byM3,byM4,byM5,byM6,byM7;
+  BYTE	byM0,byM1,byM2,byM3,byM4,byM5,byM6,byM7;
 
   switch( wAddr&0xFF01 ) {
   case	  0x8000:
@@ -287,7 +287,7 @@ void Map249_Write( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 249 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map249_Apu( NWORD wAddr, NBYTE byData )
+void Map249_Apu( WORD wAddr, BYTE byData )
 {
   if( wAddr == 0x5000 ) {
     switch( byData ) {

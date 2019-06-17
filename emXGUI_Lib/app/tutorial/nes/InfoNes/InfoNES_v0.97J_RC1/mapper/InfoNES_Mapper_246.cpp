@@ -52,7 +52,7 @@ void Map246_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 246 Write to SRAM Function                                */
 /*-------------------------------------------------------------------*/
-void Map246_Sram( NWORD wAddr, NBYTE byData )
+void Map246_Sram( WORD wAddr, BYTE byData )
 {
   if( wAddr>=0x6000 && wAddr<0x8000 ) {
     switch( wAddr ) {

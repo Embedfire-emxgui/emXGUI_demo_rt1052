@@ -4,8 +4,8 @@
 /*                                                                   */
 /*===================================================================*/
 
-NDWORD Map43_IRQ_Cnt;
-NBYTE Map43_IRQ_Enable;
+DWORD Map43_IRQ_Cnt;
+BYTE Map43_IRQ_Enable;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 43                                             */
@@ -69,19 +69,19 @@ void Map43_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 43 Read from APU Function                                 */
 /*-------------------------------------------------------------------*/
-NBYTE Map43_ReadApu( NWORD wAddr )
+BYTE Map43_ReadApu( WORD wAddr )
 {
   if ( 0x5000 <= wAddr && wAddr < 0x6000 ) 
   {
     return ROM[ 0x2000*8 + 0x1000 + (wAddr - 0x5000) ];
   }
-  return (NBYTE)(wAddr >> 8);
+  return (BYTE)(wAddr >> 8);
 }
 
 /*-------------------------------------------------------------------*/
 /*  Mapper 43 Write to APU Function                                  */
 /*-------------------------------------------------------------------*/
-void Map43_Apu( NWORD wAddr, NBYTE byData )
+void Map43_Apu( WORD wAddr, BYTE byData )
 {
 	if( (wAddr&0xF0FF) == 0x4022 ) 
   {
@@ -112,7 +112,7 @@ void Map43_Apu( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 43 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map43_Write( NWORD wAddr, NBYTE byData )
+void Map43_Write( WORD wAddr, BYTE byData )
 {
 	if( wAddr == 0x8122 ) {
 		if( byData&0x03 ) {

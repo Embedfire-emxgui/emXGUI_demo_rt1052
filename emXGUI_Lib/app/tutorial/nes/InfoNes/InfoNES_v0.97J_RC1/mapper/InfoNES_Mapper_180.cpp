@@ -62,7 +62,7 @@ void Map180_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 180 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map180_Write( NWORD wAddr, NBYTE byData )
+void Map180_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */ 
   byData &= 0x07;

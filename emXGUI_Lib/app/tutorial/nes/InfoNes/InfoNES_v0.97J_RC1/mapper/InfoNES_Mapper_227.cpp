@@ -52,9 +52,9 @@ void Map227_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 227 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map227_Write( NWORD wAddr, NBYTE byData )
+void Map227_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE	byBank = ((wAddr&0x0100)>>4)|((wAddr&0x0078)>>3);
+  BYTE	byBank = ((wAddr&0x0100)>>4)|((wAddr&0x0078)>>3);
 
   if( wAddr & 0x0001 ) {
     ROMBANK0 = ROMPAGE(((byBank<<2)+0) % (NesHeader.byRomSize<<1));

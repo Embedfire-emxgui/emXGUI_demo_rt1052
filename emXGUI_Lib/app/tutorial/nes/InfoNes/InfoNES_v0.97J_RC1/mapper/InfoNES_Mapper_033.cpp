@@ -4,10 +4,10 @@
 /*                                                                   */
 /*===================================================================*/
 
-// NBYTE Map33_Regs[ 8 ];
-// NBYTE Map33_Switch;
-// NBYTE Map33_IRQ_Enable;
-// NBYTE Map33_IRQ_Cnt;
+// BYTE Map33_Regs[ 8 ];
+// BYTE Map33_Switch;
+// BYTE Map33_IRQ_Enable;
+// BYTE Map33_IRQ_Cnt;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 33                                             */
@@ -82,7 +82,7 @@ void Map33_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 33 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map33_Write( NWORD wAddr, NBYTE byData )
+void Map33_Write( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   switch ( wAddr )
@@ -179,7 +179,7 @@ void Map33_HSync()
   {
     if ( MAP33->Map33_IRQ_Enable == 0xff )
     {
-      if ( NES->PPU_Scanline == (NWORD)( 0xff - MAP33->Map33_IRQ_Cnt ) )
+      if ( NES->PPU_Scanline == (WORD)( 0xff - MAP33->Map33_IRQ_Cnt ) )
       {
         IRQ_REQ;
         MAP33->Map33_IRQ_Cnt = 0;

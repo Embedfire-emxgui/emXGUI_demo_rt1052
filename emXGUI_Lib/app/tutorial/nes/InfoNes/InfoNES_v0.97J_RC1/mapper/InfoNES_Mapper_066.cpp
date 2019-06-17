@@ -62,10 +62,10 @@ void Map66_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 66 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map66_Write( NWORD wAddr, NBYTE byData )
+void Map66_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byRom;
-  NBYTE byVRom;
+  BYTE byRom;
+  BYTE byVRom;
 
   byRom  = ( byData >> 4 ) & 0x0F;
   byVRom = byData & 0x0F;

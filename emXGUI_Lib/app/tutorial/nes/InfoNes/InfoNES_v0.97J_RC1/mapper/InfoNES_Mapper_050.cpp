@@ -4,7 +4,7 @@
 /*                                                                   */
 /*===================================================================*/
 
-NBYTE Map50_IRQ_Enable;
+BYTE Map50_IRQ_Enable;
 
 /*-------------------------------------------------------------------*/
 /*  Initialize Mapper 50                                             */
@@ -69,7 +69,7 @@ void Map50_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 50 Write to Apu Function                                  */
 /*-------------------------------------------------------------------*/
-void Map50_Apu( NWORD wAddr, NBYTE byData )
+void Map50_Apu( WORD wAddr, BYTE byData )
 {
   if ( ( wAddr & 0xE060 ) == 0x4020 )
   {
@@ -79,7 +79,7 @@ void Map50_Apu( NWORD wAddr, NBYTE byData )
     }
     else
     {
-      NBYTE byDummy;
+      BYTE byDummy;
 
       byDummy = ( byData & 0x08 ) | ( ( byData & 0x01 ) << 2 ) | ( ( byData & 0x06 ) >> 1 );
       ROMBANK2 = ROMPAGE( byDummy % ( NesHeader.byRomSize << 1 ) );

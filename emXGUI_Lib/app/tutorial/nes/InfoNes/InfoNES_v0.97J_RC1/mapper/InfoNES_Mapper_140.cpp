@@ -61,7 +61,7 @@ void Map140_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 140 Write to SRAM Function                                */
 /*-------------------------------------------------------------------*/
-void Map140_Sram( NWORD wAddr, NBYTE byData )
+void Map140_Sram( WORD wAddr, BYTE byData )
 {
   Map140_Apu( wAddr, byData );
 }
@@ -69,7 +69,7 @@ void Map140_Sram( NWORD wAddr, NBYTE byData )
 /*-------------------------------------------------------------------*/
 /*  Mapper 140 Write to APU Function                                 */
 /*-------------------------------------------------------------------*/
-void Map140_Apu( NWORD wAddr, NBYTE byData )
+void Map140_Apu( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   ROMBANK0 = ROMPAGE( (((byData&0xF0)>>2) + 0 ) % (NesHeader.byRomSize << 1) );

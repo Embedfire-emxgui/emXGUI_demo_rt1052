@@ -61,10 +61,10 @@ void Map228_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 228 Write Function                                        */
 /*-------------------------------------------------------------------*/
-void Map228_Write( NWORD wAddr, NBYTE byData )
+void Map228_Write( WORD wAddr, BYTE byData )
 {
-  NBYTE byChr;
-  NBYTE	byPrg = (wAddr&0x0780)>>7;
+  BYTE byChr;
+  BYTE	byPrg = (wAddr&0x0780)>>7;
 
   switch( (wAddr&0x1800)>>11 ) {
   case	1:

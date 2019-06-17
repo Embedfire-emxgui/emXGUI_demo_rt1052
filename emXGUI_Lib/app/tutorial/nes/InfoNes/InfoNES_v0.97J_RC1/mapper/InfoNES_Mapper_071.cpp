@@ -52,7 +52,7 @@ void Map71_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 71 Write Function                                         */
 /*-------------------------------------------------------------------*/
-void Map71_Write( NWORD wAddr, NBYTE byData )
+void Map71_Write( WORD wAddr, BYTE byData )
 {
   switch ( wAddr & 0xf000 )
   {

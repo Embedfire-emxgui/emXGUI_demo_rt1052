@@ -62,7 +62,7 @@ void Map80_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 80 Write to SRAM Function                                 */
 /*-------------------------------------------------------------------*/
-void Map80_Sram( NWORD wAddr, NBYTE byData )
+void Map80_Sram( WORD wAddr, BYTE byData )
 {
   switch ( wAddr )
   {

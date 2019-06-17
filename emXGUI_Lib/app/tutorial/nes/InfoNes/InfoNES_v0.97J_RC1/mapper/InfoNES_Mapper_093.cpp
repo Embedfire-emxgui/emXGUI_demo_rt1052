@@ -62,7 +62,7 @@ void Map93_Init()
 /*-------------------------------------------------------------------*/
 /*  Mapper 93 Write to Sram Function                                 */
 /*-------------------------------------------------------------------*/
-void Map93_Sram( NWORD wAddr, NBYTE byData )
+void Map93_Sram( WORD wAddr, BYTE byData )
 {
   /* Set ROM Banks */
   if ( wAddr == 0x6000 )
