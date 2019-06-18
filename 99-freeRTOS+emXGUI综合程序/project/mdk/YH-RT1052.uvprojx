@@ -1054,11 +1054,6 @@
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
             </File>
             <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
-            </File>
-            <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
@@ -2350,11 +2345,6 @@
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
             </File>
             <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
-            </File>
-            <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
@@ -3644,11 +3634,6 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
             </File>
             <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>
@@ -5243,11 +5228,6 @@
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
             </File>
             <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
-            </File>
-            <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
@@ -6588,11 +6568,6 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
             </File>
             <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>
@@ -8187,11 +8162,6 @@
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
             </File>
             <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
-            </File>
-            <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
@@ -9482,11 +9452,6 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
             </File>
             <File>
               <FileName>GUI_DEMO_RectSpeed.c</FileName>

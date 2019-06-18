@@ -34,8 +34,6 @@ static FATFS fs;
 
 void FileSystem_Test(void);
 
-extern void test123(void);
-
 /**
   * @brief  文件系统初始化
   * @param  无
@@ -113,8 +111,8 @@ BOOL FileSystem_Init(void)
   }
 #elif defined(CPU_MIMXRT1052DVL6B)
   f_mount_test(&fs);
-//  FileSystem_Test();
-  test123();
+
+
 #endif
 //  
 //  

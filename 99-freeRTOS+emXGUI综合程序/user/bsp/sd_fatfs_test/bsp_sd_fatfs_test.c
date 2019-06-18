@@ -242,7 +242,7 @@ FRESULT f_readdir_test(char* dir,DIR* directory,FILINFO* fileInformation)
   FRESULT error = FR_OK;
   DIR* g_directory = directory; /* Directory object */
   FILINFO* g_fileInformation = fileInformation;
-  
+
   
   PRINTF("\r\n列出“/dir_1”目录下的内容......\r\n");
   
@@ -272,8 +272,13 @@ FRESULT f_readdir_test(char* dir,DIR* directory,FILINFO* fileInformation)
     }
     else
     {
+
       PRINTF("文件 : %s\r\n", g_fileInformation->fname);
+
+      
+
     }
+    
   }
   return error;
 }
