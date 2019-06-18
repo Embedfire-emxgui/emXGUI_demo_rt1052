@@ -41,7 +41,7 @@
 #define	LCD_ROTATE      ROTATE_0
 
 /* 是否使用硬件图形加速器（PXP之类，驱动需要重新定制） */
-#define	G2D_EN                   1
+#define	G2D_EN                   0
 
 /* 是否使用缓冲型控件，使用的话会增加一层液晶像素数据的消耗，显示效果减少闪烁*/
 #define  FRAME_BUFFER_EN            1

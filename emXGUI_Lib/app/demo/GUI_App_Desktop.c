@@ -48,7 +48,7 @@ static void dummy(void *param)
 extern void	GUI_DEMO_Graphics_Accelerator(void*);
 extern void	GUI_DEMO_ShowWave(void*);
 extern void GUI_DEMO_ShowComponent(void *param);
-
+extern void GUI_DEMO_BitBlt_Speed(void *param);
 #if 0
 static void App_GUI_DEMO_Hello(HWND hwnd)
 {
@@ -87,7 +87,7 @@ static void App_GUI_DEMO_Hello(HWND hwnd)
 #endif
 
 
-
+extern  void	GUI_DEMO_Rotate(void* param);
 
 static struct __obj_list menu_list_1[] = {
 
@@ -100,7 +100,7 @@ static struct __obj_list menu_list_1[] = {
 
 				L"¼ÆËãÆ÷",	NULL, 	L"Z", RGB_WHITE,				dummy,
 				
-				L"Textbox",	NULL,	  L"F", RGB_WHITE,				dummy,
+				L"Textbox",	NULL,	  L"F", RGB_WHITE,				GUI_DEMO_Rotate,
 
 				//    L"Speed",		NULL,	  L"G",RGB_WHITE, 				dummy,
 				//    L"Hello",		NULL,	  L"H", RGB_WHITE,				dummy,

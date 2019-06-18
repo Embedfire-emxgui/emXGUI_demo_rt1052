@@ -34,7 +34,7 @@ static BOOL GUI_LowLevelInit(void)
   /* 直接返回TRUE，为了部分设备初始化不正常不影响后续运行 */
 	return TRUE;
 }
-
+extern void GUI_DEMO_RectSpeed(void* param);
 /**
   * @brief  启动GUI，包含各种内存、液晶、输入设备的初始化
   * @param  无
@@ -108,6 +108,7 @@ void	GUI_Startup(void)
     GUI_ERROR("GUI_Default_FontInit Failed.");
 		return;
 	}
+//  GUI_DEMO_RectSpeed(NULL);
 	GUI_SetDefFont(hFont);  //设置默认的字体
 	//启动桌面窗口(该函数不会返回).
    GUI_DesktopStartup();   

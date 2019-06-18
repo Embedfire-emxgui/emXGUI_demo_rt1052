@@ -26,7 +26,7 @@ BOOL Load_state = FALSE;
 extern void	GUI_Boot_Interface_Dialog(void *param);
 extern void GUI_AppMain(void);
 
-
+//volatile uint32_t CPU_RunTime = 0UL;
 void	gui_app_thread(void *p)
 {
     #if(GUI_TOUCHSCREEN_EN & GUI_TOUCHSCREEN_CALIBRATE)
@@ -178,7 +178,7 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		case	WM_CREATE:	
 			   //创建1个20ms定时器，处理循环事件.
 				 SetTimer(hwnd,1,20,TMR_START,NULL);
-
+//         SetTimer(hwnd,2,5,TMR_START,NULL);
 				//创建App线程						
 				{
 #if (GUI_APP_BOOT_INTERFACE_EN )  
@@ -213,6 +213,10 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
           {
             GUI_InputHandler(); //处理输入设备
           }
+//          else
+//          {
+//            CPU_RunTime++;
+//          }
         }
       #endif
 		break;

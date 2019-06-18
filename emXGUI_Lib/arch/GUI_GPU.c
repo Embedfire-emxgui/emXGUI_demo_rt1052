@@ -112,7 +112,7 @@ BOOL	GPU_DrawBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const U8 *bits,
  */
 BOOL 	GPU_ScaleBitmap(const SURFACE *pSurf,int x,int y,int w,int h,const BITMAP *bm)
 {
-#if(0)
+#if(GPU_EN)
 	{
 		return	PXP_ScaleBitmap(pSurf,x,y,w,h,bm);
 	}

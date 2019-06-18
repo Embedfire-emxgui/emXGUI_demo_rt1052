@@ -78,7 +78,7 @@
     #include "fsl_debug_console.h"
 	#include "gui_drv_cfg.h"
     extern uint32_t SystemCoreClock;
-
+    extern volatile uint32_t CPU_RunTime;
 #endif
 
 
@@ -141,7 +141,7 @@
 #define configCPU_CLOCK_HZ						  (SystemCoreClock)
 
 //RTOS系统节拍中断的频率。即一秒中断的次数，每次中断RTOS都会进行任务调度
-#define configTICK_RATE_HZ						  (( TickType_t )1000)
+#define configTICK_RATE_HZ						  (( TickType_t )200)
 
 //可使用的最大优先级
 #define configMAX_PRIORITIES					  (32)
@@ -232,9 +232,9 @@
           FreeRTOS与运行时间和任务状态收集有关的配置选项   
 **********************************************************************/
 //启用运行时间统计功能
-#define configGENERATE_RUN_TIME_STATS	        0             
+#define configGENERATE_RUN_TIME_STATS	        1             
  //启用可视化跟踪调试
-#define configUSE_TRACE_FACILITY				      0    
+#define configUSE_TRACE_FACILITY				      1    
 /* 与宏configUSE_TRACE_FACILITY同时为1时会编译下面3个函数
  * prvWriteNameToBuffer()
  * vTaskList(),
@@ -242,7 +242,11 @@
 */
 #define configUSE_STATS_FORMATTING_FUNCTIONS	1                       
                                                                         
-                                                                        
+     
+
+
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()     (CPU_RunTime = 0ul)
+#define portGET_RUN_TIME_COUNTER_VALUE()             CPU_RunTime                                                                              
 /********************************************************************
                 FreeRTOS与协程有关的配置选项                                                
 *********************************************************************/
@@ -301,6 +305,8 @@
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY 	( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 
 
+
+
 /****************************************************************
             FreeRTOS与中断服务函数有关的配置选项                         
 ****************************************************************/
@@ -310,8 +316,8 @@
 
 /* 以下为使用Percepio Tracealyzer需要的东西，不需要时将 configUSE_TRACE_FACILITY 定义为 0 */
 #if ( configUSE_TRACE_FACILITY == 1 )
-#include "trcRecorder.h"
-#define INCLUDE_xTaskGetCurrentTaskHandle               1   // 启用一个可选函数（该函数被 Trace源码使用，默认该值为0 表示不用）
+//#include "trcRecorder.h"
+//#define INCLUDE_xTaskGetCurrentTaskHandle               1   // 启用一个可选函数（该函数被 Trace源码使用，默认该值为0 表示不用）
 #endif
 
 

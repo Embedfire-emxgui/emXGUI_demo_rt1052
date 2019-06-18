@@ -473,6 +473,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -632,6 +637,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -873,6 +883,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1037,6 +1052,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1739,6 +1769,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1898,6 +1933,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2139,6 +2179,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2303,6 +2348,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2842,8 +2902,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
-            <oTime>0</oTime>
+            <Optim>2</Optim>
+            <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
             <Strict>0</Strict>
@@ -3005,6 +3065,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3164,6 +3229,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3405,6 +3475,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3569,6 +3644,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -4572,6 +4662,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4731,6 +4826,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4972,6 +5072,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5136,6 +5241,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -5675,8 +5795,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
-            <oTime>0</oTime>
+            <Optim>3</Optim>
+            <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
             <Strict>0</Strict>
@@ -5889,6 +6009,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6048,6 +6173,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6289,6 +6419,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6453,6 +6588,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -7456,6 +7606,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7615,6 +7770,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7856,6 +8016,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8020,6 +8185,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -8723,6 +8903,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\fsl_pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\fsl_pit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8882,6 +9067,11 @@
               <FileName>pxp_drv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\user\bsp\PXP\pxp_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\user\bsp\pit\bsp_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9123,6 +9313,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c</FilePath>
             </File>
+            <File>
+              <FileName>0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\0.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9287,6 +9482,21 @@
               <FileName>CListMenu.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\emXGUI_Lib\app\base\CListMenu.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_BitBlt_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_BitBlt_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Rotate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\emXGUI_Lib\app\demo\GUI_DEMO_Rotate.cpp</FilePath>
             </File>
           </Files>
         </Group>

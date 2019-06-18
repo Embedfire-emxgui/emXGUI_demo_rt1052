@@ -55,7 +55,7 @@ extern void GUI_DEMO_Listbox(void*param);
 extern void GUI_NES_DIALOGTest(void *param);
 ////extern void	GUI_App_Desktop(void);
 ////extern void App_GUI_Tutorial_DEMO(void);
-//extern void GUI_VIDEO_DIALOGTest(void *param);
+//extern void GUI_DEMO_BitBlt_Speed(void *param);
 ////extern void	GUI_LED_DIALOG(void);
 ////extern void	GUI_Camera_DIALOG(void);
 

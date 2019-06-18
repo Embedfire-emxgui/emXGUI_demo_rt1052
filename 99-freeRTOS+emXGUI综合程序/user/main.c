@@ -25,7 +25,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "./systick/bsp_systick.h"
-
+#include "./pit/bsp_pit.h"
 #include "./delay/core_delay.h"   
 #include "./led/bsp_led.h" 
 #include "./key/bsp_key.h" 
@@ -100,6 +100,17 @@ int main(void)
                         (void*          )NULL,/* 任务入口函数参数 */
                         (UBaseType_t    )6, /* 任务的优先级 */
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 
+                        
+                        
+//    if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, 4, NULL) != pdPASS)
+//    {
+//        usb_echo("create host task error\r\n");
+//    }
+//    if (xTaskCreate(USB_HostApplicationMouseTask, "mouse task", 2000L / sizeof(portSTACK_TYPE), &g_HostHidGamepad1, 3,
+//                    NULL) != pdPASS)
+//    {
+//        usb_echo("create mouse task error\r\n");
+//    }                        
   /* 启动任务调度 */           
   if(1)//(pdPASS == xReturn)
     vTaskStartScheduler();   /* 启动任务，开启调度 */
@@ -123,7 +134,9 @@ static void GUI_Thread_Entry(void* parameter)
 {	
   
   printf("野火emXGUI演示例程\n\n");
-
+//  USB_HostApplicationInit();
+//  USB_HostTaskFn(g_HostHandle); 
+//  USB_HostHidGamepad1Task(&g_HostHidGamepad1);  
   /* 执行本函数不会返回 */
 	GUI_Startup();
   
@@ -185,7 +198,7 @@ static void BSP_Init(void)
     /* 初始化LED */
     LED_GPIO_Config();
     Key_GPIO_Config();
-
+    USB_HostApplicationInit();
     /* 触摸初始化 */
 //    GTP_Init_Panel();
 
@@ -196,7 +209,11 @@ static void BSP_Init(void)
 //    f_touch_test("/dir_1/he.txt"); 
 //    /*打开文件*/
 //    f_open_test("/dir_1/he.txt",&file_object);
+    /*初始化PIT定时器*/
+    PIT_TIMER_Init();
     
+    /*开启定时器*/
+    PIT_StartTimer(PIT, PIT_CHANNEL_X);   
      /*关闭文件*/
 //    f_close_test(&file_object);    
 //    RGB_LED_COLOR_BLUE;    
