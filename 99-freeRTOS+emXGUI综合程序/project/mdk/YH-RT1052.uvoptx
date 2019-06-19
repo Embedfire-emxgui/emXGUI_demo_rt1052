@@ -469,18 +469,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>544</LineNumber>
+          <LineNumber>2169</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>-2147429440</Address>
+          <Address>-2147306884</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>H:\鍏徃浜у搧\emXGUI\demo_code_rt1052\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES.cpp</Filename>
+          <Filename>H:\鍏徃浜у搧\emXGUI\demo_code_rt1052\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\YH_RT1052\../../../emXGUI_Lib/app/tutorial/nes/InfoNes/InfoNES_v0.97J_RC1/InfoNES.cpp\544</Expression>
+          <Expression>\\YH_RT1052\../../../emXGUI_Lib/app/tutorial/nes/InfoNes/InfoNES_v0.97J_RC1/main.cpp\2169</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -603,6 +603,11 @@
           <count>23</count>
           <WinNumber>1</WinNumber>
           <ItemText>NES</ItemText>
+        </Ww>
+        <Ww>
+          <count>24</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>NES-&gt;PAD_System</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -2812,7 +2817,7 @@
 
   <Group>
     <GroupName>base_app</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -2892,7 +2897,7 @@
 
   <Group>
     <GroupName>base_demo</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -3016,7 +3021,7 @@
 
   <Group>
     <GroupName>tutorial/nes</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
