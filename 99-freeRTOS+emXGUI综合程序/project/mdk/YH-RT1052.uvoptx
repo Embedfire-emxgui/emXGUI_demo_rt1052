@@ -465,24 +465,7 @@
           <Name>-X"Fire CMSIS-DAP" -UHS-00002390 -O974 -S0 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC8000 -FN1 -FF0iMXRT1052_W25Q256JV_By_Fire -FS060000000 -FL02000000</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>2169</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>-2147306884</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>H:\鍏徃浜у搧\emXGUI\demo_code_rt1052\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\YH_RT1052\../../../emXGUI_Lib/app/tutorial/nes/InfoNes/InfoNES_v0.97J_RC1/main.cpp\2169</Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -613,8 +596,8 @@
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
-          <SubType>0</SubType>
-          <ItemText>*file_list</ItemText>
+          <SubType>2</SubType>
+          <ItemText>0x20205EC0</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -1745,7 +1728,7 @@
 
   <Group>
     <GroupName>user</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

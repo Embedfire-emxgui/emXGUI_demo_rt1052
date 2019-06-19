@@ -86,6 +86,7 @@ static void USB_HostApplicationMouseTask(void *param)
             第三步：启动FreeRTOS，开始多任务调度
   ****************************************************************/
 int main(void)
+
 {	
   BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
 
