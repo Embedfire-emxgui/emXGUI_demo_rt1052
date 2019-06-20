@@ -39,7 +39,7 @@ int cur_index = 1;
 /*============================================================================*/
 
 
-#define	__Name	L"NES模拟器(InfoNES)"
+#define	__Name	L"NES模拟�?InfoNES)"
 
 /*============================================================================*/
 
@@ -128,20 +128,20 @@ static void CPU_Task(void)
 {
 	uint8_t CPU_RunInfo[400]; //保存任务运行时间信息
 
-	memset(CPU_RunInfo,0,400); //信息缓冲区清零
+	memset(CPU_RunInfo,0,400); //信息缓冲区清�?
 
 //	vTaskList((char *)&CPU_RunInfo); //获取任务运行时间信息
 
 //	printf("---------------------------------------------\r\n");
-//	printf("任务名 任务状态 优先级 剩余栈 任务序号\r\n");
+//	printf("任务�?任务状�?优先�?剩余�?任务序号\r\n");
 //	printf("%s", CPU_RunInfo);
 //	printf("---------------------------------------------\r\n");
 
-//	memset(CPU_RunInfo,0,400); //信息缓冲区清零
+//	memset(CPU_RunInfo,0,400); //信息缓冲区清�?
 
 	vTaskGetRunTimeStats((char *)&CPU_RunInfo);
 
-	printf("任务名 运行计数 使用率\r\n");
+	printf("任务�?运行计数 使用率\r\n");
 	printf("%s", CPU_RunInfo);
 	printf("---------------------------------------------\r\n\n");
 
@@ -407,7 +407,7 @@ int InfoNES_ReadRom( const char *pszFileName )
 		return -1;
 	}
 	
-    //获取Mapper号
+    //获取Mapper�?
     NES->MapperNo =Neshd->byInfo1>>4;
     for(nIdx=4;nIdx<8&&Neshd->byReserve[nIdx]==0;++nIdx );
 
@@ -1077,7 +1077,7 @@ static void draw_frame(HDC hdc)
   	  	rc.y	=0;
   	  	rc.w	=200;
   	  	rc.h	=16;
-  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
+//  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
   	  	SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
   	  	TextOut(hdc_NES,1,1,buf,-1);
@@ -1281,14 +1281,14 @@ static void __scan_file(const char *path,struct dir_info *d_info)
 #define	ID_CANCEL		0x1007
 
 #define	ID_LIST			0x2001
-static void MusicList_ReturnButton_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外观
+static void MusicList_ReturnButton_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外�?
 {
   HWND hwnd;
   HDC hdc;
   RECT rc;
   WCHAR wbuf[128];
 
-  hwnd = ds->hwnd; //button的窗口句柄.
+  hwnd = ds->hwnd; //button的窗口句�?
   hdc = ds->hDC;   //button的绘图上下文句柄.
   rc = ds->rc;     //button的绘制矩形区.
 
@@ -1299,21 +1299,21 @@ static void MusicList_ReturnButton_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按
 
   FillCircle(hdc, rc.x, rc.y, rc.w);
   SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
-  FillRect(hdc, &rc); //用矩形填充背景
+  FillRect(hdc, &rc); //用矩形填充背�?
 
   if (IsWindowEnabled(hwnd) == FALSE)
   {
     SetTextColor(hdc, MapRGB(hdc, 165,160,160));
   }
   else if (ds->State & BST_PUSHED)
-  { //按钮是按下状态
+  { //按钮是按下状�?
   //    GUI_DEBUG("ds->ID=%d,BST_PUSHED",ds->ID);
-  //		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充色(BrushColor用于所有Fill类型的绘图函数)
-  //		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制色(PenColor用于所有Draw类型的绘图函数)
-    SetTextColor(hdc, MapRGB(hdc, 105, 105, 105));      //设置文字色
+  //		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充�?BrushColor用于所有Fill类型的绘图函�?
+  //		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制�?PenColor用于所有Draw类型的绘图函�?
+    SetTextColor(hdc, MapRGB(hdc, 105, 105, 105));      //设置文字�?
   }
   else
-  { //按钮是弹起状态
+  { //按钮是弹起状�?
   //		SetBrushColor(hdc,MapRGB(hdc,255,255,255));
   //		SetPenColor(hdc,MapRGB(hdc,0,250,0));
     SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
@@ -1322,55 +1322,55 @@ static void MusicList_ReturnButton_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按
 
   //	SetBrushColor(hdc,COLOR_BACK_GROUND);
 
-  //	FillRect(hdc,&rc); //用矩形填充背景
-  //	DrawRect(hdc,&rc); //画矩形外框
+  //	FillRect(hdc,&rc); //用矩形填充背�?
+  //	DrawRect(hdc,&rc); //画矩形外�?
   //  
   //  FillCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //用矩形填充背景FillCircle
-  //	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外框
+  //	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外�?
 
   /* 使用控制图标字体 */
   SetFont(hdc, ctrlFont48);
   //  SetTextColor(hdc,MapRGB(hdc,255,255,255));
 
-  GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字
+  GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文�?
 
   DrawText(hdc, wbuf, -1, &rc, DT_VCENTER);//绘制文字(居中对齐方式)
   rc.x = 35; 
   //   rc.y = 20;
   /* 恢复默认字体 */
   SetFont(hdc, defaultFont);
-  DrawText(hdc, L"Exit", -1, &rc, DT_VCENTER);
+  DrawText(hdc, L"����", -1, &rc, DT_VCENTER);
 }
 
 
 
-static void MusicList_Button_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外观
+static void MusicList_Button_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外�?
 {
 	HWND hwnd;
 	HDC hdc;
 	RECT rc;
 	WCHAR wbuf[128];
 
-	hwnd = ds->hwnd; //button的窗口句柄.
+	hwnd = ds->hwnd; //button的窗口句�?
 	hdc = ds->hDC;   //button的绘图上下文句柄.
 	rc = ds->rc;     //button的绘制矩形区.
 
 	SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
-	FillRect(hdc, &rc); //用矩形填充背景
+	FillRect(hdc, &rc); //用矩形填充背�?
 
 	if (IsWindowEnabled(hwnd) == FALSE)
 	{
 		SetTextColor(hdc, MapRGB(hdc, 165,160,160));
 	}
 	else if (ds->State & BST_PUSHED)
-	{ //按钮是按下状态
+	{ //按钮是按下状�?
 //    GUI_DEBUG("ds->ID=%d,BST_PUSHED",ds->ID);
-//		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充色(BrushColor用于所有Fill类型的绘图函数)
-//		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制色(PenColor用于所有Draw类型的绘图函数)
-		SetTextColor(hdc, MapRGB(hdc, 105, 105, 105));      //设置文字色
+//		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充�?BrushColor用于所有Fill类型的绘图函�?
+//		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制�?PenColor用于所有Draw类型的绘图函�?
+		SetTextColor(hdc, MapRGB(hdc, 105, 105, 105));      //设置文字�?
 	}
 	else
-	{ //按钮是弹起状态
+	{ //按钮是弹起状�?
 //		SetBrushColor(hdc,MapRGB(hdc,255,255,255));
 //		SetPenColor(hdc,MapRGB(hdc,0,250,0));
 		SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
@@ -1379,17 +1379,17 @@ static void MusicList_Button_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外
 
 	//	SetBrushColor(hdc,COLOR_BACK_GROUND);
 
-	//	FillRect(hdc,&rc); //用矩形填充背景
-	//	DrawRect(hdc,&rc); //画矩形外框
+	//	FillRect(hdc,&rc); //用矩形填充背�?
+	//	DrawRect(hdc,&rc); //画矩形外�?
 	//  
 	//  FillCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //用矩形填充背景FillCircle
-	//	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外框
+	//	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外�?
 
 	  /* 使用控制图标字体 */
 	SetFont(hdc, ctrlFont64);
 	//  SetTextColor(hdc,MapRGB(hdc,255,255,255));
 
-	GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字
+	GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文�?
 
 	DrawText(hdc, wbuf, -1, &rc, DT_VCENTER | DT_CENTER);//绘制文字(居中对齐方式)
 
@@ -1586,7 +1586,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       list_menu_cfg_t cfg;
       RECT rc;
       GetClientRect(hwnd, &rc);   
-      /* 需要分配N+1项，最后一项为空 */
+      /* 需要分配N+1项，最后一项为�?*/
       menu_list = (struct __obj_list *)GUI_VMEM_Alloc(sizeof(struct __obj_list)*(file_nums+1));
       wbuf = (WCHAR (*)[128])GUI_VMEM_Alloc(sizeof(WCHAR *)*file_nums);  
       if(menu_list == NULL) return 0;
@@ -1600,7 +1600,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         //删除目录字段
         p = strstr(file_list[i], "nes/");
             
-        GUI_DEBUG("%s", p+4);
+//        GUI_DEBUG("%s", p+4);
         x_mbstowcs_cp936(wbuf[i], p+4, 100);
         menu_list[i].pName = wbuf[i];
         menu_list[i].cbStartup = NULL;
@@ -1608,7 +1608,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         menu_list[i].bmp = NULL;
         menu_list[i].color = RGB_WHITE;
       } 
-      /* 最后一项为空 */
+      /* 最后一项为�?*/
       menu_list[i].pName = NULL;
       menu_list[i].cbStartup = NULL;
       menu_list[i].icon = NULL;
@@ -1646,7 +1646,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       PAINTSTRUCT ps;
       HDC hdc;
       RECT rc;//窗口大小
-      GetClientRect(hwnd, &rc); //获得客户区矩形.
+      GetClientRect(hwnd, &rc); //获得客户区矩�?
       hdc = BeginPaint(hwnd, &ps);
       //背景
       SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
@@ -1657,7 +1657,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       rc.w = 800;
       rc.h = 80;
       SetTextColor(hdc, MapRGB(hdc, 250, 250, 250));
-      DrawText(hdc, L"GAME LIST", -1, &rc, DT_VCENTER|DT_CENTER);
+      DrawText(hdc, L"��Ϸ�б�", -1, &rc, DT_VCENTER|DT_CENTER);
       EndPaint(hwnd, &ps);
       break;
     }  
@@ -1671,7 +1671,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       if(ds->ID == 0x2003)
         MusicList_ReturnButton_OwnerDraw(ds);
       else
-        MusicList_Button_OwnerDraw(ds); //执行自绘制按钮
+        MusicList_Button_OwnerDraw(ds); //执行自绘制按�?
       return TRUE;
 
     } 
@@ -1690,7 +1690,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         {
           case 0x2000:
           {
-            cur_index = nm->idx;//切换至下一首
+            cur_index = nm->idx;//切换至下一�?
             
             GUI_DEBUG("%d", cur_index);
             PostCloseMessage(hwnd);
@@ -1719,8 +1719,8 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     }    
     case WM_DESTROY:
     {
-      NES->PAD_System = PAD_SYS_QUIT;
-      nes_cmd=NES_LOAD;
+//      NES->PAD_System = PAD_SYS_QUIT;
+//      nes_cmd=NES_LOAD;
       GUI_VMEM_Free(menu_list);
       GUI_VMEM_Free(wbuf);
        
@@ -1766,12 +1766,12 @@ static FRESULT f_readdir_gui(char* dir,DIR* directory,FILINFO* fileInformation)
     }
     if (g_fileInformation->fattrib & AM_DIR)
     {
-      PRINTF("文件夹 : %s\r\n", g_fileInformation->fname);
+      PRINTF("文件�?: %s\r\n", g_fileInformation->fname);
     }
     else
     {
       x_sprintf(file_list[file_nums],"%s/%s", dir, g_fileInformation->fname);
-      GUI_DEBUG("%s", file_list[file_nums]);
+//      GUI_DEBUG("%s", file_list[file_nums]);
       file_nums++;
      
     }  
@@ -1808,8 +1808,8 @@ static void USB_HostApplicationMouseTask(void *param)
     PostCloseMessage(hwnd_UI);
     GUI_Thread_Delete(GUI_GetCurThreadHandle());
 }
-DIR dir_object;    //目录对象结构体
-FILINFO file_info; //文件信息描述结构体
+DIR dir_object;    //目录对象结构�?
+FILINFO file_info; //文件信息描述结构�?
 static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
 	HDC  hdc;
@@ -1850,7 +1850,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				CreateWindow(BUTTON,L"Reset",WS_BORDER|WS_VISIBLE|BS_NOTIFY,m_rc[3].x,m_rc[3].y,m_rc[3].w,m_rc[3].h,hwnd,ID_RESET,hInst,0);
 				CreateWindow(BUTTON,L"全屏",WS_BORDER|WS_VISIBLE|BS_NOTIFY,m_rc[4].x,m_rc[4].y,m_rc[4].w,m_rc[4].h,hwnd,ID_FULLSCREEN,hInst,0);
 				
-        f_readdir_gui("nes",&dir_object,&file_info);
+        
 				nes_thread_run=FALSE;
 //				SYS_thread_create(nes_thread,NULL,8*1024,NULL,0);
         GUI_Thread_Create(nes_thread, "NES", 12*256,NULL, 5,5);
@@ -2090,32 +2090,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         pt.y =GET_LPARAM_Y(lParam); //获得Y坐标
         if(PtInRect(&rc_r, &pt))
           PostCloseMessage(hwnd);
-        else if(PtInRect(&rc_l, &pt))
-        {
-          WNDCLASS wcex;   
-          wcex.Tag	 		= WNDCLASS_TAG;
-          wcex.Style			= CS_HREDRAW | CS_VREDRAW;
-          wcex.lpfnWndProc	= (WNDPROC)Dlg_Load_WinProc;
-          wcex.cbClsExtra		= 0;
-          wcex.cbWndExtra		= 0;
-          wcex.hInstance		= NULL;
-          wcex.hIcon			= NULL;
-          wcex.hCursor		= NULL;
-          if(1)
-          {
-            RECT rc;
-            
 
-            CreateWindowEx(NULL,
-                                  &wcex,L"MusicList",
-                                  WS_OVERLAPPED|WS_VISIBLE,
-                                  0,0,800,480,
-                                  hwnd,0,NULL,NULL);
-
-          }          
-          
-        
-        }
 				break;
     }
 				/////
@@ -2189,11 +2164,11 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     usb_HostApplicationMouse_run = FALSE;
     usb_HostTask_run = FALSE;
 		if(nes_thread_run==FALSE&& usb_HostApplicationMouse_state == FALSE && usb_HostTask_state == FALSE)
-		{ //等 NES 线程退出了，才真正销毁窗口
+		{ //�?NES 线程退出了，才真正销毁窗�?
       file_nums = 0;
       cur_index = 1;
 			DeleteDC(hdc_NES);
-			DestroyWindow(hwnd); //销毁窗口
+			DestroyWindow(hwnd); //销毁窗�?
 		}
 		break;
 		/////
@@ -2298,6 +2273,39 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
 	return TRUE;
 }
 
+void	GUI_NES_DIALOG(void *param)
+{
+  HWND hwnd;
+  WNDCLASS wcex;  
+  MSG msg;  
+  wcex.Tag	 		= WNDCLASS_TAG;
+  wcex.Style			= CS_HREDRAW | CS_VREDRAW;
+  wcex.lpfnWndProc	= (WNDPROC)Dlg_Load_WinProc;
+  wcex.cbClsExtra		= 0;
+  wcex.cbWndExtra		= 0;
+  wcex.hInstance		= NULL;
+  wcex.hIcon			= NULL;
+  wcex.hCursor		= NULL;
+  if(1)
+  {
+    RECT rc;
+    
+    f_readdir_gui("nes",&dir_object,&file_info);
+    hwnd = CreateWindowEx(WS_EX_NOFOCUS,
+                          &wcex,L"GameList",
+                          WS_OVERLAPPED|WS_VISIBLE,
+                          0,0,800,480,
+                          NULL,0,NULL,NULL);
+
+  }          
+	ShowWindow(hwnd,SW_SHOW);
+	while(GetMessage(&msg,hwnd))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}  
+}
+
 /*============================================================================*/
 
 class	NES_SIM{
@@ -2315,7 +2323,8 @@ static int run=FALSE;
 
 static void win_thread(void *p)
 {
-	InfoNES_WinMain(NULL,NULL);
+	//InfoNES_WinMain(NULL,NULL);
+  GUI_NES_DIALOG(NULL);
 	run=FALSE;
 	GUI_Thread_Delete(GUI_GetCurThreadHandle());
 }
@@ -2324,6 +2333,7 @@ static void win_thread(void *p)
 extern "C" void test1321(void* param)
 {
 	run =TRUE;
+  
 //	SYS_thread_create(win_thread,NULL,10*1024,NULL,0);
   GUI_Thread_Create(win_thread, "NES_WIN", 10*1024, NULL, 6, 5);
 //	sms_load(NULL);
