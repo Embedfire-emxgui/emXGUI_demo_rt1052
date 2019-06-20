@@ -93,8 +93,8 @@ void BOARD_ConfigMPU(void)
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_512MB);
 
     /* Region 3 setting */
-    MPU->RBAR = ARM_MPU_RBAR(3, 0x00000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_1GB);
+    MPU->RBAR = ARM_MPU_RBAR(3, 0x81000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_8MB);
 
     /* Region 4 setting */
     MPU->RBAR = ARM_MPU_RBAR(4, 0x00000000U);
@@ -115,7 +115,7 @@ void BOARD_ConfigMPU(void)
      * accessed by cache can be put here */
     /* Memory with Normal type, not shareable, non-cacheable */
     MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_16MB);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_16MB);
 
     MPU->RBAR = ARM_MPU_RBAR(8, 0x81C00000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 1, 0, 0, 0, ARM_MPU_REGION_SIZE_4MB);

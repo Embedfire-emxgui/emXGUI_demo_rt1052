@@ -10,12 +10,12 @@
 
 void MEM_Flush(u32 addr,u32 size)
 {
-//  if(addr>=0x81C00000)
-//    return;
+  if(addr>=0x81C00000 || addr < 0x81000000)
+    return;
 //  else
 //  if(size%4!=0)
 //    GUI_DEBUG("1");
-//  SCB_CleanDCache_by_Addr((uint32_t*)addr,size);
+  SCB_CleanDCache_by_Addr((uint32_t*)addr,size);
 //  SCB_CleanDCache();
 }
 

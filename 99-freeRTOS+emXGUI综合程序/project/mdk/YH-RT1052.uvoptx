@@ -471,7 +471,7 @@
           <Type>0</Type>
           <LineNumber>292</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>-2147443642</Address>
+          <Address>-2147443638</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -606,11 +606,6 @@
         </Ww>
         <Ww>
           <count>24</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NES-&gt;PAD_System</ItemText>
-        </Ww>
-        <Ww>
-          <count>25</count>
           <WinNumber>1</WinNumber>
           <ItemText>defaultFontEn</ItemText>
         </Ww>
@@ -1677,7 +1672,7 @@
 
   <Group>
     <GroupName>board</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -2505,7 +2500,7 @@
 
   <Group>
     <GroupName>emxgui/drv</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -2829,7 +2824,7 @@
 
   <Group>
     <GroupName>base_app</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -3033,7 +3028,7 @@
 
   <Group>
     <GroupName>tutorial/nes</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

@@ -33,7 +33,7 @@ extern "C"
 #define	kfree	vfree
 
 #endif
-char file_list[20][100];
+char file_list[50][100];
 int file_nums = 0;
 int cur_index = 1;
 /*============================================================================*/
@@ -1874,7 +1874,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     nm.code = BN_CLICKED;//HIWORD(wParam);
     nm.idFrom = ID_FULLSCREEN;//LOWORD(wParam);        
     SendMessage(hwnd, WM_NOTIFY, NULL, (LPARAM)&nm);
-    SetTimer(hwnd,1,1000,TMR_START,NULL);
+//    SetTimer(hwnd,1,1000,TMR_START,NULL);
     break;
 				////////
 		
