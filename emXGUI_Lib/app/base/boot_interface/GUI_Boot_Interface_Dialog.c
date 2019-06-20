@@ -315,7 +315,7 @@ void	GUI_Boot_Interface_Dialog(void *param)
 //        /* 找到资源，正常跑应用*/ 
 //     
 //        h=rt_thread_create(,,NULL,8*1024,5,5);
-       GUI_Thread_Create(GUI_Board_App_Desktop,"GUI_APP",4*1024,NULL,5,5);
+       GUI_Thread_Create(GUI_Board_App_Desktop,"GUI_APP",8*1024,NULL,5,5);
 //        rt_thread_startup(h);			
 //        h=rt_thread_create("GUI_SLIDE_WIN",GUI_DEMO_SlideWindow,NULL,4096,5,5);
        GUI_Thread_Create(GUI_DEMO_SlideWindow,"GUI_SLIDE_WIN",4096,NULL,5,5);

@@ -35,7 +35,7 @@ extern "C"
 #endif
 char file_list[20][100];
 int file_nums = 0;
-int cur_index = 0;
+int cur_index = 1;
 /*============================================================================*/
 
 
@@ -1853,7 +1853,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         f_readdir_gui("nes",&dir_object,&file_info);
 				nes_thread_run=FALSE;
 //				SYS_thread_create(nes_thread,NULL,8*1024,NULL,0);
-        GUI_Thread_Create(nes_thread, "NES", 8*1024,NULL, 5,5);
+        GUI_Thread_Create(nes_thread, "NES", 12*256,NULL, 5,5);
 ////				SYS_thread_create(sms_thread,NULL,10*1024,NULL,0);
 //        GUI_Thread_Create(USB_HostTask, "NESUSB", 12*1024,NULL, 3,5);
 //        GUI_Thread_Create(USB_HostApplicationMouseTask, "NESUSHHOST", 12*1024,NULL, 4,5);
@@ -1874,14 +1874,14 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     nm.code = BN_CLICKED;//HIWORD(wParam);
     nm.idFrom = ID_FULLSCREEN;//LOWORD(wParam);        
     SendMessage(hwnd, WM_NOTIFY, NULL, (LPARAM)&nm);
-    //SetTimer(hwnd,1,1000,TMR_START,NULL);
+    SetTimer(hwnd,1,1000,TMR_START,NULL);
     break;
 				////////
 		
 		case	WM_TIMER:
 		{
 			//NES_Execu();
-      //CPU_Task();
+      CPU_Task();
       
 //        USB_HostTaskFn(g_HostHandle); 
 //        USB_HostHidGamepad1Task(&g_HostHidGamepad1);            
@@ -2040,7 +2040,18 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 					code =nm->code;//HIWORD(wParam);
 					id	 =nm->idFrom;//LOWORD(wParam);
 
-		
+//					if(id==ID_START)
+//					{
+//						if(code==BN_PUSHED)
+//						{
+//							SYS_KeyVal	|=NES_VK_START;
+//						}
+
+//						if(code==BN_CLICKED)
+//						{
+//							SYS_KeyVal	&=~NES_VK_START;
+//						}
+//					}		
 
 					if(id==ID_FULLSCREEN && code==BN_CLICKED)
 					{
@@ -2134,7 +2145,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				PAINTSTRUCT ps;
 				hdc =BeginPaint(hwnd,&ps);
 
-				if(DrawFrameFlag == TRUE)
+				if(DrawFrameFlag == TRUE )
 				{
 					static	int t0=0;
 					static	int t1=0;
@@ -2175,11 +2186,12 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		NES->PAD_System = PAD_SYS_QUIT;
 		nes_cmd		= NES_QUIT;     //设置nes_cmd 标志,让NES线程结束.
 		MenuRet		=-1;
-//    usb_HostApplicationMouse_run = FALSE;
-//    usb_HostTask_run = FALSE;
-		if(nes_thread_run==FALSE)
+    usb_HostApplicationMouse_run = FALSE;
+    usb_HostTask_run = FALSE;
+		if(nes_thread_run==FALSE&& usb_HostApplicationMouse_state == FALSE && usb_HostTask_state == FALSE)
 		{ //等 NES 线程退出了，才真正销毁窗口
       file_nums = 0;
+      cur_index = 1;
 			DeleteDC(hdc_NES);
 			DestroyWindow(hwnd); //销毁窗口
 		}
@@ -2221,15 +2233,23 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
 	////
 
   Neshd =(NesHeader*)vmalloc(sizeof(NesHeader));
+  memset(Neshd,0,sizeof(NesHeader));
   NES   =(NesResource*)vmalloc(sizeof(NesResource));
+  memset(NES,0,sizeof(NesResource));
   CPU   =(CpuResource*)kmalloc(sizeof(CpuResource));
+  memset(CPU,0,sizeof(CpuResource));
   RAM   =(BYTE*)kmalloc(RAM_SIZE);
+  memset(RAM,0,RAM_SIZE);
   SRAM  =(BYTE*)kmalloc(SRAM_SIZE);
+  memset(SRAM,0,SRAM_SIZE);
   PPURAM =(BYTE*)vmalloc(PPURAM_SIZE);
+  memset(PPURAM,0,PPURAM_SIZE);
   ChrBuf =(BYTE*)vmalloc(256*2*8*8);
+  memset(ChrBuf,0,256*2*8*8);
   APU =(ApuResource*)vmalloc(sizeof(ApuResource));
+  memset(APU,0,sizeof(ApuResource));
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
-
+  memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   wave_buffers =(WORD*)vmalloc(1470);
   WorkFrame =(WORD*)vmalloc(256*240*2);
 
@@ -2246,12 +2266,12 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
 	wcex.hIcon			= NULL;//LoadIcon(hInstance, (LPCTSTR)IDI_WIN32_APP_TEST);
 	wcex.hCursor		= NULL;//LoadCursor(NULL, IDC_ARROW);
 	
-	SetRectArea(&rc,20,0,256,240+24);
+	//SetRectArea(&rc,20,0,256,240+24);
 	
 	AdjustWindowRect(&rc,WS_OVERLAPPEDWINDOW);
 	
 	hwnd = CreateWindow(	&wcex,__Name,WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
-							rc.x,rc.y,rc.w,rc.h,
+							0,0,800,480,
 							NULL,0,hInst,NULL);
 							
 	ShowWindow(hwnd,SW_SHOW);

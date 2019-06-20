@@ -40,7 +40,11 @@ heap_t heap_vmem;
 
 /* VMEM缓冲区 */
 static uint8_t buff_vmem[VMEM_SIZE] __attribute__((at(VMEM_BASE)));
+//static uint8_t buff_vmem_wb[4*1024*1024] __attribute__((at(0x81000000)));
 #endif
+
+
+
 
 /* GUI_CORE内存管理 */
 //static GUI_MUTEX *mutex_core_mem = NULL;

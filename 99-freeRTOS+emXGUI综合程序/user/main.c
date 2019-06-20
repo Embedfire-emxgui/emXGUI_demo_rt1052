@@ -61,21 +61,21 @@ static void BSP_Init(void);/* 用于初始化板载相关资源 */
             第二步：创建APP应用任务
             第三步：启动FreeRTOS，开始多任务调度
   ****************************************************************/
-static void USB_HostTask(void *param)
-{
-    while (1)
-    {
-        USB_HostTaskFn(param);
-    }
-}
+//static void USB_HostTask(void *param)
+//{
+//    while (1)
+//    {
+//        USB_HostTaskFn(param);
+//    }
+//}
 
-static void USB_HostApplicationMouseTask(void *param)
-{
-    while (1)
-    {
-        USB_HostHidGamepad1Task(param);
-    }
-}
+//static void USB_HostApplicationMouseTask(void *param)
+//{
+//    while (1)
+//    {
+//        USB_HostHidGamepad1Task(param);
+//    }
+//}
 
 /*****************************************************************
   * @brief  主函数
@@ -86,7 +86,6 @@ static void USB_HostApplicationMouseTask(void *param)
             第三步：启动FreeRTOS，开始多任务调度
   ****************************************************************/
 int main(void)
-
 {	
   BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
 
@@ -97,7 +96,7 @@ int main(void)
    /* 创建AppTaskCreate任务 */
   xReturn = xTaskCreate((TaskFunction_t )GUI_Thread_Entry,  /* 任务入口函数 */
                         (const char*    )"gui",/* 任务名字 */
-                        (uint16_t       )2*1024,  /* 任务栈大小 */
+                        (uint16_t       )8*1024,  /* 任务栈大小 */
                         (void*          )NULL,/* 任务入口函数参数 */
                         (UBaseType_t    )6, /* 任务的优先级 */
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 

@@ -289,7 +289,7 @@ HFONT GUI_Default_FontInit(void)
     */
   
     /* 默认英文字体 */ 
-    defaultFontEn = XFT_CreateFont(GUI_DEFAULT_FONT_EN);        
+    defaultFontEn = XFT_CreateFont(ASCII_16_4BPP);        
 
     /* 如果使用了启动界面，在启动界面再加载外部字体 */
 #if (GUI_EXTERN_FONT_EN && (!GUI_APP_BOOT_INTERFACE_EN))

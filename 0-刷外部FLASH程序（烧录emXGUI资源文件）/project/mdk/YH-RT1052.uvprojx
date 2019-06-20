@@ -3024,7 +3024,7 @@
 </MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1,CPU_MIMXRT1052CVL5B,XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE =1,XIP_BOOT_HEADER_DCD_ENABLE =1,PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1,USE_RAM_VECTOR_TABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk</IncludePath>
+              <IncludePath>..\..\libraries\CMSIS\Include;..\..\libraries\drivers;..\..\libraries\utilities;..\..\libraries\utilities\str;..\..\libraries\utilities\log;..\..\libraries\utilities\io;..\..\libraries\xip;..\..\user;..\..\user\bsp;..\..\libraries\sdmmc\inc;..\..\libraries\sdmmc\port;..\..\libraries\fatfs;..\..\libraries\fatfs\fsl_sd_disk;..\..\user\res_mgr</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
