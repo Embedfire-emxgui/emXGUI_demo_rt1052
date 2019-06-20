@@ -37,7 +37,14 @@ char file_list[50][100];
 int file_nums = 0;
 int cur_index = 1;
 /*============================================================================*/
+typedef enum
+{
+  e_Post_List = 0,//ÆÕÍ¨µÄ¹Ø±ÕÁÐ±í
+  e_Post_All,     //ÍË³öÕû¸öAPP
+  e_Post_OK
+}Close_Typedef;
 
+Close_Typedef exit_type = e_Post_List;
 
 #define	__Name	L"NESæ¨¡æ‹Ÿå™?InfoNES)"
 
@@ -51,6 +58,7 @@ int g_nCurrent=0;
 static	HANDLE	hInst;
 
 static	HWND 	hwnd_UI;
+static	HWND 	hwnd_List;
 static	HDC		hdc_NES;
 
 static	int		nes_thread_run=TRUE;
@@ -1079,8 +1087,8 @@ static void draw_frame(HDC hdc)
   	  	rc.h	=16;
 //  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
-  	  	SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
-  	  	TextOut(hdc_NES,1,1,buf,-1);
+//  	  	SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
+//  	  	TextOut(hdc_NES,1,1,buf,-1);
 
   	}
 
@@ -1600,7 +1608,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         //åˆ é™¤ç›®å½•å­—æ®µ
         p = strstr(file_list[i], "nes/");
             
-//        GUI_DEBUG("%s", p+4);
+        GUI_DEBUG("%s", p+4);
         x_mbstowcs_cp936(wbuf[i], p+4, 100);
         menu_list[i].pName = wbuf[i];
         menu_list[i].cbStartup = NULL;
@@ -1690,10 +1698,17 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         {
           case 0x2000:
           {
+            HWND wnd;
             cur_index = nm->idx;//åˆ‡æ¢è‡³ä¸‹ä¸€é¦?
-            
-            GUI_DEBUG("%d", cur_index);
+//            SYS_KeyVal	|=PAD_SYS_QUIT;
+            NES->PAD_System = PAD_SYS_QUIT;
+            nes_cmd = NES_LOAD;
+                   
+            exit_type = e_Post_List;
             PostCloseMessage(hwnd);
+                       
+            
+            
           }
 
         break;
@@ -1713,19 +1728,23 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       }         
       if (code == BN_CLICKED && id == 0x2003)
       {
+        exit_type = e_Post_All;
         PostCloseMessage(hwnd);
       }   
       break;
     }    
-    case WM_DESTROY:
+    case WM_CLOSE:
     {
 //      NES->PAD_System = PAD_SYS_QUIT;
 //      nes_cmd=NES_LOAD;
       GUI_VMEM_Free(menu_list);
-      GUI_VMEM_Free(wbuf);
-       
-      
-      return PostQuitMessage(hwnd);	
+      GUI_VMEM_Free(wbuf);  
+      if(exit_type == e_Post_All)
+      {
+        PostCloseMessage(hwnd_UI);         
+      }
+      DestroyWindow(hwnd); //µ÷ÓÃDestroyWindowº¯ÊýÀ´Ïú»Ù´°¿Ú£¨¸Ãº¯Êý»á²úÉúWM_DESTROYÏûÏ¢£©¡£
+      return TRUE; //¹Ø±Õ´°¿Ú·µ»ØTRUE¡£
     }
 		default:
 				return	DefWindowProc(hwnd,msg,wParam,lParam);    
@@ -1833,7 +1852,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         usb_HostApplicationMouse_run = TRUE;
         usb_HostApplicationMouse_state = TRUE;
 				rom_path[0]	=0;
-				nes_cmd		=NES_LOAD;
+				nes_cmd		=NES_NULL;
 				
 				nes_fps		=0;
 				hdc_NES		=CreateMemoryDC(SURF_SCREEN,256,240);
@@ -2083,15 +2102,36 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				////////
 		case	WM_LBUTTONDOWN:
     {
-				POINT pt;
-        RECT rc_r = {400,0,400,480};
-        RECT rc_l = {0,0,400,480};
-        pt.x =GET_LPARAM_X(lParam); //èŽ·å¾—Xåæ ‡
-        pt.y =GET_LPARAM_Y(lParam); //èŽ·å¾—Yåæ ‡
-        if(PtInRect(&rc_r, &pt))
-          PostCloseMessage(hwnd);
+//      nes_cmd = NES_NULL;
+//      ShowWindow(hwnd_List,SW_SHOW);
+//      RedrawWindow(hwnd_List, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE|RDW_ERASE);
+      if(1)
+      {
+        WNDCLASS wcex;   
+        wcex.Tag	 		= WNDCLASS_TAG;
+        wcex.Style			= CS_HREDRAW | CS_VREDRAW;
+        wcex.lpfnWndProc	= (WNDPROC)Dlg_Load_WinProc;
+        wcex.cbClsExtra		= 0;
+        wcex.cbWndExtra		= 0;
+        wcex.hInstance		= NULL;
+        wcex.hIcon			= NULL;
+        wcex.hCursor		= NULL;
+        if(1)
+        {
+          RECT rc;
+          
 
-				break;
+          CreateWindowEx(NULL,
+                                &wcex,L"GameList",
+                                WS_OVERLAPPED|WS_VISIBLE,
+                                0,0,800,480,
+                                hwnd,0,NULL,NULL);
+
+        }          
+        
+      
+      }      
+      break;
     }
 				/////
 		case	WM_ERASEBKGND:
@@ -2166,7 +2206,8 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		if(nes_thread_run==FALSE&& usb_HostApplicationMouse_state == FALSE && usb_HostTask_state == FALSE)
 		{ //ç­?NES çº¿ç¨‹é€€å‡ºäº†ï¼Œæ‰çœŸæ­£é”€æ¯çª—å?
       file_nums = 0;
-      cur_index = 1;
+      cur_index = 0;
+      exit_type = e_Post_OK;
 			DeleteDC(hdc_NES);
 			DestroyWindow(hwnd); //é”€æ¯çª—å?
 		}
@@ -2275,7 +2316,7 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
 
 void	GUI_NES_DIALOG(void *param)
 {
-  HWND hwnd;
+
   WNDCLASS wcex;  
   MSG msg;  
   wcex.Tag	 		= WNDCLASS_TAG;
@@ -2291,15 +2332,15 @@ void	GUI_NES_DIALOG(void *param)
     RECT rc;
     
     f_readdir_gui("nes",&dir_object,&file_info);
-    hwnd = CreateWindowEx(WS_EX_NOFOCUS,
+    hwnd_List = CreateWindowEx(WS_EX_NOFOCUS,
                           &wcex,L"GameList",
                           WS_OVERLAPPED|WS_VISIBLE,
                           0,0,800,480,
                           NULL,0,NULL,NULL);
 
   }          
-	ShowWindow(hwnd,SW_SHOW);
-	while(GetMessage(&msg,hwnd))
+	ShowWindow(hwnd_List,SW_SHOW);
+	while(GetMessage(&msg,hwnd_List))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -2321,21 +2362,28 @@ private:
 #if	1
 static int run=FALSE;
 
-static void win_thread(void *p)
+static void list_thread(void *p)
 {
 	//InfoNES_WinMain(NULL,NULL);
   GUI_NES_DIALOG(NULL);
-	run=FALSE;
+	
 	GUI_Thread_Delete(GUI_GetCurThreadHandle());
 }
 
-
+static void win_thread(void *p)
+{
+	InfoNES_WinMain(NULL,NULL);
+ 
+	run =FALSE;
+	GUI_Thread_Delete(GUI_GetCurThreadHandle());
+}
 extern "C" void test1321(void* param)
 {
 	run =TRUE;
   
 //	SYS_thread_create(win_thread,NULL,10*1024,NULL,0);
   GUI_Thread_Create(win_thread, "NES_WIN", 10*1024, NULL, 6, 5);
+  GUI_Thread_Create(list_thread, "LIST_WIN", 10*1024, NULL, 6, 5);
 //	sms_load(NULL);
 	while(run==TRUE)
 	{
