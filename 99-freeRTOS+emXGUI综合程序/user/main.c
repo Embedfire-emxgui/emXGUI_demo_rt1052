@@ -52,7 +52,7 @@
 static void GUI_Thread_Entry(void* pvParameters);/* Test_Task任务实现 */
 
 static void BSP_Init(void);/* 用于初始化板载相关资源 */
-
+static void CPU_Task(void);
 /*****************************************************************
   * @brief  主函数
   * @param  无
@@ -61,13 +61,15 @@ static void BSP_Init(void);/* 用于初始化板载相关资源 */
             第二步：创建APP应用任务
             第三步：启动FreeRTOS，开始多任务调度
   ****************************************************************/
-//static void USB_HostTask(void *param)
-//{
-//    while (1)
-//    {
-//        USB_HostTaskFn(param);
-//    }
-//}
+static void sdad(void *param)
+{
+    while (1)
+    {
+      CPU_Task();
+       //printf("%d", eTaskGetState(xTaskGetHandle("GUI_APP")));
+       GUI_msleep(1000); 
+    }
+}
 
 //static void USB_HostApplicationMouseTask(void *param)
 //{
@@ -89,10 +91,8 @@ int main(void)
 {	
   BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
 
-
   /* 开发板硬件初始化 */
   BSP_Init();  
-  
    /* 创建AppTaskCreate任务 */
   xReturn = xTaskCreate((TaskFunction_t )GUI_Thread_Entry,  /* 任务入口函数 */
                         (const char*    )"gui",/* 任务名字 */
@@ -102,10 +102,10 @@ int main(void)
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 
                         
                         
-//    if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, 4, NULL) != pdPASS)
-//    {
-//        usb_echo("create host task error\r\n");
-//    }
+    if (xTaskCreate(sdad, "usdahost task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, NULL) != pdPASS)
+    {
+        usb_echo("create host task error\r\n");
+    }
 //    if (xTaskCreate(USB_HostApplicationMouseTask, "mouse task", 2000L / sizeof(portSTACK_TYPE), &g_HostHidGamepad1, 3,
 //                    NULL) != pdPASS)
 //    {
@@ -222,6 +222,29 @@ static void BSP_Init(void)
     /*调用画板函数*/
 //    Palette_Init();
 }
+static void CPU_Task(void)
+{
+	uint8_t CPU_RunInfo[400]; //淇濆瓨浠诲姟杩愯鏃堕棿淇℃伅
 
+	memset(CPU_RunInfo,0,400); //淇℃伅缂撳啿鍖烘竻闆?
 
+  vTaskList((char *)&CPU_RunInfo); //获取任务运行时间信息
+
+//   printf("---------------------------------------------\r\n");
+//   printf("任务名 任务状态 优先级 剩余栈 任务序号\r\n");
+//   printf("%s", CPU_RunInfo);
+//   printf("---------------------------------------------\r\n");
+
+//	vTaskGetRunTimeStats((char *)&CPU_RunInfo);
+
+//	printf("任务名 运行计数 使用率\r\n");
+//	printf("%s", CPU_RunInfo);
+//	printf("---------------------------------------------\r\n\n");
+
+}
+void vApplicationIdleHook( void )
+{
+  //printf("%d", eTaskGetState(xTaskGetHandle("GUI_APP")));
+  //CPU_Task();
+}
 /****************************END OF FILE**********************/

@@ -1737,14 +1737,20 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     {
 //      NES->PAD_System = PAD_SYS_QUIT;
 //      nes_cmd=NES_LOAD;
-      GUI_VMEM_Free(menu_list);
-      GUI_VMEM_Free(wbuf);  
+      if(exit_type == e_Post_List)
+      {
+        GUI_VMEM_Free(menu_list);
+        GUI_VMEM_Free(wbuf);          
+      }
       if(exit_type == e_Post_All)
       {
+        GUI_VMEM_Free(menu_list);
+        GUI_VMEM_Free(wbuf);  
         PostCloseMessage(hwnd_UI);         
-      }
-      DestroyWindow(hwnd); //调用DestroyWindow函数来销毁窗口（该函数会产生WM_DESTROY消息）。
-      return TRUE; //关闭窗口返回TRUE。
+      }    
+      else
+        DestroyWindow(hwnd); //调用DestroyWindow函数来销毁窗口（该函数会产生WM_DESTROY消息）。
+      break;
     }
 		default:
 				return	DefWindowProc(hwnd,msg,wParam,lParam);    
@@ -2139,7 +2145,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				//if(FullScreen == FALSE)
 				{
 					hdc	=(HDC)wParam;//GetDC(hwnd);
-				
+          GUI_DEBUG("1");
 					GetClientRect(hwnd,&rc);
 					
 //	 				BitBlt(hdc,0,0,256,240,hdc_NES,0,0,SRCCOPY);
@@ -2209,6 +2215,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       cur_index = 0;
       exit_type = e_Post_OK;
 			DeleteDC(hdc_NES);
+      PostCloseMessage(hwnd_List);
 			DestroyWindow(hwnd); //閿�姣佺獥鍙?
 		}
 		break;
@@ -2266,8 +2273,11 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   memset(APU,0,sizeof(ApuResource));
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
-  wave_buffers =(WORD*)vmalloc(1470);
-  WorkFrame =(WORD*)vmalloc(256*240*2);
+  
+  
+  
+  wave_buffers =(WORD*)GUI_GRAM_Alloc(1470);
+  WorkFrame =(WORD*)GUI_GRAM_Alloc(256*240*2);
 
 	hInst	=hInstance;
 	
@@ -2286,7 +2296,7 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
 	
 	AdjustWindowRect(&rc,WS_OVERLAPPEDWINDOW);
 	
-	hwnd = CreateWindow(	&wcex,__Name,WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN,
+	hwnd = CreateWindow(	&wcex,__Name,WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN|WS_EX_FRAMEBUFFER,
 							0,0,800,480,
 							NULL,0,hInst,NULL);
 							
@@ -2367,7 +2377,7 @@ static void list_thread(void *p)
 	//InfoNES_WinMain(NULL,NULL);
   GUI_NES_DIALOG(NULL);
 	
-	GUI_Thread_Delete(GUI_GetCurThreadHandle());
+	GUI_Thread_Delete(xTaskGetHandle("LIST_WIN"));
 }
 
 static void win_thread(void *p)
@@ -2375,15 +2385,15 @@ static void win_thread(void *p)
 	InfoNES_WinMain(NULL,NULL);
  
 	run =FALSE;
-	GUI_Thread_Delete(GUI_GetCurThreadHandle());
+	GUI_Thread_Delete(xTaskGetHandle("NES_WIN"));
 }
 extern "C" void test1321(void* param)
 {
 	run =TRUE;
   
 //	SYS_thread_create(win_thread,NULL,10*1024,NULL,0);
-  GUI_Thread_Create(win_thread, "NES_WIN", 10*1024, NULL, 6, 5);
-  GUI_Thread_Create(list_thread, "LIST_WIN", 10*1024, NULL, 6, 5);
+  GUI_Thread_Create(win_thread, "NES_WIN", 12*1024, NULL, 6, 5);
+  GUI_Thread_Create(list_thread, "LIST_WIN", 12*1024, NULL, 6, 5);
 //	sms_load(NULL);
 	while(run==TRUE)
 	{

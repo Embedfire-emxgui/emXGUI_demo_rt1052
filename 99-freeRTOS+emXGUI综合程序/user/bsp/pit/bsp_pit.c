@@ -29,7 +29,7 @@ void PIT_TIMER_Init(void)
   PIT_ClearStatusFlags(PIT, PIT_CHANNEL_X, kPIT_TimerFlag);
   /* 使能通道0的计时完成中断 */
   PIT_EnableInterrupts(PIT, PIT_CHANNEL_X, kPIT_TimerInterruptEnable);
-  NVIC_SetPriority(PIT_IRQ_ID, 6U);
+  NVIC_SetPriority(PIT_IRQ_ID, 7U);
 //  /*设置中断优先级,*/
 //  set_IRQn_Priority(PIT_IRQ_ID,Group4_PreemptPriority_6, Group4_SubPriority_0);
   /* 使能PIT定时器中断 */
@@ -48,7 +48,7 @@ void PIT_IRQHandler(void)
 {
   /* 清除中断标志位.*/
   PIT_ClearStatusFlags(PIT, PIT_CHANNEL_X, kPIT_TimerFlag);
-    
+  //printf("%d", eTaskGetState(xTaskGetHandle("GUI_APP")));
   CPU_RunTime++;
 }
 
