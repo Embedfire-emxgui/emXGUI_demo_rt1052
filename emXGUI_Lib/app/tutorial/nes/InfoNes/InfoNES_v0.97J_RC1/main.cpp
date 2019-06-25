@@ -859,11 +859,11 @@ void InfoNES_SoundClose( void )
 
 void InfoNES_SoundOutput( int samples,WORD *wave )
 {
-  sai_transfer_t xfer = {0};
+//  sai_transfer_t xfer = {0};
 //  int i;	
 //  int count = 0;
-//	while(!isFinished);     
-//  isFinished = false;
+	while(!isFinished);     
+  isFinished = false;
   if(Soundcount)
     for(int i=0;i<735;i++)
     {     
@@ -872,6 +872,7 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
     }
   else for(int i=0;i<735;i++)Abuf2[i]=wave[i]<<5;  
 //  
+    #if 0
 				if(Soundcount)
 				{
 						/*  xfer structure */
@@ -887,7 +888,8 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
 						xfer.dataSize = 1470;  
 						SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
 						Soundcount=1;
-				}    
+				} 
+#endif        
 }
 
 void InfoNES_MessageBox( char *pszMsg, ... )

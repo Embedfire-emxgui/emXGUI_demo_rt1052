@@ -153,22 +153,22 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
     {
         finishIndex++;
         emptyBlock++;
-//				if(Soundcount)
-//				{
+				if(Soundcount)
+				{
+						/*  xfer structure */
+						xfer.data = (uint8_t *)Abuf1;
+						xfer.dataSize = 1470;  
+						SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
+						Soundcount=0;
+				}
+				else
+				{
 //						/*  xfer structure */
-//						xfer.data = (uint8_t *)Abuf1;
-//						xfer.dataSize = 1470;  
-//						SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
-//						Soundcount=0;
-//				}
-//				else
-//				{
-////						/*  xfer structure */
-//						xfer.data = (uint8_t *)Abuf2;
-//						xfer.dataSize = 1470;  
-//						SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
-//						Soundcount=1;
-//				}       
+						xfer.data = (uint8_t *)Abuf2;
+						xfer.dataSize = 1470;  
+						SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
+						Soundcount=1;
+				}       
 				isFinished = true;
     }
 }
