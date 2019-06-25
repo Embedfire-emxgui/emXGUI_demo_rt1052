@@ -1615,6 +1615,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       RECT rc;//窗口大小
       GetClientRect(hwnd, &rc); //获得客户区矩�?
       hdc = BeginPaint(hwnd, &ps);
+      GUI_DEBUG("1");
       //背景
       SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
       FillRect(hdc, &rc);  
