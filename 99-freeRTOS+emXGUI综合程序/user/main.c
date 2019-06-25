@@ -101,11 +101,11 @@ int main(void)
                         (UBaseType_t    )6, /* 任务的优先级 */
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 
                         
-                        
-    if (xTaskCreate(sdad, "usdahost task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, NULL) != pdPASS)
-    {
-        usb_echo("create host task error\r\n");
-    }
+//                        
+//    if (xTaskCreate(sdad, "usdahost task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, NULL) != pdPASS)
+//    {
+//        usb_echo("create host task error\r\n");
+//    }
 //    if (xTaskCreate(USB_HostApplicationMouseTask, "mouse task", 2000L / sizeof(portSTACK_TYPE), &g_HostHidGamepad1, 3,
 //                    NULL) != pdPASS)
 //    {
@@ -194,7 +194,9 @@ static void BSP_Init(void)
 
     /* 初始化SysTick */
     SysTick_Config(SystemCoreClock / configTICK_RATE_HZ);
-
+    
+    AudioTest();
+    
     /* 初始化LED */
     LED_GPIO_Config();
     Key_GPIO_Config();

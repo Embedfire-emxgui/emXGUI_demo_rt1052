@@ -13,6 +13,8 @@
 extern	"C"{
 #endif
 
+#include "InfoNES_Types.h"  
+  
 /*-------------------------------------------------------------------*/
 /*  Macros                                                           */
 /*-------------------------------------------------------------------*/
@@ -167,7 +169,9 @@ typedef struct
     int   ApuC5Freq;
     int   ApuC5Phaseacc;
     WORD  ApuC5Address, ApuC5CacheAddr;
-    int   ApuC5DmaLength, ApuC5CacheDmaLength; 
+    int   ApuC5DmaLength, ApuC5CacheDmaLength;
+
+    unsigned char Soundcount;
 }ApuResource;
 
 
@@ -205,7 +209,7 @@ typedef struct
 /*-------------------------------------------------------------------*/
 typedef void (*ApuWritefunc)(WORD addr, BYTE value);
 extern ApuEvent *ApuEventQueue;
-extern WORD *wave_buffers;
+extern WORD wave_buffers[1470];
 extern ApuResource *APU;
 extern const ApuWritefunc pAPUSoundRegs[20];
 void ApuWriteControl(WORD addr, BYTE value);

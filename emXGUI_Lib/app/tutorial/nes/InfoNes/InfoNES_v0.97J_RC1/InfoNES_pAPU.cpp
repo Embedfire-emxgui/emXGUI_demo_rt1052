@@ -721,7 +721,7 @@ void ApuRenderingWave5(void)
 /*     InfoNES_pApuVsync() : Callback Function per Vsync             */
 /*                                                                   */
 /*===================================================================*/
-
+//#include "fsl_debug_console.h"
 void InfoNES_pAPUVsync(void)
 {
   ApuRenderingWave1();
@@ -733,7 +733,10 @@ void InfoNES_pAPUVsync(void)
     
   InfoNES_SoundOutput(APU->ApuSamplesPerSync, 
 		      wave_buffers);
-
+//  for(int i = 0; i < 1470; i++ )
+//  {
+//    PRINTF("%d", wave_buffers[i]);
+//  }
   APU->entertime = CPU->g_wPassedClocks;
   APU->cur_event = 0;
 }

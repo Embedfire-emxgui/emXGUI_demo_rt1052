@@ -62,13 +62,13 @@ static	HWND 	hwnd_List;
 static	HDC		hdc_NES;
 
 static	int		nes_thread_run=TRUE;
-static	U32 	P1_KeyVal,P2_KeyVal,SYS_KeyVal;
+static	U32 	SYS_KeyVal;
 static	int		MenuRet;
 
 //static	char	cur_dir[256];
 
-static	char	rom_dir[256];
-static	char	rom_path[256];
+//static	char	rom_dir[256];
+//static	char	rom_path[256];
 
 
 static	int		DrawFrameFlag=FALSE;
@@ -111,7 +111,7 @@ BYTE *ROMBANK3;
 //1Kb*16
 BYTE *PPUBANK[ 16 ];
 
-WORD *wave_buffers;
+WORD wave_buffers[1470];
 
 
 /*============================================================================*/
@@ -123,12 +123,12 @@ WORD *wave_buffers;
 //#define TIMER_PER_LINE     (30)
 
 
-static HANDLE m_hThread;
+//static HANDLE m_hThread;
 
-static U16 wLines;
-static U16 wLinePerTimer;
+//static U16 wLines;
+//static U16 wLinePerTimer;
 //MMRESULT uTimerID;
-static BOOL bWaitFlag;
+//static BOOL bWaitFlag;
 //CRITICAL_SECTION WaitFlagCriticalSection;
 BOOL bAutoFrameskip = TRUE;
 
@@ -789,7 +789,11 @@ void InfoNES_DebugPrint( char *pszMsg )
 /*        InfoNES_SoundInit() : Sound Emulation Initialize           */
 /*                                                                   */
 /*===================================================================*/
-void InfoNES_SoundInit( void ) {}
+void InfoNES_SoundInit( void ) 
+{
+
+
+}
 
 /*===================================================================*/
 /*                                                                   */
@@ -798,78 +802,31 @@ void InfoNES_SoundInit( void ) {}
 /*===================================================================*/
 //char buf0[16*8192];
 
+#include "fsl_sai_edma.h"
+extern sai_edma_handle_t txHandle;
+extern volatile bool isFinished;
 
+#if 0
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[1470], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[1470], 4);
+#else
+WORD *Abuf1;
+WORD *Abuf2;
+#endif
+__IO uint8_t Soundcount;
 int InfoNES_SoundOpen( int samples_per_sync, int sample_rate ) 
 {
-//	int err;
-//	U32 volume;
-//	char buf[128];
-
-	return TRUE;
-		
-#if 0
-  lpSndDevice = new DIRSOUND( hWndMain );
-
-  if ( !lpSndDevice->SoundOpen( samples_per_sync, sample_rate ) )
-  {
-    InfoNES_MessageBox( "SoundOpen() Failed." );
-    exit(0);
-  }
-
-  // if sound mute, stop sound
-  if ( APU_Mute )
-  {
-    if (!lpSndDevice->SoundMute( APU_Mute ) )
-    {
-      InfoNES_MessageBox( "SoundMute() Failed." );
-      exit(0);
-    }
-  }
-
-  return TRUE;
- #endif
- /*
- 	//buf0	=(char*)vmalloc(8*1024*8);
- 	
- 	hdr[0].lpData	=(LPSTR)&buf0[0*8192];
- 	hdr[0].dwBufferLength = 8192;
-
- 	hdr[1].lpData	=(LPSTR)&buf0[1*8192];
- 	hdr[1].dwBufferLength = 8192;
-
- 	hdr[2].lpData	=(LPSTR)&buf0[2*8192];
- 	hdr[2].dwBufferLength = 8192;
-
- 	hdr[3].lpData	=(LPSTR)&buf0[3*8192];
- 	hdr[3].dwBufferLength = 8192;
- 	
- 	g_nCurrent	=0;
- 	
- 	fmt.wFormatTag		= WAVE_FORMAT_PCM;
-	fmt.nChannels		= 2;
-	fmt.nSamplesPerSec	= 22050;;
-	fmt.nAvgBytesPerSec	= 176400;
-	fmt.nBlockAlign		= 4;
-	fmt.wBitsPerSample	= 16;
-	sprintf(buf,"\nSample Rate = %d, Channels = %d, %dBitsPerSample, size = %d\r\n",
-			fmt.nSamplesPerSec, fmt.nChannels, fmt.wBitsPerSample, *(U32 *)(buf+0x28));
-
-	DebugPuts(buf);
-	
-	hwo = 0;
-	err = waveOutOpen(&hwo,
-				0,
-				&fmt,
-				0,
-				0,
-				0);
-	waveOutGetVolume(0,	&volume);
-	sprintf(buf,"err = %x,vol=%04XH\n", err,volume);	
-	DebugPuts(buf);		
- 
- 
- return(TRUE);
- */
+  sai_transfer_t xfer;
+	isFinished = true;
+//	APU->Soundcount=0;
+  Soundcount = 1;
+  
+	NES->APU_Mute=0;
+  
+  xfer.data = (uint8_t *)Abuf1;
+  xfer.dataSize = 1470;  
+  SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+	return 1;
 }
 
 /*===================================================================*/
@@ -902,31 +859,35 @@ void InfoNES_SoundClose( void )
 
 void InfoNES_SoundOutput( int samples,WORD *wave )
 {
-//	int i,size;
-//	U32	*p;
-	
-	return;
-
-/*
-  for ( int i = 0; i < samples; i++)
-  {
-  	
-    wave[i] = ( wave1[i] + wave2[i]+ wave3[i]+ wave4[i]+ wave5[i]) /5;
- 		//wave_out[i]	=(wave1[i]<<24) | (wave1[i]<<8);
-  }
- */
-
-/*
-  if (!lpSndDevice->SoundOutput( samples, wave ) )
-  {
-    InfoNES_MessageBox( "SoundOutput() Failed." );
-    exit(0);
-  }*/
-	
-	
-
-	//DebugPrintf("[%d,%02X,%02X,%02X,%02X]",g_nCurrent,wave1[0],wave1[1],wave1[2],wave1[3]);
-
+  sai_transfer_t xfer = {0};
+//  int i;	
+//  int count = 0;
+//	while(!isFinished);     
+//  isFinished = false;
+  if(Soundcount)
+    for(int i=0;i<735;i++)
+    {     
+      Abuf1[i]=wave[i]<<5;
+      
+    }
+  else for(int i=0;i<735;i++)Abuf2[i]=wave[i]<<5;  
+//  
+				if(Soundcount)
+				{
+						/*  xfer structure */
+						xfer.data = (uint8_t *)Abuf1;
+						xfer.dataSize = 1470;  
+						SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+						Soundcount=0;
+				}
+				else
+				{
+//						/*  xfer structure */
+						xfer.data = (uint8_t *)Abuf2;
+						xfer.dataSize = 1470;  
+						SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+						Soundcount=1;
+				}    
 }
 
 void InfoNES_MessageBox( char *pszMsg, ... )
@@ -1050,7 +1011,7 @@ extern u16 sms_fb[];
 static void draw_frame(HDC hdc)
 {
 //	LONG xx,yy,x,y,r,g,b;
-  	RECT rc;
+//  	RECT rc;
 
   	BITMAP bm;
   	////
@@ -1079,12 +1040,11 @@ static void draw_frame(HDC hdc)
 	if(1)
   	{
   	  	
-  	  	WCHAR buf[40];
 
-  	  	rc.x	=0;
-  	  	rc.y	=0;
-  	  	rc.w	=200;
-  	  	rc.h	=16;
+//  	  	rc.x	=0;
+//  	  	rc.y	=0;
+//  	  	rc.w	=200;
+//  	  	rc.h	=16;
 //  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
 //  	  	SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
@@ -1115,9 +1075,9 @@ static	void	nes_thread(void *p)
 
 //	SYS_thread_set_priority(NULL,-2);
 
-	wLinePerTimer 	= LINE_PER_TIMER;
-	wLines        	= 0;
-	bWaitFlag    	= TRUE;
+//	wLinePerTimer 	= LINE_PER_TIMER;
+//	wLines        	= 0;
+//	bWaitFlag    	= TRUE;
 	ROM		=NULL;
 	VROM	=NULL;
 
@@ -1129,8 +1089,8 @@ static	void	nes_thread(void *p)
 		if(nes_cmd==NES_QUIT)
 		{
 			SYS_KeyVal =0;
-			P1_KeyVal =0;
-			P2_KeyVal =0;
+//			P1_KeyVal =0;
+//			P2_KeyVal =0;
 			InfoNES_Fin();
 			break;
 		}
@@ -1139,8 +1099,8 @@ static	void	nes_thread(void *p)
 		if(nes_cmd==NES_LOAD)
 		{ 	
 			SYS_KeyVal =0;
-			P1_KeyVal =0;
-			P2_KeyVal =0;
+//			P1_KeyVal =0;
+//			P2_KeyVal =0;
       //释放ROM
 			InfoNES_Fin();
 
@@ -1200,7 +1160,6 @@ static	void	nes_thread(void *p)
 /*============================================================================*/
 
 
-static	HWND hListWnd=NULL;
 
 #define	NES_FILE	1
 #define	SMS_FILE	2
@@ -1698,7 +1657,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         {
           case 0x2000:
           {
-            HWND wnd;
+//            HWND wnd;
             cur_index = nm->idx;//切换至下一�?
 //            SYS_KeyVal	|=PAD_SYS_QUIT;
             NES->PAD_System = PAD_SYS_QUIT;
@@ -1848,8 +1807,8 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				def_win_style =GetWindowLong(hwnd,GWL_STYLE);
 				hwnd_UI		=hwnd;
 				
-				P1_KeyVal =0;
-				P2_KeyVal =0;
+//				P1_KeyVal =0;
+//				P2_KeyVal =0;
 				SYS_KeyVal =0;
 
 				MenuRet		=0;
@@ -1857,7 +1816,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         usb_HostTask_state = TRUE;
         usb_HostApplicationMouse_run = TRUE;
         usb_HostApplicationMouse_state = TRUE;
-				rom_path[0]	=0;
+//				rom_path[0]	=0;
 				nes_cmd		=NES_NULL;
 				
 				nes_fps		=0;
@@ -2124,7 +2083,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         wcex.hCursor		= NULL;
         if(1)
         {
-          RECT rc;
+
           
 
           CreateWindowEx(NULL,
@@ -2145,7 +2104,6 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				//if(FullScreen == FALSE)
 				{
 					hdc	=(HDC)wParam;//GetDC(hwnd);
-          GUI_DEBUG("1");
 					GetClientRect(hwnd,&rc);
 					
 //	 				BitBlt(hdc,0,0,256,240,hdc_NES,0,0,SRCCOPY);
@@ -2244,15 +2202,15 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
 //	SYS_thread_set_priority(NULL,-5);
 //	DebugPuts("InfoNES\r\n");
 //  USB_HostApplicationInit();
-	if(argv!=NULL)
-	{
-		memcpy(rom_dir,argv,sizeof(rom_dir));
-	}
-	else
-	{
-		//SYS_get_process_data(PROC_CUR_DIR,cur_dir,sizeof(cur_dir));
-		x_strcpy(rom_dir,"B:");
-	}
+//	if(argv!=NULL)
+//	{
+//		memcpy(rom_dir,argv,sizeof(rom_dir));
+//	}
+//	else
+//	{
+//		//SYS_get_process_data(PROC_CUR_DIR,cur_dir,sizeof(cur_dir));
+//		x_strcpy(rom_dir,"B:");
+//	}
 	////
 
   Neshd =(NesHeader*)vmalloc(sizeof(NesHeader));
@@ -2274,9 +2232,12 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
+  Abuf1=(WORD*)GUI_MEM_Alloc(1470);
   
+  Abuf2=(WORD*)GUI_MEM_Alloc(1470);  
+
   
-  wave_buffers =(WORD*)GUI_GRAM_Alloc(1470);
+//  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
   WorkFrame =(WORD*)GUI_GRAM_Alloc(256*240*2);
 
 	hInst	=hInstance;
@@ -2318,7 +2279,7 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
    	vfree((APU));
   	vfree(ApuEventQueue);
 
-  	vfree(wave_buffers);
+//  	GUI_VMEM_Free(wave_buffers);
    	vfree(WorkFrame);
 
 	return TRUE;
@@ -2339,7 +2300,6 @@ void	GUI_NES_DIALOG(void *param)
   wcex.hCursor		= NULL;
   if(1)
   {
-    RECT rc;
     
     f_readdir_gui("nes",&dir_object,&file_info);
     hwnd_List = CreateWindowEx(WS_EX_NOFOCUS,
@@ -2387,7 +2347,8 @@ static void win_thread(void *p)
 	run =FALSE;
 	GUI_Thread_Delete(xTaskGetHandle("NES_WIN"));
 }
-extern "C" void test1321(void* param)
+
+extern "C" void NES_Simulator(void* param)
 {
 	run =TRUE;
   

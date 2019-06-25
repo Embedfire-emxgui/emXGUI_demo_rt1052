@@ -556,7 +556,7 @@ void EDMA_SetCallback(edma_handle_t *handle, edma_callback callback, void *userD
     handle->callback = callback;
     handle->userData = userData;
 }
-
+#include "fsl_debug_console.h"
 void EDMA_PrepareTransfer(edma_transfer_config_t *config,
                           void *srcAddr,
                           uint32_t srcWidth,
@@ -573,8 +573,9 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
            (srcWidth == 32U));
     assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U) || (srcWidth == 8U) || (destWidth == 16U) ||
            (destWidth == 32U));
-    assert(transferBytes % bytesEachRequest == 0);
-
+//    int i = transferBytes % bytesEachRequest;
+//    assert(transferBytes % bytesEachRequest == 0);
+//  PRINTF("%d\r\n", i);
     config->destAddr = (uint32_t)destAddr;
     config->srcAddr = (uint32_t)srcAddr;
     config->minorLoopBytes = bytesEachRequest;
