@@ -807,8 +807,8 @@ extern sai_edma_handle_t txHandle;
 extern volatile bool isFinished;
 
 #if 0
-AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[1470], 4);
-AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[1470], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[735], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[735], 4);
 #else
 WORD *Abuf1;
 WORD *Abuf2;
@@ -862,32 +862,32 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
   sai_transfer_t xfer = {0};
 //  int i;	
 //  int count = 0;
-//	while(!isFinished);     
-//  isFinished = false;
+
   if(Soundcount)
-    for(int i=0;i<735;i++)
+    for(int i=0;i<365;i++)
     {     
-      Abuf1[i]=wave[i]<<5;
-      
+      Abuf1[i] = wave[i]<<5;
+      Abuf1[i+1] = wave[i]<<5;
     }
-  else for(int i=0;i<735;i++)Abuf2[i]=wave[i]<<5;  
-//  
-				if(Soundcount)
-				{
-						/*  xfer structure */
-						xfer.data = (uint8_t *)Abuf1;
-						xfer.dataSize = 1470;  
-						SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-						Soundcount=0;
-				}
-				else
-				{
-//						/*  xfer structure */
-						xfer.data = (uint8_t *)Abuf2;
-						xfer.dataSize = 1470;  
-						SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-						Soundcount=1;
-				}    
+  else for(int i=0;i<365;i++){ Abuf2[i]=wave[i]<<5; Abuf2[i+1]=wave[i]<<5; }
+//	while(!isFinished);     
+//  isFinished = false;  
+  if(Soundcount)
+  {
+      /*  xfer structure */
+      xfer.data = (uint8_t *)Abuf2;
+      xfer.dataSize = 735;  
+      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+      Soundcount=0;
+  }
+  else
+  {
+			/*  xfer structure */
+      xfer.data = (uint8_t *)Abuf1;
+      xfer.dataSize = 735;  
+      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+      Soundcount=1;
+  }    
 }
 
 void InfoNES_MessageBox( char *pszMsg, ... )

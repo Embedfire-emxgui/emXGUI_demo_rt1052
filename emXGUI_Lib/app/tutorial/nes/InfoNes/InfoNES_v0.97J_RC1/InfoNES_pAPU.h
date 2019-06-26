@@ -231,7 +231,7 @@ void InfoNES_pAPUVsync(void);
 /* 3 is 44100 Hz.                                                    */
 /* these values subject to change without notice.                    */
 /*-------------------------------------------------------------------*/
-#define pAPU_QUALITY 1
+#define pAPU_QUALITY 2
 
 #ifdef	__cplusplus
 }
