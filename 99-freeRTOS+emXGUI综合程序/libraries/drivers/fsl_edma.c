@@ -574,7 +574,7 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
     assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U) || (srcWidth == 8U) || (destWidth == 16U) ||
            (destWidth == 32U));
 //    int i = transferBytes % bytesEachRequest;
-//    assert(transferBytes % bytesEachRequest == 0);
+    assert(transferBytes % bytesEachRequest == 0);
 //  PRINTF("%d\r\n", i);
     config->destAddr = (uint32_t)destAddr;
     config->srcAddr = (uint32_t)srcAddr;

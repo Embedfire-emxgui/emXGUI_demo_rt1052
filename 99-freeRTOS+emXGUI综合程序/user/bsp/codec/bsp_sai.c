@@ -224,18 +224,18 @@ int AudioTest(void)
     /*
      * config.masterSlave = kSAI_Master;
      * config.mclkSource = kSAI_MclkSourceSysclk;
-     * config.protocol = kSAI_BusPCMA;
+     * config.protocol = kSAI_BusLeftJustified;
      * config.syncMode = kSAI_ModeAsync;
      * config.mclkOutputEnable = true;
      */
     SAI_TxGetDefaultConfig(&config);
-//    config.protocol = kSAI_BusPCMB;
+//    config.protocol = kSAI_BusI2S;
     SAI_TxInit(DEMO_SAI, &config);
 
     /* Configure the audio format */
-    format.bitWidth = kSAI_WordWidth16bits;
+    format.bitWidth = kSAI_WordWidth8bits;
     format.channel = 0U;
-    format.sampleRate_Hz = kSAI_SampleRate22050Hz;//kSAI_SampleRate22050Hz;
+    format.sampleRate_Hz = kSAI_SampleRate22050Hz;
 
     format.masterClockHz = DEMO_SAI_CLK_FREQ;
 
@@ -261,7 +261,7 @@ int AudioTest(void)
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
 
-//    /*  xfer structure */
+    /*  xfer structure */
 //    temp = (uint32_t)music;
 //    xfer.data = (uint8_t *)temp;
 //    xfer.dataSize = MUSIC_LEN;

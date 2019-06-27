@@ -824,7 +824,7 @@ int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
 	NES->APU_Mute=0;
   
   xfer.data = (uint8_t *)Abuf1;
-  xfer.dataSize = 1470;  
+  xfer.dataSize = 735;  
   SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
 	return 1;
 }
@@ -864,14 +864,19 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
 //  int count = 0;
 
   if(Soundcount)
-    for(int i=0;i<365;i++)
+    for(int i=0,t=0;i<365;i++,t+=2)
     {     
-      Abuf1[i] = wave[i]<<5;
-      Abuf1[i+1] = wave[i]<<5;
+      Abuf1[t] = wave[i]/4;
+      Abuf1[t+1] = wave[i]/4;
     }
-  else for(int i=0;i<365;i++){ Abuf2[i]=wave[i]<<5; Abuf2[i+1]=wave[i]<<5; }
-//	while(!isFinished);     
-//  isFinished = false;  
+  else 
+    for(int i=0,t=0;i<365;i++,t+=2)
+    {       
+      Abuf2[t]=wave[i]/4; 
+      Abuf2[t+1]=wave[i]/4; 
+    }
+	while(!isFinished);     
+  isFinished = false;  
   if(Soundcount)
   {
       /*  xfer structure */
@@ -2233,9 +2238,9 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
-  Abuf1=(WORD*)GUI_MEM_Alloc(1470);
+  Abuf1=(WORD*)GUI_MEM_Alloc(1470*sizeof(WORD));
   
-  Abuf2=(WORD*)GUI_MEM_Alloc(1470);  
+  Abuf2=(WORD*)GUI_MEM_Alloc(1470*sizeof(WORD));  
 
   
 //  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
