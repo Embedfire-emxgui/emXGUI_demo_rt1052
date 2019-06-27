@@ -78,7 +78,7 @@ static void sdad(void *param)
 //        USB_HostHidGamepad1Task(param);
 //    }
 //}
-
+#include "fsl_sai_edma.h"
 /*****************************************************************
   * @brief  主函数
   * @param  无
@@ -93,6 +93,7 @@ int main(void)
 
   /* 开发板硬件初始化 */
   BSP_Init();  
+//  SoundTest();
    /* 创建AppTaskCreate任务 */
   xReturn = xTaskCreate((TaskFunction_t )GUI_Thread_Entry,  /* 任务入口函数 */
                         (const char*    )"gui",/* 任务名字 */
@@ -194,12 +195,14 @@ static void BSP_Init(void)
 
     /* 初始化SysTick */
     SysTick_Config(SystemCoreClock / configTICK_RATE_HZ);
-    
-    AudioTest();
-    
+//    hard_init();
+//    
+////    SoundTest();
     /* 初始化LED */
-    LED_GPIO_Config();
+//    LED_GPIO_Config();
+    
     Key_GPIO_Config();
+//    
     USB_HostApplicationInit();
     /* 触摸初始化 */
 //    GTP_Init_Panel();
@@ -220,7 +223,7 @@ static void BSP_Init(void)
 //    f_close_test(&file_object);    
 //    RGB_LED_COLOR_BLUE;    
     CORE_BOARD_LED_ON;
-    
+    AudioTest();
     /*调用画板函数*/
 //    Palette_Init();
 }

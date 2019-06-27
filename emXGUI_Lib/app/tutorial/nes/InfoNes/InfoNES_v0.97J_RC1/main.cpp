@@ -13,15 +13,15 @@
 #include "InfoNES_System.h"
 #include "x_libc.h"
 //#include "x_commdlg.h"
-
+//
 #include	"CListMenu.h"
 extern "C"
 {
 #include "host_gamepad.h"
 #include "usb_host_app.h"
 #include "InfoNES.h"
-
-  
+//#include "music.h"
+extern const uint8_t music[];
 }
 /*============================================================================*/
 #define vmalloc GUI_VMEM_Alloc
@@ -801,11 +801,12 @@ void InfoNES_SoundInit( void )
 /*                                                                   */
 /*===================================================================*/
 //char buf0[16*8192];
-
+extern "C"
+{
 #include "fsl_sai_edma.h"
 extern sai_edma_handle_t txHandle;
 extern volatile bool isFinished;
-
+}
 #if 0
 AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[735], 4);
 AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[735], 4);
@@ -820,12 +821,11 @@ int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
 	isFinished = true;
 //	APU->Soundcount=0;
   Soundcount = 1;
-  
+  uint32_t temp = 0;
 	NES->APU_Mute=0;
   
-  xfer.data = (uint8_t *)Abuf1;
-  xfer.dataSize = 735;  
-  SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+  
+  
 	return 1;
 }
 
@@ -860,36 +860,37 @@ void InfoNES_SoundClose( void )
 void InfoNES_SoundOutput( int samples,WORD *wave )
 {
   sai_transfer_t xfer = {0};
+  uint32_t temp = 0;
 //  int i;	
 //  int count = 0;
 
   if(Soundcount)
-    for(int i=0,t=0;i<365;i++,t+=2)
-    {     
-      Abuf1[t] = wave[i]/4;
-      Abuf1[t+1] = wave[i]/4;
-    }
+  for(int i=0,t=0;i<samples;i++,t+=2)
+  {     
+    Abuf1[t] = wave[i];
+    Abuf1[t+1] = wave[i];
+  }
   else 
-    for(int i=0,t=0;i<365;i++,t+=2)
+    for(int i=0,t=0;i<samples;i++,t+=2)
     {       
-      Abuf2[t]=wave[i]/4; 
-      Abuf2[t+1]=wave[i]/4; 
+      Abuf2[t]= wave[i]<<5; 
+      Abuf2[t+1]=wave[i]; 
     }
+  
 	while(!isFinished);     
   isFinished = false;  
   if(Soundcount)
   {
-      /*  xfer structure */
-      xfer.data = (uint8_t *)Abuf2;
-      xfer.dataSize = 735;  
+      xfer.data = (uint8_t *)Abuf1;
+      xfer.dataSize = samples*2;  
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=0;
   }
   else
   {
 			/*  xfer structure */
-      xfer.data = (uint8_t *)Abuf1;
-      xfer.dataSize = 735;  
+      xfer.data = (uint8_t *)Abuf2;
+      xfer.dataSize = samples*2;  
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=1;
   }    

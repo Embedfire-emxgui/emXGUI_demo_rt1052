@@ -57,6 +57,7 @@ codec_config_t boardCodecConfig = {
     .op.SetFormat = WM8960_ConfigDataFormat
 };
  
+
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
 #define DEMO_SAI SAI1
@@ -139,68 +140,63 @@ void BOARD_EnableSaiMclkOutput(bool enable)
     }
 }
 #include "InfoNES_pAPU.h"
-
+#include "music.h"
 extern WORD *Abuf1;
 extern WORD *Abuf2;
 extern __IO uint8_t Soundcount;
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
+    uint32_t temp = 0;
 		sai_transfer_t xfer;
     if(kStatus_SAI_RxError == status)
     {
     }
     else
     {
-        finishIndex++;
-        emptyBlock++;
-//				if(Soundcount)
-//				{
-//						/*  xfer structure */
-//						xfer.data = (uint8_t *)Abuf1;
-//						xfer.dataSize = 1470;  
-//						SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
-//						Soundcount=0;
-//				}
-//				else
-//				{
-////						/*  xfer structure */
-//						xfer.data = (uint8_t *)Abuf2;
-//						xfer.dataSize = 1470;  
-//						SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
-//						Soundcount=1;
-//				}       
-				isFinished = true;
+          
+			isFinished = true;
+//      if(Soundcount)
+//      {
+//          temp = (uint32_t)music;
+//          /*  xfer structure */
+//          xfer.data = (uint8_t *)music;
+//          xfer.dataSize = 48000;  
+//          SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+//          Soundcount=0;
+//      }
+//      else
+//      {
+//          temp = (uint32_t)music;
+//          /*  xfer structure */
+//          xfer.data = (uint8_t *)temp;
+//          xfer.dataSize = 48000;  
+//          SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+//          Soundcount=1;
+//      }      
     }
 }
 
 /*!
  * @brief Main function
  */
+sai_transfer_format_t format;   
+edma_config_t dmaConfig;
+void hard_init(void)
+{
+
+  
+}
+
+
 int AudioTest(void)
 {
     sai_config_t config;
     uint32_t mclkSourceClockHz = 0U;
-    sai_transfer_format_t format;   
-    edma_config_t dmaConfig;
-    uint32_t temp = 0;
-    sai_transfer_t xfer;
+
+
     uint32_t delayCycle = 500000U;
 
-    CLOCK_InitAudioPll(&audioPllConfig);
-//    BOARD_InitDebugConsole();
 
-    /*Clock setting for LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
-
-    /*Clock setting for SAI1*/
-    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
-
-    /*Enable MCLK clock*/
-    BOARD_EnableSaiMclkOutput(true);
-    BOARD_Codec_I2C_Init();
 
     PRINTF("SAI example started!\n\r");
 
@@ -229,22 +225,22 @@ int AudioTest(void)
      * config.mclkOutputEnable = true;
      */
     SAI_TxGetDefaultConfig(&config);
-//    config.protocol = kSAI_BusI2S;
     SAI_TxInit(DEMO_SAI, &config);
 
     /* Configure the audio format */
-    format.bitWidth = kSAI_WordWidth8bits;
+    format.bitWidth = kSAI_WordWidth16bits;
     format.channel = 0U;
     format.sampleRate_Hz = kSAI_SampleRate22050Hz;
 
     format.masterClockHz = DEMO_SAI_CLK_FREQ;
 
     format.protocol = config.protocol;
-    format.stereo = kSAI_Stereo;
+   // format.stereo = kSAI_MonoRight;//kSAI_MonoLeft;//kSAI_Stereo;
     format.isFrameSyncCompact = false;
 
     format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
-
+    
+    
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
@@ -255,21 +251,14 @@ int AudioTest(void)
         __ASM("nop");
         delayCycle--;
     }
-
+//    NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL,&dmaHandle);
 
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
 
-    /*  xfer structure */
-//    temp = (uint32_t)music;
-//    xfer.data = (uint8_t *)temp;
-//    xfer.dataSize = MUSIC_LEN;
-//    SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
-//    /* Wait until finished */
-//    while (isFinished != true)
-//    {
-//    }
+   //SoundTest();
+  
 //    
 //    /* Once transfer finish, disable SAI instance. */
 //    SAI_TransferAbortSendEDMA(DEMO_SAI, &txHandle);
@@ -280,6 +269,20 @@ int AudioTest(void)
 //    }
 		return 0;
 }
+
+void SoundTest(void)
+{
+  uint32_t temp = 0;
+  sai_transfer_t xfer;  
+//temp = (uint32_t)music;
+  /*  xfer structure */
+  xfer.data = (uint8_t *)music;
+  xfer.dataSize = 48000;  
+  SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+  while(!isFinished);   
+  
+}
+
 
 void nes_audio(int len,uint16_t *nes_audio_buffer)
 {
