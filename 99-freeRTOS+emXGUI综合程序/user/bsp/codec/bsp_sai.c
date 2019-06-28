@@ -189,11 +189,26 @@ int AudioTest(void)
 {
     sai_config_t config;
     uint32_t mclkSourceClockHz = 0U;
-
-
+    sai_transfer_format_t format;   
+    edma_config_t dmaConfig;
+	
     uint32_t delayCycle = 500000U;
 
+    CLOCK_InitAudioPll(&audioPllConfig);
+    BOARD_InitDebugConsole();
 
+    /*Clock setting for LPI2C*/
+    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
+
+    /*Clock setting for SAI1*/
+    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
+    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
+
+    /*Enable MCLK clock*/
+    BOARD_EnableSaiMclkOutput(true);
+    BOARD_Codec_I2C_Init();
 
     PRINTF("SAI example started!\n\r");
 
@@ -222,22 +237,22 @@ int AudioTest(void)
      * config.mclkOutputEnable = true;
      */
     SAI_TxGetDefaultConfig(&config);
+
     SAI_TxInit(DEMO_SAI, &config);
 
     /* Configure the audio format */
     format.bitWidth = kSAI_WordWidth16bits;
     format.channel = 0U;
-    format.sampleRate_Hz = kSAI_SampleRate22050Hz;
+    format.sampleRate_Hz = kSAI_SampleRate11025Hz;//kSAI_SampleRate22050Hz;
 
     format.masterClockHz = DEMO_SAI_CLK_FREQ;
 
     format.protocol = config.protocol;
-   // format.stereo = kSAI_MonoRight;//kSAI_MonoLeft;//kSAI_Stereo;
+    format.stereo = kSAI_Stereo;
     format.isFrameSyncCompact = false;
 
-    format.watermark = 32 / 2U;
-    
-    
+    format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
+
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
@@ -248,14 +263,13 @@ int AudioTest(void)
         __ASM("nop");
         delayCycle--;
     }
-    
-    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL,&dmaHandle);
     NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
-    NVIC_SetPriority(DMA0_DMA16_IRQn, 6U);
+    NVIC_SetPriority(DMA0_DMA16_IRQn, 7U);
+    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL,&dmaHandle);
+
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
-    
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
-    
+  
    //SoundTest();
   
 //    

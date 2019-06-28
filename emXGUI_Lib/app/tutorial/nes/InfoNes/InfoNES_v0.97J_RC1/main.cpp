@@ -1067,10 +1067,10 @@ static void draw_frame(HDC hdc)
 //  	  	rc.y	=0;
 //  	  	rc.w	=200;
 //  	  	rc.h	=16;
-//  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
+  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
-//        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
-//  	  	TextOut(hdc_NES,1,1,buf,-1);
+        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
+  	  	TextOut(hdc_NES,1,1,buf,-1);
 
   	}
 
@@ -1729,10 +1729,11 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       {
         GUI_VMEM_Free(menu_list);
         GUI_VMEM_Free(wbuf);  
-        PostCloseMessage(hwnd_UI);         
+        PostCloseMessage(hwnd_UI); 
+        return DestroyWindow(hwnd);        
       }    
-      else if(exit_type == e_Post_OK)
-        DestroyWindow(hwnd); //调用DestroyWindow函数来销毁窗口（该函数会产生WM_DESTROY消息）。
+//      else if(exit_type == e_Post_OK)
+//        DestroyWindow(hwnd); //调用DestroyWindow函数来销毁窗口（该函数会产生WM_DESTROY消息）。
       break;
     }
 		default:
@@ -2129,6 +2130,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		
 				//if(FullScreen == FALSE)
 				{
+          GUI_DEBUG("1");
 					hdc	=(HDC)wParam;//GetDC(hwnd);
 					GetClientRect(hwnd,&rc);
 					
@@ -2199,8 +2201,9 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       cur_index = 0;
       exit_type = e_Post_OK;
       GUI_SemDelete(sai_complete_sem);
-			DeleteDC(hdc_NES);
-      PostCloseMessage(hwnd_List);
+			
+      //PostCloseMessage(hwnd_List);
+      DeleteDC(hdc_NES);
 			DestroyWindow(hwnd); 
 		}
 		break;
@@ -2306,7 +2309,8 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
    	vfree((APU));
   	vfree(ApuEventQueue);
 
-//  	GUI_VMEM_Free(wave_buffers);
+  	GUI_GRAM_Free(Abuf1);
+    GUI_GRAM_Free(Abuf2);
    	vfree(WorkFrame);
 
 	return TRUE;
