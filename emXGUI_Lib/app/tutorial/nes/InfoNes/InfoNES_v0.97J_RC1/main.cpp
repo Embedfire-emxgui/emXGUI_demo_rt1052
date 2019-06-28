@@ -876,18 +876,18 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
   if(Soundcount)
   for(int i=0,t=0;i<samples;i++,t+=2)
   {     
-    if(i == 366)
-    {
-      temp = 2;
-    }
-    Abuf1[t] = wave[i];
-    Abuf1[t+1] = wave[i];
+//    if(i == 367)
+//    {
+//      GUI_DEBUG("%d",t);
+//    }
+    Abuf1[t] = wave[i]<<5;
+    Abuf1[t+1] = wave[i]<<5;
   }
   else 
     for(int i=0,t=0;i<samples;i++,t+=2)
     {       
-      Abuf2[t]= wave[i]; 
-      Abuf2[t+1]= wave[i]; 
+      Abuf2[t]= wave[i]<<5; 
+      Abuf2[t+1]= wave[i]<<5; 
     }
   
 //	while(!isFinished);     
@@ -1067,10 +1067,10 @@ static void draw_frame(HDC hdc)
 //  	  	rc.y	=0;
 //  	  	rc.w	=200;
 //  	  	rc.h	=16;
-  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
+//  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
-        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
-  	  	TextOut(hdc_NES,1,1,buf,-1);
+//        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
+//  	  	TextOut(hdc_NES,1,1,buf,-1);
 
   	}
 
@@ -1722,7 +1722,8 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       if(exit_type == e_Post_List)
       {
         GUI_VMEM_Free(menu_list);
-        GUI_VMEM_Free(wbuf);          
+        GUI_VMEM_Free(wbuf); 
+        return DestroyWindow(hwnd);
       }
       if(exit_type == e_Post_All)
       {
@@ -1730,7 +1731,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         GUI_VMEM_Free(wbuf);  
         PostCloseMessage(hwnd_UI);         
       }    
-      else
+      else if(exit_type == e_Post_OK)
         DestroyWindow(hwnd); //µ÷ÓÃDestroyWindowº¯ÊýÀ´Ïú»Ù´°¿Ú£¨¸Ãº¯Êý»á²úÉúWM_DESTROYÏûÏ¢£©¡£
       break;
     }
@@ -2193,14 +2194,14 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     usb_HostApplicationMouse_run = FALSE;
     usb_HostTask_run = FALSE;
 		if(nes_thread_run==FALSE&& usb_HostApplicationMouse_state == FALSE && usb_HostTask_state == FALSE)
-		{ //ç­?NES çº¿ç¨‹é€€å‡ºäº†ï¼Œæ‰çœŸæ­£é”€æ¯çª—å?
+		{ 
       file_nums = 0;
       cur_index = 0;
       exit_type = e_Post_OK;
       GUI_SemDelete(sai_complete_sem);
 			DeleteDC(hdc_NES);
       PostCloseMessage(hwnd_List);
-			DestroyWindow(hwnd); //é”€æ¯çª—å?
+			DestroyWindow(hwnd); 
 		}
 		break;
 		/////
@@ -2258,9 +2259,9 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
-  Abuf1=(WORD*)GUI_MEM_Alloc(734*sizeof(WORD));
+  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
   
-  Abuf2=(WORD*)GUI_MEM_Alloc(734*sizeof(WORD));  
+  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
 
   
 //  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
