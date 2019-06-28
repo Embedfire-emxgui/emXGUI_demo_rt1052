@@ -392,6 +392,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 /*============================================================================*/
 
+
 void	GUI_Board_App_Desktop(void)
 //static void	AppMain(void)
 {
@@ -399,6 +400,10 @@ void	GUI_Board_App_Desktop(void)
     WNDCLASS	wcex;
     MSG msg;
 
+
+    
+   
+//    SoundTest();
     /////
     wcex.Tag = WNDCLASS_TAG;
 

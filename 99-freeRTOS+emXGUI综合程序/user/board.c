@@ -106,7 +106,7 @@ void BOARD_ConfigMPU(void)
 
     /* Region 6 setting */
     MPU->RBAR = ARM_MPU_RBAR(6, 0x20200000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 1, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_256KB); 
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_256KB); 
 
     /* Region 7 setting: Memory with Normal type, not shareable, outer/inner write back */
 

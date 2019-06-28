@@ -252,7 +252,7 @@ status_t SAI_TransferGetSendCountEDMA(I2S_Type *base, sai_edma_handle_t *handle,
 status_t SAI_TransferGetReceiveCountEDMA(I2S_Type *base, sai_edma_handle_t *handle, size_t *count);
 
 /*! @} */
-
+void SoundTest(void);
 #if defined(__cplusplus)
 }
 #endif

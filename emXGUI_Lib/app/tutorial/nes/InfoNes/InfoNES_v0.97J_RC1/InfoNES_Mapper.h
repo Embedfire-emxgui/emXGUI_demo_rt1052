@@ -144,6 +144,16 @@ typedef struct
     BYTE  Map118_Regs[ 8 ];    
 }Mapper118Res;
 
+typedef struct
+{
+    DWORD Map69_IRQ_Cnt; 
+    BYTE Map32_Saved;
+    BYTE Map64_Cmd;
+    BYTE Map64_Prg;
+    BYTE Map64_Chr;
+    BYTE  Map69_IRQ_Enable;
+    BYTE  Map69_Regs[ 1 ];    
+}MapperMISRes;
 
 extern const MapperTable MapTab[];
 extern Mapper1Res *MAP1;
@@ -153,12 +163,30 @@ extern Mapper21Res *MAP21;
 extern Mapper23Res *MAP23;
 extern Mapper33Res *MAP33;
 extern Mapper118Res *MAP118;
-
+extern MapperMISRes *MAPMIS;
 /*-------------------------------------------------------------------*/
 /*  Function prototypes                                              */
 /*-------------------------------------------------------------------*/
 
+void Map0_Init(void);
+void Map0_Write( WORD wAddr, BYTE byData );
+void Map0_Sram( WORD wAddr, BYTE byData );
+void Map0_Apu( WORD wAddr, BYTE byData );
+BYTE Map0_ReadApu( WORD wAddr );
+void Map0_VSync(void);
+void Map0_HSync(void);
+void Map0_PPU( WORD wAddr );
+void Map0_RenderScreen( BYTE byMode );
 
+void Map1_Init(void);
+void Map1_Write( WORD wAddr, BYTE byData );
+void Map1_set_ROM_banks(void);
+
+void Map2_Init(void);
+void Map2_Write( WORD wAddr, BYTE byData );
+
+void Map3_Init(void);
+void Map3_Write( WORD wAddr, BYTE byData );
 
 void Map4_Init(void);
 void Map4_Write( WORD wAddr, BYTE byData );
