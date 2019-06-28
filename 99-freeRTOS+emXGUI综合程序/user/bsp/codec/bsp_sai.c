@@ -140,10 +140,11 @@ void BOARD_EnableSaiMclkOutput(bool enable)
     }
 }
 #include "InfoNES_pAPU.h"
-#include "music.h"
+#include "emXGUI.h"
 extern WORD *Abuf1;
 extern WORD *Abuf2;
 extern __IO uint8_t Soundcount;
+extern GUI_SEM* sai_complete_sem;
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     uint32_t temp = 0;
@@ -153,8 +154,8 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
     }
     else
     {
-          
-			isFinished = true;
+      GUI_SemPostISR(sai_complete_sem);  
+			//isFinished = true;
 //      if(Soundcount)
 //      {
 //          temp = (uint32_t)music;
@@ -181,11 +182,7 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
  */
 sai_transfer_format_t format;   
 edma_config_t dmaConfig;
-void hard_init(void)
-{
 
-  
-}
 
 
 int AudioTest(void)
@@ -251,12 +248,14 @@ int AudioTest(void)
         __ASM("nop");
         delayCycle--;
     }
-//    NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
+    
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL,&dmaHandle);
-
+//    NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
+    NVIC_SetPriority(DMA0_DMA16_IRQn, 7U);
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
+    
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
-
+    
    //SoundTest();
   
 //    
@@ -270,18 +269,6 @@ int AudioTest(void)
 		return 0;
 }
 
-void SoundTest(void)
-{
-  uint32_t temp = 0;
-  sai_transfer_t xfer;  
-//temp = (uint32_t)music;
-  /*  xfer structure */
-  xfer.data = (uint8_t *)music;
-  xfer.dataSize = 48000;  
-  SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-  while(!isFinished);   
-  
-}
 
 
 void nes_audio(int len,uint16_t *nes_audio_buffer)

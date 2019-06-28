@@ -222,7 +222,7 @@ static void BSP_Init(void)
      /*关闭文件*/
 //    f_close_test(&file_object);    
 //    RGB_LED_COLOR_BLUE;    
-    CORE_BOARD_LED_ON;
+//    CORE_BOARD_LED_ON;
     AudioTest();
     /*调用画板函数*/
 //    Palette_Init();

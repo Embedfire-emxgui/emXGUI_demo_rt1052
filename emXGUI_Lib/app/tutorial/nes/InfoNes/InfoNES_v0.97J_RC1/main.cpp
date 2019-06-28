@@ -27,6 +27,10 @@ extern const uint8_t music[];
 #define vmalloc GUI_VMEM_Alloc
 #define vfree   GUI_VMEM_Free
 #define SYS_msleep GUI_msleep
+
+
+GUI_SEM* sai_complete_sem = NULL;
+
 #if 1 
 
 #define	kmalloc	vmalloc
@@ -808,8 +812,8 @@ extern sai_edma_handle_t txHandle;
 extern volatile bool isFinished;
 }
 #if 0
-AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[735], 4);
-AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[735], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(BYTE Abuf1[735], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(BYTE Abuf2[735], 4);
 #else
 WORD *Abuf1;
 WORD *Abuf2;
@@ -817,15 +821,18 @@ WORD *Abuf2;
 __IO uint8_t Soundcount;
 int InfoNES_SoundOpen( int samples_per_sync, int sample_rate ) 
 {
+#if 1
   sai_transfer_t xfer;
-	isFinished = true;
 //	APU->Soundcount=0;
   Soundcount = 1;
   uint32_t temp = 0;
 	NES->APU_Mute=0;
   
-  
-  
+  xfer.data = (uint8_t *)Abuf1;
+  xfer.dataSize = 367*2;  
+  SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+  Soundcount=0;  
+#endif  
 	return 1;
 }
 
@@ -860,29 +867,36 @@ void InfoNES_SoundClose( void )
 void InfoNES_SoundOutput( int samples,WORD *wave )
 {
   sai_transfer_t xfer = {0};
+  uint32_t t0 = 0;
   uint32_t temp = 0;
 //  int i;	
 //  int count = 0;
-
+#if 1
+//  t0 = GUI_GetTickCount();
   if(Soundcount)
   for(int i=0,t=0;i<samples;i++,t+=2)
   {     
+    if(i == 366)
+    {
+      temp = 2;
+    }
     Abuf1[t] = wave[i];
     Abuf1[t+1] = wave[i];
   }
   else 
     for(int i=0,t=0;i<samples;i++,t+=2)
     {       
-      Abuf2[t]= wave[i]<<5; 
-      Abuf2[t+1]=wave[i]; 
+      Abuf2[t]= wave[i]; 
+      Abuf2[t+1]= wave[i]; 
     }
   
-	while(!isFinished);     
-  isFinished = false;  
+//	while(!isFinished);     
+//  isFinished = false;  
+  GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
   if(Soundcount)
   {
       xfer.data = (uint8_t *)Abuf1;
-      xfer.dataSize = samples*2;  
+      xfer.dataSize = 367*2;  
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=0;
   }
@@ -890,10 +904,12 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
   {
 			/*  xfer structure */
       xfer.data = (uint8_t *)Abuf2;
-      xfer.dataSize = samples*2;  
+      xfer.dataSize = 367*2;  
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=1;
-  }    
+  }
+//  GUI_DEBUG("%d", GUI_GetTickCount()-t0);
+#endif  
 }
 
 void InfoNES_MessageBox( char *pszMsg, ... )
@@ -1021,7 +1037,7 @@ static void draw_frame(HDC hdc)
 
   	BITMAP bm;
   	////
-  
+  WCHAR buf[128];
 
 #if 1 //NES
   	bm.Format	=BM_XRGB1555;
@@ -1051,10 +1067,10 @@ static void draw_frame(HDC hdc)
 //  	  	rc.y	=0;
 //  	  	rc.w	=200;
 //  	  	rc.h	=16;
-//  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
+  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
-//  	  	SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
-//  	  	TextOut(hdc_NES,1,1,buf,-1);
+        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
+  	  	TextOut(hdc_NES,1,1,buf,-1);
 
   	}
 
@@ -1833,7 +1849,9 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				GetClientRect(hwnd,&rc);
 //        FullScreen=TRUE;
 				SetRectArea(&rc0,2,rc.h-24,rc.w-2*2,24);
-			
+        
+        sai_complete_sem = GUI_SemCreate(0, 1);
+        
 				MakeMatrixRect(m_rc,&rc0,2,1,5,1);
 				CreateWindow(BUTTON,L"ROMS",WS_BORDER|WS_VISIBLE|BS_NOTIFY,m_rc[0].x,m_rc[0].y,m_rc[0].w,m_rc[0].h,hwnd,ID_LOAD,hInst,0);
 				CreateWindow(BUTTON,L"Start",WS_BORDER|WS_VISIBLE|BS_NOTIFY,m_rc[1].x,m_rc[1].y,m_rc[1].w,m_rc[1].h,hwnd,ID_START,hInst,0);
@@ -2179,6 +2197,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       file_nums = 0;
       cur_index = 0;
       exit_type = e_Post_OK;
+      GUI_SemDelete(sai_complete_sem);
 			DeleteDC(hdc_NES);
       PostCloseMessage(hwnd_List);
 			DestroyWindow(hwnd); //销毁窗�?
@@ -2239,9 +2258,9 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
-  Abuf1=(WORD*)GUI_MEM_Alloc(1470*sizeof(WORD));
+  Abuf1=(WORD*)GUI_MEM_Alloc(734*sizeof(WORD));
   
-  Abuf2=(WORD*)GUI_MEM_Alloc(1470*sizeof(WORD));  
+  Abuf2=(WORD*)GUI_MEM_Alloc(734*sizeof(WORD));  
 
   
 //  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
