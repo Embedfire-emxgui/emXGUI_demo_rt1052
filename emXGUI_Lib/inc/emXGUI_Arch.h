@@ -195,7 +195,9 @@ void		GUI_SemDelete(GUI_SEM *hSem);
 HANDLE		GUI_GetCurThreadHandle(void);
 U32			GUI_GetTickCount(void);
 void		GUI_Yield(void);
-BOOL GUI_Thread_Create(void (*entry)(void *parameter),
+void GUI_SemPostISR(GUI_SEM *hsem);	
+BOOL GUI_Thread_Create(void
+  (*entry)(void *parameter),
                          const char *name,
                          u32  stack_size,
                          void *parameter,

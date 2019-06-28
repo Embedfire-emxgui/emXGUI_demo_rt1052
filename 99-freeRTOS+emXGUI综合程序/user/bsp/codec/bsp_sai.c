@@ -155,7 +155,7 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
     else
     {
       GUI_SemPostISR(sai_complete_sem);  
-			//isFinished = true;
+//			isFinished = true;
 //      if(Soundcount)
 //      {
 //          temp = (uint32_t)music;
@@ -235,7 +235,7 @@ int AudioTest(void)
    // format.stereo = kSAI_MonoRight;//kSAI_MonoLeft;//kSAI_Stereo;
     format.isFrameSyncCompact = false;
 
-    format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
+    format.watermark = 32 / 2U;
     
     
 
@@ -250,8 +250,8 @@ int AudioTest(void)
     }
     
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL,&dmaHandle);
-//    NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
-    NVIC_SetPriority(DMA0_DMA16_IRQn, 7U);
+    NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
+    NVIC_SetPriority(DMA0_DMA16_IRQn, 6U);
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
