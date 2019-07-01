@@ -141,8 +141,8 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 }
 #include "InfoNES_pAPU.h"
 #include "emXGUI.h"
-extern WORD *Abuf1;
-extern WORD *Abuf2;
+extern WORD Abuf1[735];
+extern WORD Abuf2[735];
 extern __IO uint8_t Soundcount;
 extern GUI_SEM* sai_complete_sem;
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -154,26 +154,23 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
     }
     else
     {
-      GUI_SemPostISR(sai_complete_sem);  
+//      GUI_SemPostISR(sai_complete_sem);  
 //			isFinished = true;
-//      if(Soundcount)
-//      {
-//          temp = (uint32_t)music;
-//          /*  xfer structure */
-//          xfer.data = (uint8_t *)music;
-//          xfer.dataSize = 48000;  
-//          SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-//          Soundcount=0;
-//      }
-//      else
-//      {
-//          temp = (uint32_t)music;
-//          /*  xfer structure */
-//          xfer.data = (uint8_t *)temp;
-//          xfer.dataSize = 48000;  
-//          SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-//          Soundcount=1;
-//      }      
+    if(Soundcount)
+    {
+        xfer.data = (uint8_t *)Abuf1;
+        xfer.dataSize = 367*2;  
+        SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+        Soundcount=0;
+    }
+    else
+    {
+        /*  xfer structure */
+        xfer.data = (uint8_t *)Abuf2;
+        xfer.dataSize = 367*2;  
+        SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+        Soundcount=1;
+    }     
     }
 }
 

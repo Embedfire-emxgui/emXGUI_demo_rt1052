@@ -278,8 +278,8 @@ status_t WM8960_Init(codec_handle_t *handle, void *wm8960_config)
     WM8960_WriteReg(handle, WM8960_LINVOL, 0x1ff);
     WM8960_WriteReg(handle, WM8960_RINVOL, 0x1ff);
 		WM8960_SetModule(handle, kWM8960_ModuleSpeaker, true);
-		WM8960_SetVolume(handle, kWM8960_ModuleSpeaker, 0x1ff);
-		//WM8960_SetVolume(handle, kWM8960_ModuleDAC, 0xfffff);
+		//WM8960_SetVolume(handle, kWM8960_ModuleSpeaker, 0x1ff);
+//		WM8960_SetVolume(handle, kWM8960_ModuleDAC, 0xfffff);
     return kStatus_Success;
 }
 

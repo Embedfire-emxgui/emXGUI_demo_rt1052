@@ -811,9 +811,9 @@ extern "C"
 extern sai_edma_handle_t txHandle;
 extern volatile bool isFinished;
 }
-#if 0
-AT_NONCACHEABLE_SECTION_ALIGN(BYTE Abuf1[735], 4);
-AT_NONCACHEABLE_SECTION_ALIGN(BYTE Abuf2[735], 4);
+#if 1
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[735], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[735], 4);
 #else
 WORD *Abuf1;
 WORD *Abuf2;
@@ -873,6 +873,7 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
 //  int count = 0;
 #if 1
 //  t0 = GUI_GetTickCount();
+//  GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
   if(Soundcount)
   for(int i=0,t=0;i<samples;i++,t+=2)
   {     
@@ -892,22 +893,22 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
   
 //	while(!isFinished);     
 //  isFinished = false;  
-  GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
-  if(Soundcount)
-  {
-      xfer.data = (uint8_t *)Abuf1;
-      xfer.dataSize = 367*2;  
-      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-      Soundcount=0;
-  }
-  else
-  {
-			/*  xfer structure */
-      xfer.data = (uint8_t *)Abuf2;
-      xfer.dataSize = 367*2;  
-      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-      Soundcount=1;
-  }
+//  
+//  if(Soundcount)
+//  {
+//      xfer.data = (uint8_t *)Abuf1;
+//      xfer.dataSize = 367*2;  
+//      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+//      Soundcount=0;
+//  }
+//  else
+//  {
+//			/*  xfer structure */
+//      xfer.data = (uint8_t *)Abuf2;
+//      xfer.dataSize = 367*2;  
+//      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+//      Soundcount=1;
+//  }
 //  GUI_DEBUG("%d", GUI_GetTickCount()-t0);
 #endif  
 }
@@ -1637,7 +1638,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       RECT rc;//窗口大小
       GetClientRect(hwnd, &rc); //获得客户区矩�?
       hdc = BeginPaint(hwnd, &ps);
-      GUI_DEBUG("1");
+ 
       //背景
       SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
       FillRect(hdc, &rc);  
@@ -2262,9 +2263,9 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
-  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
-  
-  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
+//  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
+//  
+//  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
 
   
 //  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
@@ -2309,8 +2310,10 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
    	vfree((APU));
   	vfree(ApuEventQueue);
 
-  	GUI_GRAM_Free(Abuf1);
-    GUI_GRAM_Free(Abuf2);
+//  	GUI_GRAM_Free(Abuf1);
+//    GUI_GRAM_Free(Abuf2);
+    SAI_TransferAbortSendEDMA(SAI1, &txHandle);
+    SAI_Deinit(SAI1);  
    	vfree(WorkFrame);
 
 	return TRUE;
