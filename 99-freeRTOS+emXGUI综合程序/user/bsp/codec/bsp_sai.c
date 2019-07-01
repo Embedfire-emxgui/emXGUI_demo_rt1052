@@ -155,7 +155,7 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
     else
     {
 //      GUI_SemPostISR(sai_complete_sem);  
-//			isFinished = true;
+			isFinished = true;
     if(Soundcount)
     {
         xfer.data = (uint8_t *)Abuf1;
@@ -267,8 +267,16 @@ int AudioTest(void)
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
   
-   //SoundTest();
-  
+//    uint32_t temp = 0;
+//    sai_transfer_t xfer;  
+//  //temp = (uint32_t)music;
+//    /*  xfer structure */
+//    xfer.data = (uint8_t *)music;
+//    xfer.dataSize = 48000;  
+//    SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+//    getRegValue();
+//    while(!isFinished); 
+//  
 //    
 //    /* Once transfer finish, disable SAI instance. */
 //    SAI_TransferAbortSendEDMA(DEMO_SAI, &txHandle);

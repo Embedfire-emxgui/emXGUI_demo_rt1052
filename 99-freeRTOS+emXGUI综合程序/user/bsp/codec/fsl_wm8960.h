@@ -440,7 +440,7 @@ status_t WM8960_ReadReg(uint8_t reg, uint16_t *val);
  * @param val Value needs to write into the register.
  */
 status_t WM8960_ModifyReg(codec_handle_t *handle, uint8_t reg, uint16_t mask, uint16_t val);
-
+void getRegValue(void);
 #if defined(__cplusplus)
 }
 #endif

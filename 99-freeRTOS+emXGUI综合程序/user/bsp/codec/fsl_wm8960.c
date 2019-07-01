@@ -211,7 +211,7 @@ status_t WM8960_Init(codec_handle_t *handle, void *wm8960_config)
         /*
          * Audio data length = 16bit, I2S data format
          */
-        WM8960_WriteReg(handle, WM8960_IFACE1, 0x02);
+        WM8960_WriteReg(handle, WM8960_IFACE1, 0x0D);
 
         /*
          * LMICBOOST = 0dB, Connect left and right PGA to left and right Input Boost Mixer
@@ -258,8 +258,8 @@ status_t WM8960_Init(codec_handle_t *handle, void *wm8960_config)
     /*
      * ADC volume, 0dB
      */
-    WM8960_WriteReg(handle, WM8960_LADC, 0x1C3);
-    WM8960_WriteReg(handle, WM8960_RADC, 0x1C3);
+    WM8960_WriteReg(handle, WM8960_LADC, 0x1F3);
+    WM8960_WriteReg(handle, WM8960_RADC, 0x1F3);
 
     /*
      * Digital DAC volume, 0dB
@@ -270,16 +270,30 @@ status_t WM8960_Init(codec_handle_t *handle, void *wm8960_config)
     /*
      * Headphone volume, LOUT1 and ROUT1, 0dB
      */
-    WM8960_WriteReg(handle, WM8960_LOUT1, 0x1ff);
-    WM8960_WriteReg(handle, WM8960_ROUT1, 0x1ff);
+    WM8960_WriteReg(handle, WM8960_LOUT1, 0x16f);
+    WM8960_WriteReg(handle, WM8960_ROUT1, 0x16f);
+    /*
+     * Headphone volume, LOUT1 and ROUT1, 0dB
+     */
+    WM8960_WriteReg(handle, WM8960_LOUT2, 0x16F);
+    WM8960_WriteReg(handle, WM8960_ROUT2, 0x16F);
+    
+
+		WM8960_SetModule(handle, kWM8960_ModuleSpeaker, true);
+		WM8960_SetVolume(handle, kWM8960_ModuleSpeaker, 0x7f);
+//		WM8960_SetVolume(handle, kWM8960_ModuleDAC, 0xfffff);
+    uint32_t i = 4000000;
+
+    while (i)
+    {
+        __ASM("nop");
+        i--;
+    }
 
     /* Unmute DAC. */
     WM8960_WriteReg(handle, WM8960_DACCTL1, 0x0000);
-    WM8960_WriteReg(handle, WM8960_LINVOL, 0x1ff);
-    WM8960_WriteReg(handle, WM8960_RINVOL, 0x1ff);
-		WM8960_SetModule(handle, kWM8960_ModuleSpeaker, true);
-		//WM8960_SetVolume(handle, kWM8960_ModuleSpeaker, 0x1ff);
-//		WM8960_SetVolume(handle, kWM8960_ModuleDAC, 0xfffff);
+    WM8960_WriteReg(handle, WM8960_LINVOL, 0x117);
+    WM8960_WriteReg(handle, WM8960_RINVOL, 0x117);
     return kStatus_Success;
 }
 
@@ -721,63 +735,41 @@ status_t WM8960_SetMute(codec_handle_t *handle, wm8960_module_t module, bool isE
 status_t WM8960_ConfigDataFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits)
 {
     status_t retval = kStatus_Success;
-    uint32_t div = 0;
-    uint16_t val = 0;
 
-    /* Compute sample rate div, dac and adc are the same sample rate */
-    div = mclk / sample_rate;
-    if (div == 256)
+    switch (sample_rate)
     {
-        val = 0;
-    }
-    else if (div > 256)
-    {
-        val = (((div / 256U) << 6U) | ((div / 256U) << 3U));
-    }
-    else
-    {
-        return kStatus_InvalidArgument;
-    }
-
-    retval = WM8960_WriteReg(handle, WM8960_CLOCK1, val);
-
-    /* Compute bclk div */
-    div /= 64U;
-    switch (div)
-    {
-        case 4:
-        case 5:
-        case 6:
-            val = (0x1C0 | div);
+        case 8000:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0x1B0);
             break;
-        case 8:
-            val = 0x1C7;
+        case 11025:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0xD8);
             break;
-        case 11:
-            val = 0x1C8;
+        case 12000:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0x120);
             break;
-        case 12:
-            val = 0x1C9;
+        case 16000:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0xD8);
             break;
-        case 16:
-            val = 0x1CA;
+        case 22050:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0xD8);
             break;
-        case 22:
-            val = 0x1CB;
+        case 24000:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0x90);
             break;
-        case 24:
-            val = 0x1CC;
+        case 32000:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0x48);
             break;
-        case 32:
-            val = 0x1CF;
+        case 44100:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0xD8);
+            break;
+        case 48000:
+            retval = WM8960_WriteReg(handle, WM8960_CLOCK1, 0x00);
             break;
         default:
-            val = 0;
             retval = kStatus_InvalidArgument;
             break;
     }
 
-    retval = WM8960_WriteReg(handle, WM8960_CLOCK2, val);
     /*
      * Slave mode (MS = 0), LRP = 0, 32bit WL, left justified (FORMAT[1:0]=0b01)
      */
@@ -849,6 +841,9 @@ status_t WM8960_WriteReg(codec_handle_t *handle, uint8_t reg, uint16_t val)
     return retval;
 }
 
+
+
+
 status_t WM8960_ReadReg(uint8_t reg, uint16_t *val)
 {
     if (reg >= WM8960_CACHEREGNUM)
@@ -879,3 +874,19 @@ status_t WM8960_ModifyReg(codec_handle_t *handle, uint8_t reg, uint16_t mask, ui
     }
     return kStatus_Success;
 }
+
+#include "fsl_debug_console.h"
+void getRegValue(void)
+{
+  int count = 0;
+  for(int i = 0; i < WM8960_CACHEREGNUM; i++)
+  {
+    
+    
+    PRINTF("%d ", reg_cache[i]);
+    count++;
+    if(count % 10 == 0) PRINTF("\n");
+  }
+
+}
+
