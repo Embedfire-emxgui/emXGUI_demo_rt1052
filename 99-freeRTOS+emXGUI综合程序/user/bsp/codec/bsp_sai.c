@@ -154,23 +154,26 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
     }
     else
     {
-//      GUI_SemPostISR(sai_complete_sem);  
-			isFinished = true;
-    if(Soundcount)
-    {
-        xfer.data = (uint8_t *)Abuf1;
-        xfer.dataSize = 367*2;  
-        SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-        Soundcount=0;
-    }
-    else
-    {
-        /*  xfer structure */
-        xfer.data = (uint8_t *)Abuf2;
-        xfer.dataSize = 367*2;  
-        SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-        Soundcount=1;
-    }     
+#if Limit_Speed      
+      GUI_SemPostISR(sai_complete_sem);  
+//			isFinished = true;
+#else
+      if(Soundcount)
+      {
+          xfer.data = (uint8_t *)Abuf1;
+          xfer.dataSize = 367*2;  
+          SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+          Soundcount=0;
+      }
+      else
+      {
+          /*  xfer structure */
+          xfer.data = (uint8_t *)Abuf2;
+          xfer.dataSize = 367*2;  
+          SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+          Soundcount=1;
+      }
+#endif      
     }
 }
 

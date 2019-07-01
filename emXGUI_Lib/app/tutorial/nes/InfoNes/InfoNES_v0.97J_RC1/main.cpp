@@ -29,6 +29,9 @@ extern const uint8_t music[];
 #define SYS_msleep GUI_msleep
 
 
+//游戏不进行限速是66FPS
+//      进行限速是23FPS
+
 GUI_SEM* sai_complete_sem = NULL;
 
 #if 1 
@@ -872,8 +875,11 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
 //  int i;	
 //  int count = 0;
 #if 1
+  
 //  t0 = GUI_GetTickCount();
-//  GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
+#if Limit_Speed  
+  GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
+#endif  
   if(Soundcount)
   for(int i=0,t=0;i<samples;i++,t+=2)
   {     
@@ -893,23 +899,23 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
   
 //	while(!isFinished);     
 //  isFinished = false;  
-//  
-//  if(Soundcount)
-//  {
-//      xfer.data = (uint8_t *)Abuf1;
-//      xfer.dataSize = 367*2;  
-//      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-//      Soundcount=0;
-//  }
-//  else
-//  {
-//			/*  xfer structure */
-//      xfer.data = (uint8_t *)Abuf2;
-//      xfer.dataSize = 367*2;  
-//      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
-//      Soundcount=1;
-//  }
-//  GUI_DEBUG("%d", GUI_GetTickCount()-t0);
+#if Limit_Speed    
+  if(Soundcount)
+  {
+      xfer.data = (uint8_t *)Abuf1;
+      xfer.dataSize = 367*2;  
+      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+      Soundcount=0;
+  }
+  else
+  {
+			/*  xfer structure */
+      xfer.data = (uint8_t *)Abuf2;
+      xfer.dataSize = 367*2;  
+      SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
+      Soundcount=1;
+  }
+#endif  
 #endif  
 }
 
