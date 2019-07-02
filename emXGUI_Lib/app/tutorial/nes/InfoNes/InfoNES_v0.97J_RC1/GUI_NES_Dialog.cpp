@@ -20,7 +20,7 @@ extern "C"
 #include "host_gamepad.h"
 #include "usb_host_app.h"
 #include "InfoNES.h"
-//#include "music.h"
+extern int AudioTest();
 extern const uint8_t music[];
 }
 /*============================================================================*/
@@ -814,7 +814,7 @@ extern "C"
 extern sai_edma_handle_t txHandle;
 extern volatile bool isFinished;
 }
-#if 1
+#if 0
 AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[735], 4);
 AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[735], 4);
 #else
@@ -828,7 +828,6 @@ int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
   sai_transfer_t xfer;
 //	APU->Soundcount=0;
   Soundcount = 1;
-  uint32_t temp = 0;
 	NES->APU_Mute=0;
   
   xfer.data = (uint8_t *)Abuf1;
@@ -870,16 +869,16 @@ void InfoNES_SoundClose( void )
 void InfoNES_SoundOutput( int samples,WORD *wave )
 {
   sai_transfer_t xfer = {0};
-  uint32_t t0 = 0;
-  uint32_t temp = 0;
+
 //  int i;	
 //  int count = 0;
 #if 1
-  
+  //GUI_DEBUG("Wait");
 //  t0 = GUI_GetTickCount();
 #if Limit_Speed  
   GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
 #endif  
+//   GUI_DEBUG("Wait over");
   if(Soundcount)
   for(int i=0,t=0;i<samples;i++,t+=2)
   {     
@@ -1074,10 +1073,10 @@ static void draw_frame(HDC hdc)
 //  	  	rc.y	=0;
 //  	  	rc.w	=200;
 //  	  	rc.h	=16;
-  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
+//  	  	x_wsprintf(buf,L"FPS: %d/%d",nes_fps,screen_fps);
 //        GUI_DEBUG("%d", nes_fps);
-        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
-  	  	TextOut(hdc_NES,1,1,buf,-1);
+//        SetTextColor(hdc_NES,MapRGB(hdc,255,0,0));
+//  	  	TextOut(hdc_NES,1,1,buf,-1);
 
   	}
 
@@ -2269,9 +2268,9 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
-//  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
-//  
-//  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
+  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
+  
+  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
 
   
 //  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
@@ -2316,8 +2315,8 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
    	vfree((APU));
   	vfree(ApuEventQueue);
 
-//  	GUI_GRAM_Free(Abuf1);
-//    GUI_GRAM_Free(Abuf2);
+  	GUI_GRAM_Free(Abuf1);
+    GUI_GRAM_Free(Abuf2);
     SAI_TransferAbortSendEDMA(SAI1, &txHandle);
     SAI_Deinit(SAI1);  
    	vfree(WorkFrame);
@@ -2340,7 +2339,7 @@ void	GUI_NES_DIALOG(void *param)
   wcex.hCursor		= NULL;
   if(1)
   {
-    
+    AudioTest();
     f_readdir_gui("nes",&dir_object,&file_info);
     hwnd_List = CreateWindowEx(WS_EX_NOFOCUS,
                           &wcex,L"GameList",

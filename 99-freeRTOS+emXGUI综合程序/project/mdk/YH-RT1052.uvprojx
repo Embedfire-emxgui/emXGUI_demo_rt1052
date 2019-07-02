@@ -1184,9 +1184,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2480,9 +2480,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -3776,9 +3776,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -5073,9 +5073,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -6420,9 +6420,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -7717,9 +7717,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -9014,9 +9014,9 @@
               <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\InfoNES_pAPU.cpp</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>GUI_NES_Dialog.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\main.cpp</FilePath>
+              <FilePath>..\..\..\emXGUI_Lib\app\tutorial\nes\InfoNes\InfoNES_v0.97J_RC1\GUI_NES_Dialog.cpp</FilePath>
             </File>
           </Files>
         </Group>

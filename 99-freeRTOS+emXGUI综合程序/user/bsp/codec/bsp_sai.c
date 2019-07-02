@@ -141,8 +141,10 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 }
 #include "InfoNES_pAPU.h"
 #include "emXGUI.h"
-extern WORD Abuf1[735];
-extern WORD Abuf2[735];
+//extern WORD Abuf1[735];
+//extern WORD Abuf2[735];
+extern WORD *Abuf1;
+extern WORD *Abuf2;
 extern __IO uint8_t Soundcount;
 extern GUI_SEM* sai_complete_sem;
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)

@@ -223,7 +223,7 @@ static void BSP_Init(void)
 //    f_close_test(&file_object);    
 //    RGB_LED_COLOR_BLUE;    
 //    CORE_BOARD_LED_ON;
-    AudioTest();
+    
     /*µ÷ÓÃ»­°åº¯Êý*/
 //    Palette_Init();
 }
