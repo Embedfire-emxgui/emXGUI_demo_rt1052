@@ -2133,9 +2133,9 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				/////
 		case	WM_ERASEBKGND:
 		
-				//if(FullScreen == FALSE)
+		
 				{
-          GUI_DEBUG("1");
+         
 					hdc	=(HDC)wParam;//GetDC(hwnd);
 					GetClientRect(hwnd,&rc);
 					

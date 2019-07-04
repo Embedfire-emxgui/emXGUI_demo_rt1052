@@ -1,5 +1,7 @@
 #include "emXGUI.h"
 #include "emXGUI_JPEG.h"
+#include "x_libc.h"
+extern const char SEG_NUM_64[];
 
 #define	ID_OK		0x1000
 #define	ID_NEXT		0x1001
@@ -13,7 +15,7 @@ typedef struct
   HWND  hwnd;
   HDC   hdc_mem;
   HDC   hdc_mem_panel;
-  
+  HFONT hFont_SEG_NUM;
   char* m_panel_picpath;
   int point_type;
   int panel_value;
@@ -26,6 +28,7 @@ InstrumentPanel_T g_panel=
   .panel_value = 0,
   .panel_value_inc = 3,
   .point_type = 0,
+  .hFont_SEG_NUM=NULL,
   .m_panel_picpath = "instrument_panel.jpg",
 };
 static void	X_MeterPointer(HDC hdc,int cx,int cy,int r,u32 color,int st_angle,int angle_size,int dat_size,int dat_val,int style)
@@ -42,8 +45,8 @@ static void	X_MeterPointer(HDC hdc,int cx,int cy,int r,u32 color,int st_angle,in
 
 	angle -= 90;
 
-	
-
+//	GUI_DEBUG("%d", angle);
+  
   if(style==0)
   {
     pt[0].x	 = (int)(cx + sin(angle*3.14/180)*r);
@@ -269,7 +272,8 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
       CreateWindow(BUTTON, L"OK", WS_VISIBLE, rc.w - 80, 8, 68, 32, hwnd, ID_OK, NULL, NULL); //′′?¨ò???°′?￥(ê?ày).
       
 //      CreateWindow(BUTTON, L"->", WS_VISIBLE, rc.w - 80, 8 + 40, 68, 32, hwnd, ID_NEXT, NULL, NULL);
-
+      g_panel.hFont_SEG_NUM =XFT_CreateFont(SEG_NUM_64); //创建64x64的数码管外观的字体(xft字体)
+      
       u8 *jpeg_buf;
       u32 jpeg_size;
       JPG_DEC *dec;
@@ -290,7 +294,7 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
       /* 释放图片内容空间 */
       RES_Release_Content((char **)&jpeg_buf);
-      SetTimer(hwnd, 0x2000, 1, TMR_START, NULL);
+      SetTimer(hwnd, 0x2000, 100, TMR_START, NULL);
       break;
     }
     case WM_TIMER:
@@ -301,7 +305,7 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
       if (id == 0x2000)
       {
 
-        if (g_panel.panel_value > 180)
+        if (g_panel.panel_value > 242)
         {
           g_panel.panel_value_inc = -1 * (TURN_SPEED);
         }
@@ -311,7 +315,8 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
           g_panel.panel_value_inc = TURN_SPEED;
         }
         g_panel.panel_value += g_panel.panel_value_inc;
-
+        if(g_panel.panel_value>=0 && g_panel.panel_value <= 242)
+            
         InvalidateRect(hwnd, NULL, FALSE);
       }
       break; 
@@ -344,7 +349,8 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 			PAINTSTRUCT ps;
 			HDC hdc;
 			int x;
-      
+      RECT rc0;
+      WCHAR wbuf[128];
 			hdc =BeginPaint(hwnd,&ps); 
 
 
@@ -353,8 +359,19 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 			BitBlt(g_panel.hdc_mem,0,0,PANEL_W,PANEL_H,g_panel.hdc_mem_panel,0,0,SRCCOPY); 
 			
 			
-			X_MeterPointer(g_panel.hdc_mem,PANEL_W/2,PANEL_H/2,120,MapRGB(g_panel.hdc_mem,250,20,20),0,360,360,g_panel.panel_value,0);
+			X_MeterPointer(g_panel.hdc_mem,PANEL_W/2,PANEL_H/2,120,MapRGB(g_panel.hdc_mem,250,20,20),-32,360,360,g_panel.panel_value,0);
 
+      
+      SetFont(g_panel.hdc_mem,g_panel.hFont_SEG_NUM);
+			x_wsprintf(wbuf,L"%02d", g_panel.panel_value*100/242);
+			rc0.x=PANEL_W/2-50;
+			rc0.y=PANEL_H/2+50;
+			rc0.w=100;
+			rc0.h=100;
+      
+			SetTextColor(g_panel.hdc_mem,MapRGB(g_panel.hdc_mem,200,0,0));
+			DrawText(g_panel.hdc_mem,wbuf,-1,&rc0,DT_SINGLELINE|DT_VCENTER|DT_CENTER);      
+      
 			BitBlt(hdc,x,20,PANEL_W,PANEL_H,g_panel.hdc_mem,0,0,SRCCOPY); 
 
 
@@ -367,7 +384,7 @@ static LRESULT InstrumentPanel_WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
       
       DeleteDC(g_panel.hdc_mem);
       DeleteDC(g_panel.hdc_mem_panel);
-
+      DeleteFont(g_panel.hFont_SEG_NUM); //删除字体.
       return DestroyWindow(hwnd); 
     }
     default:
