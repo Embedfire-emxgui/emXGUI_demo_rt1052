@@ -24,8 +24,8 @@ extern int AudioTest();
 extern const uint8_t music[];
 }
 /*============================================================================*/
-#define vmalloc GUI_VMEM_Alloc
-#define vfree   GUI_VMEM_Free
+#define vmalloc GUI_GRAM_Alloc
+#define vfree   GUI_GRAM_Free
 #define SYS_msleep GUI_msleep
 
 
@@ -814,9 +814,9 @@ extern "C"
 extern sai_edma_handle_t txHandle;
 extern volatile bool isFinished;
 }
-#if 0
-AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[735], 4);
-AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[735], 4);
+#if 1
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf1[736], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(WORD Abuf2[736], 4);
 #else
 WORD *Abuf1;
 WORD *Abuf2;
@@ -829,9 +829,9 @@ int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
 //	APU->Soundcount=0;
   Soundcount = 1;
 	NES->APU_Mute=0;
-  
+  GUI_DEBUG("2");
   xfer.data = (uint8_t *)Abuf1;
-  xfer.dataSize = 367*2;  
+  xfer.dataSize = 367*2+2;  
   SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
   Soundcount=0;  
 #endif  
@@ -845,8 +845,11 @@ int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
 /*===================================================================*/
 void InfoNES_SoundClose( void ) 
 {
-
-	return;
+  //GUI_DEBUG("3");
+	
+  SAI_TransferAbortSendEDMA(SAI1, &txHandle);
+  
+  return;
 	
 #if 0
   lpSndDevice->SoundClose();
@@ -875,17 +878,11 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
 #if 1
   //GUI_DEBUG("Wait");
 //  t0 = GUI_GetTickCount();
-#if Limit_Speed  
-  GUI_SemWait(sai_complete_sem, 0xFFFFFFFF);
-#endif  
+
 //   GUI_DEBUG("Wait over");
   if(Soundcount)
   for(int i=0,t=0;i<samples;i++,t+=2)
   {     
-//    if(i == 367)
-//    {
-//      GUI_DEBUG("%d",t);
-//    }
     Abuf1[t] = wave[i]<<5;
     Abuf1[t+1] = wave[i]<<5;
   }
@@ -895,14 +892,16 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
       Abuf2[t]= wave[i]<<5; 
       Abuf2[t+1]= wave[i]<<5; 
     }
-  
+#if Limit_Speed  
+  GUI_SemWait(sai_complete_sem, 0x2000);
+#endif    
 //	while(!isFinished);     
 //  isFinished = false;  
 #if Limit_Speed    
   if(Soundcount)
   {
       xfer.data = (uint8_t *)Abuf1;
-      xfer.dataSize = 367*2;  
+      xfer.dataSize = 367*2+2;  
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=0;
   }
@@ -910,7 +909,7 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
   {
 			/*  xfer structure */
       xfer.data = (uint8_t *)Abuf2;
-      xfer.dataSize = 367*2;  
+      xfer.dataSize = 367*2+2;  
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=1;
   }
@@ -1595,7 +1594,7 @@ static LRESULT Dlg_Load_WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
         //删除目录字段
         p = strstr(file_list[i], "nes/");
             
-        GUI_DEBUG("%s", p+4);
+//        GUI_DEBUG("%s", p+4);
         x_mbstowcs_cp936(wbuf[i], p+4, 100);
         menu_list[i].pName = wbuf[i];
         menu_list[i].cbStartup = NULL;
@@ -2268,9 +2267,9 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
   ApuEventQueue =(ApuEvent*)vmalloc(APU_EVENT_MAX*sizeof(ApuEvent));
   memset(ApuEventQueue,0,APU_EVENT_MAX*sizeof(ApuEvent));
   
-  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
-  
-  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
+//  Abuf1=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));
+//  
+//  Abuf2=(WORD*)GUI_GRAM_Alloc(734*sizeof(WORD));  
 
   
 //  wave_buffers =(WORD*)GUI_VMEM_Alloc(1470);
@@ -2315,12 +2314,12 @@ extern "C" int	InfoNES_WinMain(HANDLE hInstance,void *argv)
    	vfree((APU));
   	vfree(ApuEventQueue);
 
-  	GUI_GRAM_Free(Abuf1);
-    GUI_GRAM_Free(Abuf2);
+//  	GUI_GRAM_Free(Abuf1);
+//    GUI_GRAM_Free(Abuf2);
+
+   	vfree(WorkFrame);
     SAI_TransferAbortSendEDMA(SAI1, &txHandle);
     SAI_Deinit(SAI1);  
-   	vfree(WorkFrame);
-
 	return TRUE;
 }
 

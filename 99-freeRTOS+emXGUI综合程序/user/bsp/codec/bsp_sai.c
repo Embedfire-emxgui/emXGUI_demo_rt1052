@@ -139,12 +139,13 @@ void BOARD_EnableSaiMclkOutput(bool enable)
         IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
     }
 }
+
 #include "InfoNES_pAPU.h"
 #include "emXGUI.h"
-//extern WORD Abuf1[735];
-//extern WORD Abuf2[735];
-extern WORD *Abuf1;
-extern WORD *Abuf2;
+extern WORD Abuf1[735];
+extern WORD Abuf2[735];
+//extern WORD *Abuf1;
+//extern WORD *Abuf2;
 extern __IO uint8_t Soundcount;
 extern GUI_SEM* sai_complete_sem;
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -265,13 +266,15 @@ int AudioTest(void)
         __ASM("nop");
         delayCycle--;
     }
-    NVIC_SetPriority(DEMO_SAI_IRQ, 7U);
-    NVIC_SetPriority(DMA0_DMA16_IRQn, 7U);
+    NVIC_SetPriority(DEMO_SAI_IRQ, 8U);
+    NVIC_SetPriority(DMA0_DMA16_IRQn, 8U);
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL,&dmaHandle);
 
+    
+    
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
-  
+
 //    uint32_t temp = 0;
 //    sai_transfer_t xfer;  
 //  //temp = (uint32_t)music;

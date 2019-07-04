@@ -53,7 +53,7 @@ extern void GUI_DEMO_Test(void *param);
 //extern void	GUI_Video_DIALOG(void* param);
 extern void GUI_DEMO_Listbox(void*param);
 extern void NES_Simulator(void *param);
-////extern void	GUI_App_Desktop(void);
+
 ////extern void App_GUI_Tutorial_DEMO(void);
 //extern void GUI_DEMO_BitBlt_Speed(void *param);
 ////extern void	GUI_LED_DIALOG(void);

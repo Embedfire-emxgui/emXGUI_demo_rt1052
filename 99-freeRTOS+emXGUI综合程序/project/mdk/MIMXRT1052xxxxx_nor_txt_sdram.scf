@@ -61,6 +61,9 @@
 #define m_interrupts_start             0x60002000
 #define m_interrupts_size              0x00000400
 
+#define m_itcmsection_start            0x00000000
+#define m_itcmsection_size             0x00020000
+
 #define m_text_start                   0x60002400
 #define m_text_size                    0x03FFDC00
 
@@ -80,14 +83,16 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x2000
+  #define Stack_Size                   0x0200
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    0x2000
+  #define Heap_Size                    0x8000
 #endif
+
+
 
 LR_m_rom_config m_flash_config_start m_flash_config_size {   ; load region size_region
 	RW_m_config_text m_flash_config_start m_flash_config_size { ; load address = execution address
@@ -113,6 +118,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_size {   ; lo
   }
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
     .ANY (+RW +ZI)
+    bsp_sai.o (+RO +RW +ZI)
     *(m_usb_dma_init_data)
     *(m_usb_dma_noninit_data)
   }
@@ -123,7 +129,12 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_size {   ; lo
   RW_m_data2 m_data2_start m_data2_size{
     .ANY (+RW +ZI)
   }
-  
+  ;LR_m_itcm m_itcmsection_start m_itcmsection_size{
+    ;bsp_sai.o (+RO)
+    ;fsl_sai.o (+RO)
+    ;fsl_edma.o (+RO)
+    ;fsl_sai_edma.o (+RO)
+  ;}  
   RW_m_ncache m_ncache_start m_ncache_size { ; ncache RW data
     * (NonCacheable.init)
     * (NonCacheable)

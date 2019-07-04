@@ -90,7 +90,7 @@ void BOARD_ConfigMPU(void)
 
     /* Region 2 setting */
     MPU->RBAR = ARM_MPU_RBAR(2, 0x60000000U);
-    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_512MB);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_32MB);
 
     /* Region 3 setting */
     MPU->RBAR = ARM_MPU_RBAR(3, 0x81000000U);

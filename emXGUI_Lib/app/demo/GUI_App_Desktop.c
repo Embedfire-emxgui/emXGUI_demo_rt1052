@@ -44,7 +44,7 @@ static void dummy(void *param)
 
 }
 
-
+extern void	GUI_DEMO_InstrumentPanel(void*);
 extern void	GUI_DEMO_Graphics_Accelerator(void*);
 extern void	GUI_DEMO_ShowWave(void*);
 extern void GUI_DEMO_ShowComponent(void *param);
@@ -96,7 +96,7 @@ static struct __obj_list menu_list_1[] = {
 		//  	L"Hello",		NULL,	  L"B", RGB_WHITE,				dummy,
 		//		L"Button",		NULL,	  L"C", RGB_WHITE,				App_GUI_Climate_Cabinet,
         L"控件演示",	NULL,   L"E", RGB_WHITE,				GUI_DEMO_ShowComponent,
-				L"仪表盘",		NULL,	  L"H",RGB_WHITE, 				dummy,
+				L"仪表盘",		NULL,	  L"H",RGB_WHITE, 				GUI_DEMO_InstrumentPanel,
 
 				L"计算器",	NULL, 	L"Z", RGB_WHITE,				dummy,
 				
