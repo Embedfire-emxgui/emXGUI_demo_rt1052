@@ -868,7 +868,7 @@ void InfoNES_SoundClose( void )
 //#define	rec_freq	735
 
 //U8 wave[ 1024 ];
-
+int var = 1;
 void InfoNES_SoundOutput( int samples,WORD *wave )
 {
   sai_transfer_t xfer = {0};
@@ -892,12 +892,15 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
       Abuf2[t]= wave[i]<<5; 
       Abuf2[t+1]= wave[i]<<5; 
     }
-#if Limit_Speed  
+//#if Limit_Speed  
+  if(var)
   GUI_SemWait(sai_complete_sem, 0x2000);
-#endif    
+//#endif    
 //	while(!isFinished);     
 //  isFinished = false;  
-#if Limit_Speed    
+//#if Limit_Speed    
+   if(var)
+   {
   if(Soundcount)
   {
       xfer.data = (uint8_t *)Abuf1;
@@ -913,7 +916,8 @@ void InfoNES_SoundOutput( int samples,WORD *wave )
       SAI_TransferSendEDMA(SAI1, &txHandle, &xfer);
       Soundcount=1;
   }
-#endif  
+}
+//#endif  
 #endif  
 }
 
@@ -2385,11 +2389,16 @@ static void win_thread(void *p)
 	run =FALSE;
 	GUI_Thread_Delete(xTaskGetHandle("NES_WIN"));
 }
-
+extern u16 cur_app;
 extern "C" void NES_Simulator(void* param)
 {
 	run =TRUE;
-  
+  if(cur_app == 16)
+  {
+    var = 1;
+  }
+  else
+    var = 0;
 //	SYS_thread_create(win_thread,NULL,10*1024,NULL,0);
   GUI_Thread_Create(win_thread, "NES_WIN", 12*1024, NULL, 6, 5);
   GUI_Thread_Create(list_thread, "LIST_WIN", 12*1024, NULL, 6, 5);

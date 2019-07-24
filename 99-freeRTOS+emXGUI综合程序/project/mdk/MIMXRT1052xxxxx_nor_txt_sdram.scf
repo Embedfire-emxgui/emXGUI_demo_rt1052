@@ -105,6 +105,7 @@ LR_m_rom_ivt m_ivt_start m_ivt_size {   ; load region size_region
 	* (.boot_hdr.ivt, +FIRST)
 	* (.boot_hdr.boot_data)
 	* (.boot_hdr.dcd_data)
+  
 	}
 }
 
@@ -138,5 +139,6 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_size {   ; lo
   RW_m_ncache m_ncache_start m_ncache_size { ; ncache RW data
     * (NonCacheable.init)
     * (NonCacheable)
+    gui_nes_dialog.o(+RO)
   }
 }

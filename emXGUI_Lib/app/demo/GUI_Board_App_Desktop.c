@@ -90,14 +90,14 @@ static const struct __obj_list menu_list_1[] = {
 
       L"以太网",		NULL,	  L"Q", RGB_WHITE,				dummy,
       L"WiFi",		NULL,	  L"P", RGB_WHITE,				dummy,
-      L"游戏",	NULL,	  L"S", RGB_WHITE,				NES_Simulator,
+      L"游戏原速",	NULL,	  L"S", RGB_WHITE,				NES_Simulator,
 
       L"电话",	NULL, 	L"T", RGB_WHITE,				dummy,
       L"短信",	NULL,   L"U", RGB_WHITE,				dummy,
       L"二维码",	NULL,	  L"V", RGB_WHITE,				dummy,
 
 
-        L"时钟",		NULL,	  L"H", RGB_WHITE,				dummy,
+        L"游戏限速",		NULL,	  L"S", RGB_WHITE,				NES_Simulator,
         L"录音机",	  NULL,	  L"Y", 	RGB_WHITE,			dummy,
 //        L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
 //            L"Checkbox",	NULL, 	L"D", RGB_WHITE,				dummy,
@@ -179,7 +179,7 @@ static void button_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 
 }
 
-
+u16 cur_app;
 static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     HWND wnd; 
@@ -239,7 +239,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         id = LOWORD(wParam);
 
         nm = (LM_NMHDR*)lParam;
-
+        cur_app = nm->idx;
         if (code == LMN_CLICKED)
         {
             switch (id)
